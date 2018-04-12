@@ -11,8 +11,13 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET search page. */
-router.get('/restaurants', function(req, res, next) {
+router.get('/Restaurants', function(req, res) {
     res.render('restaurants', { title: 'Restaurant Search' });
+});
+
+/* GET search page. */
+router.get('/CreateRestaurant', function(req, res, next) {
+    res.render('create_restaurant', { title: 'Create Restaurant' });
 });
 
 module.exports = router;
