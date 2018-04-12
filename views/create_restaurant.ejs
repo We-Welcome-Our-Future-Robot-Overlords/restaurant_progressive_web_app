@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+      <link rel='stylesheet' href='/stylesheets/style.css' />
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcR6NQAQEOfVHCgavdfRYpPxZxLE-l2xM&libraries=places">
+      </script>
+  </head>
+  <body>
+    <div class="pac-card" id="pac-card">
+      <div id="title">
+        Autocomplete Address
+      </div>
+      <div id="pac-container">
+        <input id="pac-input" type="text"
+            placeholder="Enter a location">
+      </div>
+      <div id="map"></div>
+      <div id="infowindow-content">
+        <img src="" width="16" height="16" id="place-icon">
+        <span id="place-name"  class="title"></span><br>
+        <span id="place-address"></span>
+      </div>
+    </div>
+    <div id="address-output"></div>
+    <div id="lat-lng"></div>
+
+    <script type="text/javascript" src="/javascripts/create_restaurant.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcR6NQAQEOfVHCgavdfRYpPxZxLE-l2xM&libraries=places&callback=initMap"
+        async defer></script>
+  </body>
+</html>
