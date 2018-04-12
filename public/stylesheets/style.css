@@ -6,3 +6,8 @@ body {
 a {
   color: #00B7FF;
 }
+
+.inputList {
+    text-align:right;
+    list-style: none;
+}

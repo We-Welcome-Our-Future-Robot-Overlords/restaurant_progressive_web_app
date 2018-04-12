@@ -5,7 +5,7 @@ var Restaurant = require('../models/restaurants');
 exports.init= function() {
     // uncomment if you need to drop the database
 
-    // Character.remove({}, function(err) {
+    // Restaurant.remove({}, function(err) {
     //    console.log('collection removed')
     // });
 

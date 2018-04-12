@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p></p>                                                                                                                                                                                                       </p>
-  </body>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="/javascripts/index.js"></script>
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <aside style="width:50%;">
+            <form id=“xForm" onsubmit="onSubmit('/restaurants')">
+                <ul class="inputList">
+                    <li>
+                        <label for='req_name'>Name:</label>
+                        <input type="text" name="req_name" id="req_name" />
+                    </li>
+                    <li>
+                        <label for='req_cuisine'>Cuisine:</label>
+                        <input type="text" name="req_cuisine" id="req_cuisine" />
+                    </li>
+                    <li><input type="submit" name="g" value="Submit" id="g"></li>
+                </ul>
+            </form>
+        </aside>
+        <div id="results" style="margin-top:30px"></div>
+    </body>
 </html>
