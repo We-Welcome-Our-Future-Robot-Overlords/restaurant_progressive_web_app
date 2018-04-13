@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Restaurant = require('../models/restaurants');
+var Cuisine = require('../models/cuisine');
 
 
 exports.init= function() {
@@ -8,10 +9,42 @@ exports.init= function() {
     // Restaurant.remove({}, function(err) {
     //    console.log('collection removed')
     // });
+    var c1 = new Cuisine({
+        title: 'American',
+    });
+
+    c1.save(function (err, results) {
+        console.log(results._id);
+    });
+
+    var c2 = new Cuisine({
+        title: 'Chinese',
+    });
+
+    c2.save(function (err, results) {
+        console.log(results._id);
+    });
+
+    var c3 = new Cuisine({
+        title: 'Indian',
+    });
+
+    c3.save(function (err, results) {
+        console.log(results._id);
+    });
+
+    var c4 = new Cuisine({
+        title: 'Japanese',
+    });
+
+    c4.save(function (err, results) {
+        console.log(results._id);
+    });
+
 
     var r1 = new Restaurant({
         name: 'Tasteez',
-        cuisine: ['Junk','Chicken'],
+        cuisine: [c3._id],
         description: 'Nope',
         address: {
             street: '196 Brook Hill',
@@ -30,7 +63,7 @@ exports.init= function() {
 
     var r2 = new Restaurant({
         name: 'KFC',
-        cuisine: ['Trash','Chicken'],
+        cuisine: [c1._id],
         description: 'KFC',
         address: {
             street: '163 West Street',
@@ -49,7 +82,7 @@ exports.init= function() {
 
     var r3 = new Restaurant({
         name: 'City Chicken Cafe',
-        cuisine: ['Chicken'],
+        cuisine: [c3._id,c4._id],
         description: 'No coffee',
         address: {
             street: '29 Mansfield Road',

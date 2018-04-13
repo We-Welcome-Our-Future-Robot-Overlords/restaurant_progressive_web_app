@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var Restaurant = new Schema(
     {
         name: {type: String, required: true},
-        cuisine: {type: [String], required: true},
+        cuisine:  [{ type: Schema.Types.ObjectId, ref: 'Cuisine', required: true}],
         description: {type: String},
         address: {
             street: {type: String, required: true},
@@ -15,7 +15,9 @@ var Restaurant = new Schema(
         location: {
             lat: {type: Number},
             lng: {type: Number}
-        }
+        },
+        star: {type: Number, default: 0},
+        rating_count: {type: Number, default: 0}
         /* TODO add pic */
     }
 );
@@ -30,6 +32,6 @@ Restaurant.virtual('full_address')
     }
 );
 
-Restaurant.set('toObject', {getters: true, virtuals: true});
+Restaurant.set('toObject', {getters: true, virtual: true});
 
 module.exports = mongoose.model('Restaurant', Restaurant);
