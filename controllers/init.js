@@ -38,12 +38,31 @@ exports.init= function() {
             country: 'United Kingdom'
         },
         location: {
-            lat: 53.380106,
-            lng: -1.479211
+            lat: 53.3800525,
+            lng:  -1.4792723000000478
         }
     });
 
     r2.save(function (err, results) {
+        console.log(results._id);
+    });
+
+    var r3 = new Restaurant({
+        name: 'City Chicken Cafe',
+        cuisine: ['Chicken'],
+        description: 'No coffee',
+        address: {
+            street: '29 Mansfield Road',
+            city: 'Nottingham',
+            country: 'United Kingdom'
+        },
+        location: {
+            lat: 52.95837629999999,
+            lng:  -1.4792723000000478
+        }
+    });
+
+    r3.save(function (err, results) {
         console.log(results._id);
     });
 }

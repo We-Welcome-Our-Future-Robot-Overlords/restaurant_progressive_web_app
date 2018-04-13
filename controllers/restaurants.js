@@ -1,4 +1,5 @@
 var Restaurant = require('../models/restaurants');
+var maths = require('../public/javascripts/maths');
 
 /* TODO try some query to see if database work as normal */
 
@@ -11,21 +12,20 @@ function clean(obj) {
     }
 }
 
+
 exports.retrieve = function (req, res) {
     var rstrntData = req.body;
     clean(rstrntData);
-    var locus = {};
-    console.log("lat 2 is", lat2);
-    if ('lat' in rstrntData && 'lng' in rstrntData) {
-        var lat2 = rstrntData.lat;
-        var lng2 = rstrntData.lng;
+    console.log("non-empty data:", rstrntData);
+    var valid_coord = 'lat' in rstrntData && 'lng' in rstrntData && 'radius' in rstrntData;
+    var lat1 = 0;
+    var lng1 = 0;
+    var radius = 0;
+    if (valid_coord) {
+        console.log("valid coordinates:", valid_coord);
+        var lat1 = rstrntData.lat;
+        var lng1 = rstrntData.lng;
         var radius = rstrntData.radius;
-        locus = {$where: function() {
-                var toreturn  = haversine(this.lat, lat2, this.lng, lng2) < radius;
-                console.log(toreturn);
-                return toreturn;
-            }
-        };
     }
     delete rstrntData['lat'];
     delete rstrntData['lng'];
@@ -34,12 +34,23 @@ exports.retrieve = function (req, res) {
         res.status(403).send('No data sent!');
     } else {
         try {
-            console.log("locus is now:", locus);
-            Restaurant.find({$and: [rstrntData, locus]},
+            Restaurant.find(rstrntData,
                 function (err, restaurants) {
                     if (err) {
                         res.status(500).send('Invalid data!');
                     } else {
+                        if (valid_coord) {
+                            console.log(lat1, lng1,);
+                            restaurants = restaurants.filter(function(rstrnt) {
+                                var rstrnt_coord = rstrnt.location;
+                                console.log(rstrnt_coord);
+                                var distance =  maths.haversine(lat1,lng1,rstrnt_coord.lat,rstrnt_coord.lng);
+                                console.log(distance);
+                                var inrange = distance <= radius;
+                                console.log(inrange);
+                                return inrange;
+                            });
+                        }
                         res.setHeader('Content-Type', 'application/json');
                         res.send(JSON.stringify(restaurants));
                     }
