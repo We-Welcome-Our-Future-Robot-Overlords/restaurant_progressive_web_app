@@ -13,11 +13,23 @@
                 <ul class="inputList">
                     <li>
                         <label for='name'>Name:</label>
-                        <input type="text" name="name" id="name"/>
+                        <input type="text" name="name" id="name" />
                     </li>
                     <li>
                         <label for='cuisine'>Cuisine:</label>
                         <input type="text" name="cuisine" id="cuisine" />
+                    </li>
+                    <li>
+                        <label for="lat">Latitude:</label>
+                        <input type="number" name="lat" id="lat" step="any"/>
+                    </li>
+                    <li>
+                        <label for="lng">Longitude:</label>
+                        <input type="number" name="lng" id="lng" step="any"/>
+                    </li>
+                    <li>
+                        <label for="radius">Radius (km):</label>
+                        <input type="number" name="radius" id="radius" step="any" value="1" />
                     </li>
                     <li><input type="submit" name="g" value="Submit" id="g"></li>
                 </ul>
