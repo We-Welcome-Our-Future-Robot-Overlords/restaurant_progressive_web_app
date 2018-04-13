@@ -25,7 +25,7 @@ exports.retrieve = function (req, res) {
         console.log("valid coordinates:", valid_coord);
         var lat1 = rstrntData.lat;
         var lng1 = rstrntData.lng;
-        var radius = rstrntData.radius;
+        var radius = rstrntData.radius * 1000; //convert from km to m
     }
     delete rstrntData['lat'];
     delete rstrntData['lng'];
@@ -45,7 +45,7 @@ exports.retrieve = function (req, res) {
                                 var rstrnt_coord = rstrnt.location;
                                 console.log(rstrnt_coord);
                                 var distance =  maths.haversine(lat1,lng1,rstrnt_coord.lat,rstrnt_coord.lng);
-                                console.log(distance);
+                                console.log(distance)
                                 var inrange = distance <= radius;
                                 console.log(inrange);
                                 return inrange;

@@ -6,7 +6,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="/javascripts/index.js"></script>
     </head>
-    <body>
+    <body onload="setLocation()" >
         <h1><%= title %></h1>
         <aside style="width:50%;">
             <form id=“xForm" onsubmit="onSubmit('/restaurants')">
@@ -21,11 +21,11 @@
                     </li>
                     <li>
                         <label for="lat">Latitude:</label>
-                        <input type="number" name="lat" id="lat" step="any"/>
+                        <input type="number" name="lat" id="lat" step="any" value="0"/>
                     </li>
                     <li>
                         <label for="lng">Longitude:</label>
-                        <input type="number" name="lng" id="lng" step="any"/>
+                        <input type="number" name="lng" id="lng" step="any" value="0"/>
                     </li>
                     <li>
                         <label for="radius">Radius (km):</label>

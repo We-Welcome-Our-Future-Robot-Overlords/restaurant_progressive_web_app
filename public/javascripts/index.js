@@ -29,3 +29,12 @@ function onSubmit(url) {
     sendAjaxQuery(url, data);
     event.preventDefault();
 }
+
+function setLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+}
+function showPosition(position) {
+    document.getElementsByName('lat')[0].setAttribute('value', position.coords.latitude);
+    document.getElementsByName('lng')[0].setAttribute('value', position.coords.longitude);}
