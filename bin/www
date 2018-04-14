@@ -6,7 +6,8 @@
 
 var app = require('../app');
 var debug = require('debug')('intelligentweb:server');
-var http = require('http');
+var https = require('https');
+var fs = require('fs-extra');
 var database = require('../database/restaurants');
 process.env.GOOGLE_API = 'AIzaSyCcR6NQAQEOfVHCgavdfRYpPxZxLE-l2xM';
 console.log("Google API: " + process.env.GOOGLE_API);
@@ -19,10 +20,18 @@ var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTPs server.
  */
+var options = {
+    key: fs.readFileSync('./private_access/ca.key'),
+    cert: fs.readFileSync('./private_access/ca.crt')
+};
 
-var server = http.createServer(app);
+/**
+ * Create HTTPs server using the options
+ */
+var server = https.createServer(options, app);
+
 
 /**
  * Listen on provided port, on all network interfaces.
