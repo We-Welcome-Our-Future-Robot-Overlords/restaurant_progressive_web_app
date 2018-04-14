@@ -6,10 +6,22 @@
     <script src="/javascripts/map.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
             async defer></script>
+    <script>
+        $(document).ready(function (){
+            setLocation();
+            let cuisine_dict = <%-cuisine_dict%>;
+            console.log(cuisine_dict);
+            for(var i=0;i<cuisine_dict.length;i++)
+            {
+                var option=$('<option></option>').val(cuisine_dict[i]._id).html(cuisine_dict[i]['title']);
+                $('select#cuisine').append(option);
+            }
+
+        });
+    </script>
 </head>
-<body onload="setLocation()">
+<body>
 <h1><%= title %></h1>
-<h2><%= cuisine_dict %></h2>
 <div class="pac-card" id="pac-card">
     <div id="map"></div>
 </div>
@@ -23,7 +35,7 @@
             </li>
             <li>
                 <label for='cuisine'>Cuisine:</label>
-                <input type="text" name="cuisine" id="cuisine"/>
+                <select name="cuisine" id="cuisine"></select>
             </li>
             <li>
                 <input id="pac-input" type="text"
