@@ -20,10 +20,10 @@ function clean(obj) {
     }
 }
 exports.search = function (req, res) {
-    var rstrntData = req.body;
+    const rstrntData = req.body;
+    const valid_coord = rstrntData.pac_input != '';
+    console.log(rstrntData);
     clean(rstrntData);
-    console.log("non-empty data:", rstrntData);
-    var valid_coord = 'lat' in rstrntData && 'lng' in rstrntData && 'radius' in rstrntData;
     var lat1 = 0;
     var lng1 = 0;
     var radius = 0;
@@ -36,7 +36,12 @@ exports.search = function (req, res) {
     delete rstrntData['lat'];
     delete rstrntData['lng'];
     delete rstrntData['radius'];
-    if (rstrntData == null || Object.keys(rstrntData).length == 0) {
+    delete rstrntData['pac_input'];
+    const any_rstrnt = rstrntData == null || Object.keys(rstrntData).length == 0;
+    console.log("any restaurant", any_rstrnt);
+    const invalid_data = !valid_coord && any_rstrnt;
+    if (invalid_data) {
+        console.log('no name, cuisine, or locus');
         res.status(403).send('No data sent!');
     } else {
         try {
@@ -51,7 +56,7 @@ exports.search = function (req, res) {
                                 var rstrnt_coord = rstrnt.location;
                                 console.log(rstrnt_coord);
                                 var distance =  maths.haversine(lat1,lng1,rstrnt_coord.lat,rstrnt_coord.lng);
-                                console.log(distance)
+                                console.log(distance);
                                 var inrange = distance <= radius;
                                 console.log(inrange);
                                 return inrange;
