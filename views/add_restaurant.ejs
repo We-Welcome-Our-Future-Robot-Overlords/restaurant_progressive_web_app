@@ -2,13 +2,11 @@
 <html>
   <head>
     <% include ../views/header %>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places">
-    </script>
-    <script type="text/javascript" src="/javascripts/add_restaurant.js"></script>
+    <script type="text/javascript" src="/javascripts/map.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
             async defer></script>
   </head>
-  <body>
+  <body onload="initMap(53.379484, -1.47946, 'address')" >
     <div class="pac-card" id="pac-card">
       <div id="title">
         Autocomplete Address

@@ -3,10 +3,17 @@
     <head>
         <% include ../views/header %>
         <script src="/javascripts/index.js"></script>
+        <script src="/javascripts/map.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
+                async defer></script>
     </head>
     <body onload="setLocation()" >
         <h1><%= title %></h1>
         <h2><%= cuisine_dict %></h2>
+        <div class="pac-card" id="pac-card">
+            <div id="map"></div>
+        </div>
+
         <section id="SearchControls">
             <form id=“xForm" onsubmit="onSubmit('/restaurants')">
                 <ul class="inputList">
@@ -19,12 +26,14 @@
                         <input type="text" name="cuisine" id="cuisine" />
                     </li>
                     <li>
-                        <label for="lat">Latitude:</label>
-                        <input type="number" name="lat" id="lat" step="any" value="0"/>
+                        <input id="pac-input" type="text"
+                               placeholder="Enter a location">
                     </li>
                     <li>
-                        <label for="lng">Longitude:</label>
-                        <input type="number" name="lng" id="lng" step="any" value="0"/>
+                        <input type="hidden" name="lat" id="lat" value="0"/>
+                    </li>
+                    <li>
+                        <input type="hidden" name="lng" id="lng" value="0"/>
                     </li>
                     <li>
                         <label for="radius">Radius (km):</label>
