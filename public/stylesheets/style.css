@@ -6,12 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
-
+/* Search */
 .inputList {
     text-align:right;
     list-style: none;
 }
-
+/* Map UI */
 .pac-card {
     width: 500px;
     margin: 10px 10px 0 0;

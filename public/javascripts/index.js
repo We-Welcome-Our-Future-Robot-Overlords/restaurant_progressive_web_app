@@ -1,4 +1,4 @@
-function sendAjaxQuery(url, data) {
+function sendAjaxQuery(url, data, fn) {
     $.ajax({
         url: url ,
         data: data,
@@ -11,7 +11,7 @@ function sendAjaxQuery(url, data) {
             var ret = dataR;
             // in order to have the object printed by alert
             // we need to JSON stringify the object
-            document.getElementById('results').innerHTML= JSON.stringify(ret);
+            fn(JSON.stringify(ret));
         },
         error: function (xhr, status, error) {
             alert('Error: ' + error.message);
@@ -26,7 +26,10 @@ function onSubmit(url) {
         data[formArray[index].name]= formArray[index].value;
     }
     // const data = JSON.stringify($(this).serializeArray());
-    sendAjaxQuery(url, data);
+    //TODO: User friendly way of displaying search results
+    sendAjaxQuery(url, data, function(dat) {
+        $('#results').html(dat);
+    });
     event.preventDefault();
 }
 
@@ -36,5 +39,6 @@ function setLocation() {
     }
 }
 function showPosition(position) {
-    document.getElementsByName('lat')[0].setAttribute('value', position.coords.latitude);
-    document.getElementsByName('lng')[0].setAttribute('value', position.coords.longitude);}
+    $('input#lat').val(position.coords.latitude);
+    $('input#lng').val(position.coords.longitude);
+}

@@ -1,8 +1,6 @@
 var Restaurant = require('../models/restaurants');
 var maths = require('../public/javascripts/maths');
 
-/* TODO try some query to see if database work as normal */
-
 //Remove empty attributes:
 function clean(obj) {
     for (var propName in obj) {
@@ -13,7 +11,7 @@ function clean(obj) {
 }
 
 
-exports.retrieve = function (req, res) {
+exports.search = function (req, res) {
     var rstrntData = req.body;
     clean(rstrntData);
     console.log("non-empty data:", rstrntData);
