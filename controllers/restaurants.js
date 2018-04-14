@@ -24,6 +24,9 @@ function clean(obj) {
 exports.search = function (req, res) {
     const rstrntData = req.body;
     const valid_coord = rstrntData.pac_input != '';
+    if ('cuisine' in rstrntData) {
+        rstrntData.cuisine = rstrntData.cuisine.split(",");
+    }
     console.log(rstrntData);
     clean(rstrntData);
     var lat1 = 0;

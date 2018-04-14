@@ -13,11 +13,22 @@
             console.log(cuisine_dict);
             for(var i=0;i<cuisine_dict.length;i++)
             {
-                var option=$('<option></option>').val(cuisine_dict[i]._id).html(cuisine_dict[i]['title']);
-                $('select#cuisine').append(option);
+                let id = cuisine_dict[i].id;
+                let title = cuisine_dict[i].title;
+                var checkbox=$("<input type='checkbox'/>").val(id)
+                $('ul#cuisine_checkboxes').append(checkbox);
+                $("input:checkbox[value=" + id + "]").wrap("<li>" + title + "</li>");
             }
 
         });
+        function checked_cuisines() {
+            var checked_cuisines = [];
+            $("input:checkbox:checked").each(function(){
+                checked_cuisines.push($(this).val());
+            });
+            console.log(checked_cuisines);
+            $("input#cuisine").val(checked_cuisines);
+        }
     </script>
 </head>
 <body>
@@ -27,15 +38,18 @@
 </div>
 
 <section id="SearchControls">
-    <form id=“xForm" onsubmit="onSubmit('/restaurants')">
+    <p>Cuisines:
+        <ul id="cuisine_checkboxes">
+        </ul>
+    </p>
+    <form id=“xForm" onsubmit="checked_cuisines(); onSubmit('/restaurants');">
         <ul class="inputList">
             <li>
                 <label for='name'>Name:</label>
                 <input type="text" name="name" id="name"/>
             </li>
             <li>
-                <label for='cuisine'>Cuisine:</label>
-                <select name="cuisine" id="cuisine"></select>
+                <input type="hidden" name="cuisine" id="cuisine" />
             </li>
             <li>
                 <input name="pac_input" id="pac-input" type="text"
