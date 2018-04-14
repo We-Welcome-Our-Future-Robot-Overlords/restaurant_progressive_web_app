@@ -32,13 +32,3 @@ function onSubmit(url) {
     });
     event.preventDefault();
 }
-
-function setLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    }
-}
-function showPosition(position) {
-    $('input#lat').val(position.coords.latitude);
-    $('input#lng').val(position.coords.longitude);
-}
