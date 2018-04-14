@@ -5,7 +5,9 @@ let maths = require('../public/javascripts/maths');
 //---GET---
 exports.prepare = function(req, res) {
     let pttCursor = Cuisine.find({}).exec(function(err, cuisines) {
-        res.render('restaurants', { title: 'Restaurant Search', cuisine_dict: JSON.stringify(cuisines),
+        res.render('restaurants', {
+            title: 'Restaurant Search',
+            cuisine_dict: JSON.stringify(cuisines),
             API: process.env.GOOGLE_API});
     });
 }
