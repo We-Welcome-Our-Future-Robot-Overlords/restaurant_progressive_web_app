@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-      <link rel='stylesheet' href='/stylesheets/style.css' />
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcR6NQAQEOfVHCgavdfRYpPxZxLE-l2xM&libraries=places">
-      </script>
+    <% include ../views/header %>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places">
+    </script>
+    <script type="text/javascript" src="/javascripts/add_restaurant.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
+            async defer></script>
   </head>
   <body>
     <div class="pac-card" id="pac-card">
@@ -24,9 +26,5 @@
     </div>
     <div id="address-output"></div>
     <div id="lat-lng"></div>
-
-    <script type="text/javascript" src="/javascripts/create_restaurant.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcR6NQAQEOfVHCgavdfRYpPxZxLE-l2xM&libraries=places&callback=initMap"
-        async defer></script>
   </body>
 </html>

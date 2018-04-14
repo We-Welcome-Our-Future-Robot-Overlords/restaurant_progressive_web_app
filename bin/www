@@ -8,6 +8,8 @@ var app = require('../app');
 var debug = require('debug')('intelligentweb:server');
 var http = require('http');
 var database = require('../database/restaurants');
+process.env.GOOGLE_API = 'AIzaSyCcR6NQAQEOfVHCgavdfRYpPxZxLE-l2xM';
+console.log("Google API: " + process.env.GOOGLE_API);
 
 /**
  * Get port from environment and store in Express.

@@ -14,7 +14,7 @@ exports.init= function() {
     });
 
     c1.save(function (err, results) {
-        console.log(results._id);
+        console.log("c1_id: " + results._id);
     });
 
     var c2 = new Cuisine({
@@ -22,7 +22,7 @@ exports.init= function() {
     });
 
     c2.save(function (err, results) {
-        console.log(results._id);
+        console.log("c2_id: " + results._id);
     });
 
     var c3 = new Cuisine({
@@ -30,7 +30,7 @@ exports.init= function() {
     });
 
     c3.save(function (err, results) {
-        console.log(results._id);
+        console.log("c3_id: " + results._id);
     });
 
     var c4 = new Cuisine({
@@ -38,7 +38,7 @@ exports.init= function() {
     });
 
     c4.save(function (err, results) {
-        console.log(results._id);
+        console.log("c4_id: " + results._id);
     });
 
 
@@ -58,7 +58,7 @@ exports.init= function() {
     });
 
     r1.save(function (err, results) {
-        console.log(results._id);
+        console.log("r1_id: " + results._id);
     });
 
     var r2 = new Restaurant({
@@ -77,7 +77,7 @@ exports.init= function() {
     });
 
     r2.save(function (err, results) {
-        console.log(results._id);
+        console.log("r2_id: " + results._id);
     });
 
     var r3 = new Restaurant({
@@ -96,7 +96,7 @@ exports.init= function() {
     });
 
     r3.save(function (err, results) {
-        console.log(results._id);
+        console.log("r3_id: " + results._id);
     });
 }
 
