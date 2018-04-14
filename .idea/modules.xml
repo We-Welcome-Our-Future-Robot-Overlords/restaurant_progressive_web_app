@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/IntelligentWeb.iml" filepath="$PROJECT_DIR$/IntelligentWeb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/restaurant_progressive_web_app.iml" filepath="$PROJECT_DIR$/restaurant_progressive_web_app.iml" />
     </modules>
   </component>
 </project>
