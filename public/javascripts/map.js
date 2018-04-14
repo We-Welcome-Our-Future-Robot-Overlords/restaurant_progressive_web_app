@@ -1,6 +1,6 @@
 function setLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
+        navigator.geolocation.getCurrentPosition(showPosition, geoError);
     }
 }
 function showPosition(position) {
@@ -9,6 +9,9 @@ function showPosition(position) {
     initMap(position.coords.latitude, position.coords.longitude, '(cities)');
 }
 
+function geoError() {
+    initMap(53.379484, -1.47946, '(cities)');
+}
 
 function initMap(lat, lng, type) {
     lat = parseFloat(lat);
@@ -32,12 +35,18 @@ function initMap(lat, lng, type) {
         ]
     };
     map.setOptions({styles: styles['hide']});
+
+    var marker = new google.maps.Marker({
+        map: map,
+        position: {lat, lng}
+    });
+
     if (type != undefined) {
-        autoFillAddresss(map, type);
+        autoFillAddresss(map, marker, type);
     }
 }
 
-function autoFillAddresss(map, type) {
+function autoFillAddresss(map, marker, type) {
     var input = document.getElementById('pac-input');
 
     var autocomplete = new google.maps.places.Autocomplete(input);
@@ -47,12 +56,6 @@ function autoFillAddresss(map, type) {
     // so that the autocomplete requests use the current map bounds for the
     // bounds option in the request.
     autocomplete.bindTo('bounds', map);
-
-    var marker = new google.maps.Marker({
-        map: map,
-        anchorPoint: new google.maps.Point(0, -29)
-    });
-
     autocomplete.addListener('place_changed', function() {
         marker.setVisible(false);
         var place = autocomplete.getPlace();
@@ -70,6 +73,7 @@ function autoFillAddresss(map, type) {
             map.setCenter(place.geometry.location);
             map.setZoom(17);
         }
+
         marker.setPosition(place.geometry.location);
         marker.setVisible(true);
 
