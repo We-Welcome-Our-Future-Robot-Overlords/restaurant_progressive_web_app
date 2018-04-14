@@ -1,6 +1,15 @@
-var Restaurant = require('../models/restaurants');
-var maths = require('../public/javascripts/maths');
+let Restaurant = require('../models/restaurants');
+let Cuisine = require('../models/cuisine');
+let maths = require('../public/javascripts/maths');
 
+//---GET---
+exports.prepare = function(req, res) {
+    let pttCursor = Cuisine.find({}).exec(function(err, cuisines) {
+        res.render('restaurants', { title: 'Restaurant Search', cuisine_dict: JSON.stringify(cuisines)});
+    });
+}
+
+//---POST---
 //Remove empty attributes:
 function clean(obj) {
     for (var propName in obj) {
@@ -9,8 +18,6 @@ function clean(obj) {
         }
     }
 }
-
-
 exports.search = function (req, res) {
     var rstrntData = req.body;
     clean(rstrntData);

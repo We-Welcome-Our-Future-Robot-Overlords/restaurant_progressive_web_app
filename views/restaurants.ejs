@@ -3,10 +3,16 @@
     <head>
         <% include ../views/header %>
         <script src="/javascripts/index.js"></script>
+        <script>
+            $( document ).ready(function() {
+                setLocation();
+                var cusine_dict = <%- cuisine_dict %>;
+                console.log(cuisine_dict);
+            });
+        </script>
     </head>
-    <body onload="setLocation()" >
+    <body>
         <h1><%= title %></h1>
-        <h2><%= cuisine_dict %></h2>
         <section id="SearchControls">
             <form id=“xForm" onsubmit="onSubmit('/restaurants')">
                 <ul class="inputList">
@@ -16,7 +22,8 @@
                     </li>
                     <li>
                         <label for='cuisine'>Cuisine:</label>
-                        <input type="text" name="cuisine" id="cuisine" />
+                        <select name="cuisine" id="cuisine" >
+                        </select>
                     </li>
                     <li>
                         <label for="lat">Latitude:</label>

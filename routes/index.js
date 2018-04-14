@@ -4,7 +4,6 @@ var bodyParser= require("body-parser");
 
 
 var restaurant = require('../controllers/restaurants');
-var cuisine = require('../controllers/cuisine');
 var initDB= require('../controllers/init');
 initDB.init();
 
@@ -16,7 +15,7 @@ router.get('/', function(req, res, next) {
 
 /* GET search page. */
 router.get('/restaurants', function(req, res, next) {
-    res.render('restaurants', { title: 'Restaurant Search', cuisine_dict: cuisine.retrieve()});
+    restaurant.prepare(req,res);
 });
 
 router.post('/restaurants', restaurant.search);
