@@ -3,7 +3,7 @@ var Restaurant = require('../models/restaurants');
 var Cuisine = require('../models/cuisine');
 
 
-exports.init= function() {
+exports.init = function () {
     // uncomment if you need to drop the database
 
     // Restaurant.remove({}, function(err) {
@@ -26,7 +26,7 @@ exports.init= function() {
     });
 
     var c3 = new Cuisine({
-        title: 'Indian',
+        title: 'Chicken',
     });
 
     c3.save(function (err, results) {
@@ -34,17 +34,25 @@ exports.init= function() {
     });
 
     var c4 = new Cuisine({
-        title: 'Japanese',
+        title: 'Halal',
     });
 
     c4.save(function (err, results) {
         console.log("c4_id: " + results._id);
     });
 
+    var c5 = new Cuisine({
+        title: 'Malaysian',
+    });
+
+    c5.save(function (err, results) {
+        console.log("c5_id: " + results._id);
+    });
+
 
     var r1 = new Restaurant({
         name: 'Tasteez',
-        cuisine: [c3._id],
+        cuisine: [c3._id, c4.id],
         description: 'Nope',
         address: {
             street: '196 Brook Hill',
@@ -63,7 +71,7 @@ exports.init= function() {
 
     var r2 = new Restaurant({
         name: 'KFC',
-        cuisine: [c1._id],
+        cuisine: [c1._id, c3.id],
         description: 'KFC',
         address: {
             street: '163 West Street',
@@ -72,7 +80,7 @@ exports.init= function() {
         },
         location: {
             lat: 53.3800525,
-            lng:  -1.4792723000000478
+            lng: -1.4792723000000478
         }
     });
 
@@ -82,7 +90,7 @@ exports.init= function() {
 
     var r3 = new Restaurant({
         name: 'City Chicken Cafe',
-        cuisine: [c3._id,c4._id],
+        cuisine: [c3._id, c4._id],
         description: 'No coffee',
         address: {
             street: '29 Mansfield Road',
@@ -91,12 +99,68 @@ exports.init= function() {
         },
         location: {
             lat: 52.95837629999999,
-            lng:  -1.4792723000000478
+            lng: -1.4792723000000478
         }
     });
 
     r3.save(function (err, results) {
         console.log("r3_id: " + results._id);
     });
-}
 
+    var r4 = new Restaurant({
+        name: 'KFC',
+        cuisine: [c1._id, c3.id],
+        description: 'KFC',
+        address: {
+            street: '23-25 Milton Street',
+            city: 'Nottingham',
+            country: 'United Kingdom'
+        },
+        location: {
+            lat: 52.9557397,
+            lng: -1.1484259000000065
+        }
+    });
+
+    r4.save(function (err, results) {
+        console.log("r4_id: " + results._id);
+    });
+
+    var r5 = new Restaurant({
+        name: "Mr Man's Restaurant",
+        cuisine: [c2.id, c5.id],
+        description: 'Wollaton',
+        address: {
+            street: 'Wollaton Park, Wollaton Road',
+            city: 'Nottingham',
+            country: 'United Kingdom'
+        },
+        location: {
+            lat: 52.9537045,
+            lng: -1.213083
+        }
+    });
+
+    r5.save(function (err, results) {
+        console.log("r5_id: " + results._id);
+    });
+
+    var r6 = new Restaurant({
+        name: 'Orient Express',
+        cuisine: [c2.id, c4.id],
+        description: 'Near Diamond',
+        address: {
+            street: '290 Glossop Road',
+            city: 'Sheffield',
+            country: 'United Kingdom'
+        },
+        location: {
+            lat: 53.3802244,
+            lng: -1.4823355999999421
+        }
+    });
+
+    r6.save(function (err, results) {
+        console.log("r6_id: " + results._id);
+    });
+}

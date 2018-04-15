@@ -23,11 +23,16 @@ function clean(obj) {
 }
 exports.search = function (req, res) {
     const rstrntData = req.body;
+    console.log("POST Data")
+    console.log(rstrntData);
     const valid_coord = rstrntData.pac_input != '';
     if ('cuisine' in rstrntData) {
-        rstrntData.cuisine = rstrntData.cuisine.split(",");
+        if (rstrntData.cuisine == '') {
+            delete rstrntData['cuisine'];
+        } else {
+            rstrntData.cuisine = {$all: rstrntData.cuisine.split(",")};
+        }
     }
-    console.log(rstrntData);
     clean(rstrntData);
     var lat1 = 0;
     var lng1 = 0;
@@ -43,8 +48,10 @@ exports.search = function (req, res) {
     delete rstrntData['radius'];
     delete rstrntData['pac_input'];
     const any_rstrnt = rstrntData == null || Object.keys(rstrntData).length == 0;
-    console.log("any restaurant", any_rstrnt);
+    console.log("any restaurant?", any_rstrnt);
     const invalid_data = !valid_coord && any_rstrnt;
+    console.log("Query:")
+    console.log(rstrntData);
     if (invalid_data) {
         console.log('no name, cuisine, or locus');
         res.status(403).send('No data sent!');
@@ -56,7 +63,7 @@ exports.search = function (req, res) {
                         res.status(500).send('Invalid data!');
                     } else {
                         if (valid_coord) {
-                            console.log(lat1, lng1,);
+                            console.log("Centre:", {lat1, lng1});
                             restaurants = restaurants.filter(function(rstrnt) {
                                 var rstrnt_coord = rstrnt.location;
                                 console.log(rstrnt_coord);
