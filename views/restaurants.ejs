@@ -5,9 +5,31 @@
         <script src="/javascripts/index.js"></script>
         <script src="/javascripts/map.js"></script>
         <script src="/javascripts/cuisine.js"></script>
+        <script src="/chosen/chosen.jquery.js"></script>
+        <link rel='stylesheet' href='/chosen/chosen.css' />
+        <script>
+            $(function() {
+                $(".chosen-select").chosen({no_results_text: "No result found"});
+            });
+            $(document).ready(function(){
+                resizeChosen();
+                jQuery(window).on('resize', resizeChosen);
+            });
+            function resizeChosen() {
+                $(".chosen-container").each(function() {
+                    $(this).attr('style', 'width: 50%');
+                });
+            }
+        </script>
     </head>
     <body onload="cuisine(<%= cuisine_dict %>)">
         <h1><%= title %></h1>
+        <select data-placeholder="Choose Your Cuisine" multiple class="chosen-select">
+            <option value=""></option>
+            <option>C11111111111111111</option>
+            <option>C2</option>
+            <option>C3</option>
+        </select>
         <div class="pac-card" id="pac-card">
             <div id="map"></div>
         </div>

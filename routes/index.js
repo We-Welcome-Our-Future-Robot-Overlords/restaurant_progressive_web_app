@@ -22,7 +22,9 @@ router.post('/restaurants', restaurant.search);
 
 /* GET Create Restaurant page. */
 router.get('/add_restaurant', function(req, res, next) {
-    res.render('add_restaurant', { title: 'Add Restaurant', API: process.env.GOOGLE_API});
+    res.render('add_restaurant', {
+        title: 'Add Restaurant',
+        API: process.env.GOOGLE_API});
 });
 
 module.exports = router;
