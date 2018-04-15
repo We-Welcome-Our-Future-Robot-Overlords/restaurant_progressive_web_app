@@ -72,7 +72,7 @@ exports.init = function () {
     var r2 = new Restaurant({
         name: 'KFC',
         cuisine: [c1._id, c3.id],
-        description: 'KFC',
+        description: 'Kentucky Fried Chicken',
         address: {
             street: '163 West Street',
             city: 'Sheffield',
@@ -110,7 +110,7 @@ exports.init = function () {
     var r4 = new Restaurant({
         name: 'KFC',
         cuisine: [c1._id, c3.id],
-        description: 'KFC',
+        description: 'Kentucky Fried Chicken',
         address: {
             street: '23-25 Milton Street',
             city: 'Nottingham',

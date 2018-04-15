@@ -32,6 +32,8 @@ Restaurant.virtual('full_address')
     }
 );
 
+Restaurant.index({name: 'text', description: 'text'});
+
 Restaurant.set('toObject', {getters: true, virtual: true});
 
 module.exports = mongoose.model('Restaurant', Restaurant);

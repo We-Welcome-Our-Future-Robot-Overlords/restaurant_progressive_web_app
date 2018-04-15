@@ -25,21 +25,27 @@ exports.search = function (req, res) {
     const rstrntData = req.body;
     console.log("POST Data")
     console.log(rstrntData);
-    const valid_coord = rstrntData.pac_input != '';
+    clean(rstrntData);
+
+    //Keyword Search
+    if ('keywords' in rstrntData) {
+        rstrntData.$text = {$search: rstrntData.keywords};
+        delete rstrntData['keywords'];
+    }
+
+    //Cuisine Search
     if ('cuisine' in rstrntData) {
-        if (rstrntData.cuisine == '') {
-            delete rstrntData['cuisine'];
+        let cuisine_arr = rstrntData.cuisine.split(",");
+        if (rstrntData.all_any_cuisine == 'on') {
+            rstrntData.cuisine = {$in: cuisine_arr};
         } else {
-            let cuisine_arr = rstrntData.cuisine.split(",");
-            if (rstrntData.all_any_cuisine == 'on') {
-                rstrntData.cuisine = {$in: cuisine_arr};
-            } else {
-                rstrntData.cuisine = {$all: cuisine_arr};
-            }
+            rstrntData.cuisine = {$all: cuisine_arr};
         }
         delete rstrntData['all_any_cuisine'];
     }
-    clean(rstrntData);
+
+    //Location Search
+    const valid_coord = 'pac_input' in rstrntData;
     var lat1 = 0;
     var lng1 = 0;
     var radius = 0;

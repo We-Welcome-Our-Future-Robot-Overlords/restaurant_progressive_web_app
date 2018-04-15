@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <% include ../views/header %>
+    <% include ../views/head %>
     <script type="text/javascript" src="/javascripts/map.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
-            async defer></script>
   </head>
   <body onload="initMap(53.379484, -1.47946, 'address')" >
     <div class="pac-card" id="pac-card">
@@ -25,5 +23,7 @@
     <div id="address-output"></div>
     <input id="lat" />
     <input id="lng" />
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
+            async defer></script>
   </body>
 </html>

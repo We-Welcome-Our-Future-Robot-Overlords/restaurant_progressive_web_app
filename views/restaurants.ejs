@@ -1,81 +1,55 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <% include ../views/header %>
-    <script src="/javascripts/index.js"></script>
-    <script src="/javascripts/map.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
-            async defer></script>
-    <script>
-        $(document).ready(function (){
-            setLocation();
-            let cuisine_dict = <%-cuisine_dict%>;
-            console.log(cuisine_dict);
-            for(var i=0;i<cuisine_dict.length;i++)
-            {
-                let id = cuisine_dict[i].id;
-                let title = cuisine_dict[i].title;
-                var checkbox=$("<input type='checkbox'/>").val(id)
-                $('ul#cuisine_checkboxes').append(checkbox);
-                $("input:checkbox[value=" + id + "]").wrap("<li>" + title + "</li>");
-            }
+    <head>
+        <% include ../views/head %>
+        <script src="/javascripts/index.js"></script>
+        <script src="/javascripts/map.js"></script>
+        <script src="/javascripts/cuisine.js"></script>
+    </head>
+    <body onload="cuisine(<%= cuisine_dict %>)">
+        <h1><%= title %></h1>
+        <div class="pac-card" id="pac-card">
+            <div id="map"></div>
+        </div>
 
-        });
-        function checked_cuisines() {
-            var checked_cuisines = [];
-            $("#cuisine_checkboxes > li > input[type=checkbox]").each(function(){
-                if ($(this).is(":checked")) {
-                    checked_cuisines.push($(this).val());
-                }
-            });
-            console.log(checked_cuisines);
-            $("input#cuisine").val(checked_cuisines);
-        }
-    </script>
-</head>
-<body>
-<h1><%= title %></h1>
-<div class="pac-card" id="pac-card">
-    <div id="map"></div>
-</div>
-
-<section id="SearchControls">
-    <p>Cuisines:
-        <ul id="cuisine_checkboxes" class="inputList">
-        </ul>
-    </p>
-    <hr />
-    <form id=“xForm" onsubmit="checked_cuisines(); onSubmit('/restaurants');">
-        <ul class="inputList">
-            <li>
-                <label for="all_any_cuisine">Any?</label>
-                <input type="checkbox" name="all_any_cuisine" id="all_any_cuisine" />
-            </li>
-            <li>
-                <label for='name'>Keywords:</label>
-                <input type="text" name="name" id="name"/>
-            </li>
-            <li>
-                <input type="hidden" name="cuisine" id="cuisine" />
-            </li>
-            <li>
-                <input name="pac_input" id="pac-input" type="text"
-                       placeholder="Enter a location">
-            </li>
-            <li>
-                <input type="hidden" name="lat" id="lat" value="0"/>
-            </li>
-            <li>
-                <input type="hidden" name="lng" id="lng" value="0"/>
-            </li>
-            <li>
-                <label for="radius">Radius (km):</label>
-                <input type="number" name="radius" id="radius" step="any" value="1"/>
-            </li>
-            <li><input type="submit" name="g" value="Submit" id="g"></li>
-        </ul>
-    </form>
-</section>
-<div id="results" style="margin-top:30px"></div>
-</body>
+        <section id="SearchControls">
+            <p>Cuisines:
+                <ul id="cuisine_checkboxes">
+                </ul>
+            </p>
+            <form id=“xForm" onsubmit="checked_cuisines(); onSubmit('/restaurants');">
+                <ul class="inputList">
+                    <li>
+                        <label for="all_any_cuisine">Any?</label>
+                        <input type="checkbox" name="all_any_cuisine" id="all_any_cuisine" />
+                    </li>
+                    <li>
+                        <label for='keywords'>Keywords:</label>
+                        <input type="text" name="keywords" id="keywords"/>
+                    </li>
+                    <li>
+                        <input type="hidden" name="cuisine" id="cuisine" />
+                    </li>
+                    <li>
+                        <input name="pac_input" id="pac-input" type="text"
+                               placeholder="Enter a location">
+                    </li>
+                    <li>
+                        <input type="hidden" name="lat" id="lat" value="0"/>
+                    </li>
+                    <li>
+                        <input type="hidden" name="lng" id="lng" value="0"/>
+                    </li>
+                    <li>
+                        <label for="radius">Radius (km):</label>
+                        <input type="number" name="radius" id="radius" step="any" value="1"/>
+                    </li>
+                    <li><input type="submit" name="g" value="Submit" id="g"></li>
+                </ul>
+            </form>
+        </section>
+        <div id="results" style="margin-top:30px"></div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
+                async defer></script>
+    </body>
 </html>
