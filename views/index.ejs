@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <% include ../views/head %>
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>
-      <a href="/restaurants">Search</a>
-      <a href="/add_restaurant">Create</a>
-    </p>
-  </body>
+    <head>
+        <% include ../views/templates/head %>
+    </head>
+    <body>
+        <% include ../views/templates/nav.ejs%>
+        <main>
+            <h1><%= title %></h1>
+        </main>
+    </body>
 </html>

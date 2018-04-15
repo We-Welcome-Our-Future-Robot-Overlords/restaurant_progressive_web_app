@@ -1,5 +1,4 @@
 function cuisine(cuisine) {
-    setLocation();
     console.log(cuisine);
     for(var i=0;i<cuisine.length;i++){
         let id = cuisine[i].id;

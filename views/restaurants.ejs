@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <% include ../views/head %>
+        <% include ../views/templates/head %>
         <script src="/javascripts/index.js"></script>
         <script src="/javascripts/map.js"></script>
         <script src="/javascripts/cuisine.js"></script>
@@ -12,6 +12,8 @@
                 $(".chosen-select").chosen({no_results_text: "No result found"});
             });
             $(document).ready(function(){
+                setLocation();
+                cuisine(<%- cuisine_dict %>);
                 resizeChosen();
                 jQuery(window).on('resize', resizeChosen);
             });
@@ -22,7 +24,9 @@
             }
         </script>
     </head>
-    <body onload="cuisine(<%= cuisine_dict %>)">
+    <body>
+    <% include ../views/templates/nav.ejs%>
+    <main>
         <h1><%= title %></h1>
         <select data-placeholder="Choose Your Cuisine" multiple class="chosen-select">
             <option value=""></option>
@@ -73,5 +77,6 @@
         <div id="results" style="margin-top:30px"></div>
         <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
                 async defer></script>
+    </main>
     </body>
 </html>
