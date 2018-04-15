@@ -30,8 +30,14 @@ exports.search = function (req, res) {
         if (rstrntData.cuisine == '') {
             delete rstrntData['cuisine'];
         } else {
-            rstrntData.cuisine = {$all: rstrntData.cuisine.split(",")};
+            let cuisine_arr = rstrntData.cuisine.split(",");
+            if (rstrntData.all_any_cuisine == 'on') {
+                rstrntData.cuisine = {$in: cuisine_arr};
+            } else {
+                rstrntData.cuisine = {$all: cuisine_arr};
+            }
         }
+        delete rstrntData['all_any_cuisine'];
     }
     clean(rstrntData);
     var lat1 = 0;
