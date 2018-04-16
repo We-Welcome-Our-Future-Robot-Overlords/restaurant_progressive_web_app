@@ -15,7 +15,7 @@ function setCuisineSel(cuisine_arr){
 
 function searchFn(dat, cuisine_arr){
     cuisine_map = cuisine_map || new Map(cuisine_arr.map((kv) => [kv._id, kv.title]));
-    console.log(dat[0]);
+    var locations = [];
     $('#results').html('');
     dat.forEach((result) => {
         var result_item = $("<div class='searchResult'></div>").html("<h2>" + result.name + "</h2>"
@@ -25,19 +25,14 @@ function searchFn(dat, cuisine_arr){
         result.cuisine.forEach((c) => {
            var c_tag = $("<button type='button' class='btn btn-primary btn-sm'></button>").html(cuisine_map.get(c));
            c_tag.click(() => {
-               let loc = window.location.pathname;
-               let current_dir = loc.substring(loc.lastIndexOf('/'));
-               if (current_dir.startsWith('/search')) {
-                   //XHR if already on /search
-                   sendAjaxQuery('/search', {cuisine: c}, searchFn);
-               } else {
-                   //TODO: HTTPS if otherwise
-                   console.log("foo bar");
-               }
+               sendAjaxQuery('/search', {cuisine: c}, searchFn);
            });
             cuisine_tags = cuisine_tags.add(c_tag);
         });
         result_item.append(cuisine_tags);
         $('#results').append(result_item);
+        var location = {lat: result.location.lat,lng: result.location.lng};
+        locations.push(location);
     })
+    placeMarkers(locations);
 }

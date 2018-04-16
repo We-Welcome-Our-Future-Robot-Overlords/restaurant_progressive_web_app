@@ -22,7 +22,8 @@ function clean(obj) {
     }
 }
 exports.search = function (req, res, extra_dict) {
-    const rstrntData = req.body;
+    var rstrntData = req.body;
+    var kw = '';
     console.log("POST Data")
     console.log(rstrntData);
     clean(rstrntData);
@@ -30,6 +31,7 @@ exports.search = function (req, res, extra_dict) {
     //Keyword Search
     if ('keywords' in rstrntData) {
         rstrntData.$text = {$search: rstrntData.keywords};
+        kw = rstrntData['keywords']
         delete rstrntData['keywords'];
     }
 
@@ -91,6 +93,7 @@ exports.search = function (req, res, extra_dict) {
                             res.send(JSON.stringify(restaurants));
                         } else {
                             return_dict = Object.assign({}, {
+                                keywords: kw,
                                 result_arr: JSON.stringify(restaurants)
                             }, extra_dict || {});
                             exports.prepare(req, res, return_dict);

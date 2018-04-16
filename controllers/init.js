@@ -99,7 +99,7 @@ exports.init = function () {
         },
         location: {
             lat: 52.95837629999999,
-            lng: -1.4792723000000478
+            lng: -1.1493497
         }
     });
 

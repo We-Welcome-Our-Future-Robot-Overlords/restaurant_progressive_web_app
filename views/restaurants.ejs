@@ -8,8 +8,9 @@
         <script src="/javascripts/map.js"></script>
         <script src="/javascripts/search.js"></script>
         <script>
+            var cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
             $('document').ready(() => {
-                setCuisineSel(<%- JSON.stringify(cuisine_arr) %>);
+                setCuisineSel(cuisine_arr);
                 setLocation();
             });
             $( function() {
@@ -26,7 +27,7 @@
         <% include ../views/templates/nav.ejs%>
         <div class="jumbotron text-center">
             <h1><%= title %></h1>
-            <input class="selectize-input searchTextBox" form="xForm" type="text" name="keywords" id="keywords" placeholder="Keywords"/><br />
+            <input class="selectize-input searchTextBox" form="xForm" type="text" name="keywords" id="keywords" placeholder="Keywords" <%-(typeof keywords !== 'undefined') ? "value='" + keywords + "'" : ''%>"/><br />
             <input form="xForm" type="text" name="cuisine" id="cuisine_selector" placeholder="Cuisine"/>
             Match Any? <input form="xForm" type="checkbox" name="all_any_cuisine" id="all_any_cuisine" /><br />
             <button id="toggleLocationSearch" type="button" class="btn btn-secondary btn-sm" style="margin-top:8px">Choose Location</button>
@@ -39,7 +40,7 @@
                 </div>
             </div>
             <hr />
-            <form id="xForm" onsubmit="onSubmit('<%- page %>', searchFn);">
+            <form id="xForm" onsubmit="onSubmit('<%- page %>', (dat) => searchFn(dat, cuisine_arr));">
                 <input type="hidden" name="lat" id="lat" value="0"/>
                 <input type="hidden" name="lng" id="lng" value="0"/>
             </form>
@@ -48,7 +49,7 @@
         <main id="results" style="margin-top:30px">
         <% if (typeof result_arr !== 'undefined') { %>
             <script>
-                searchFn(<%-result_arr%>, <%- JSON.stringify(cuisine_arr)%>);
+                searchFn(<%-result_arr%>, cuisine_arr %>);
             </script>
         <%}%>
         </main>
