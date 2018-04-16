@@ -3,12 +3,12 @@ let Cuisine = require('../models/cuisine');
 let maths = require('../public/javascripts/maths');
 
 //---GET---
-exports.prepare = function(req, res) {
+exports.prepare = function(req, res, extra_dict) {
     let pttCursor = Cuisine.find({}).exec(function(err, cuisines) {
-        res.render('restaurants', {
-            page: req.url,
-            cuisine_arr: cuisines,
-            API: process.env.GOOGLE_API});
+        return_dict = Object.assign({},{
+            cuisine_arr: cuisines}, extra_dict || {});
+        console.log(return_dict);
+        res.render('restaurants', return_dict);
     });
 }
 
@@ -21,7 +21,7 @@ function clean(obj) {
         }
     }
 }
-exports.search = function (req, res) {
+exports.search = function (req, res, extra_dict) {
     const rstrntData = req.body;
     console.log("POST Data")
     console.log(rstrntData);
@@ -86,8 +86,15 @@ exports.search = function (req, res) {
                                 return inrange;
                             });
                         }
-                        res.setHeader('Content-Type', 'application/json');
-                        res.send(JSON.stringify(restaurants));
+                        if (req.xhr) {
+                            res.setHeader('Content-Type', 'application/json');
+                            res.send(JSON.stringify(restaurants));
+                        } else {
+                            return_dict = Object.assign({}, {
+                                result_arr: JSON.stringify(restaurants)
+                            }, extra_dict || {});
+                            exports.prepare(req, res, return_dict);
+                        }
                     }
                 });
         } catch (e) {

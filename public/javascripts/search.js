@@ -13,7 +13,8 @@ function setCuisineSel(cuisine_arr){
     cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id, kv.title]));
 }
 
-function searchFn(dat){
+function searchFn(dat, cuisine_arr){
+    cuisine_map = cuisine_map || new Map(cuisine_arr.map((kv) => [kv._id, kv.title]));
     console.log(dat[0]);
     $('#results').html('');
     dat.forEach((result) => {

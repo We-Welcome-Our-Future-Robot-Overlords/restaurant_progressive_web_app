@@ -44,6 +44,7 @@ a {
     font-family: Montserrat, sans-serif !important;
 }
 .searchTextBox, .selectize-control.multi {
+    text-align: left;
     color: #000;
     width: 80%;
     margin: 8px auto;

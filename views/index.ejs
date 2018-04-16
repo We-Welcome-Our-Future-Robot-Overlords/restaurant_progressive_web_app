@@ -10,6 +10,10 @@
             <h1><%= title %></h1>
         </div>
         <main>
+            <form action="/search" method="post">
+                <input type="hidden" name="keywords" value="Chicken" />
+                <input type="submit" />
+            </form>
             <%- title %>
         </main>
     </body>
