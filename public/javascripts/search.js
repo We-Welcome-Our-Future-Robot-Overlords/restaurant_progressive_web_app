@@ -1,20 +1,18 @@
-var cuisine_map;
-
-function setCuisineSel(cuisine_arr){
+function setCuisineSel(){
     $('#cuisine_selector').selectize({
         plugins: ['remove_button'],
         persist: false,
         maxItems: null,
         valueField: '_id',
         labelField: 'title',
+        searchField: 'title',
         options: cuisine_arr,
         create: false
     });
-    cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id, kv.title]));
 }
 
 function searchFn(dat, cuisine_arr){
-    cuisine_map = cuisine_map || new Map(cuisine_arr.map((kv) => [kv._id, kv.title]));
+    var cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id, kv.title]));
     var locations = [];
     $('#results').html('');
     dat.forEach((result) => {

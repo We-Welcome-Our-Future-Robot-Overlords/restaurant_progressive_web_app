@@ -10,7 +10,7 @@
         <script>
             var cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
             $('document').ready(() => {
-                setCuisineSel(cuisine_arr);
+                setCuisineSel();
                 setLocation();
             });
             $( function() {
@@ -27,14 +27,16 @@
         <% include ../views/templates/nav.ejs%>
         <div class="jumbotron text-center">
             <h1><%= title %></h1>
-            <input class="selectize-input searchTextBox" form="xForm" type="text" name="keywords" id="keywords" placeholder="Keywords" <%-(typeof keywords !== 'undefined') ? "value='" + keywords + "'" : ''%>"/><br />
+            <input class="selectize-input searchTextBox" form="xForm" type="text" name="keywords"
+                   id="keywords" placeholder="Keywords"/><br />
             <input form="xForm" type="text" name="cuisine" id="cuisine_selector" placeholder="Cuisine"/>
-            Match Any? <input form="xForm" type="checkbox" name="all_any_cuisine" id="all_any_cuisine" /><br />
-            <button id="toggleLocationSearch" type="button" class="btn btn-secondary btn-sm" style="margin-top:8px">Choose Location</button>
+            <button id="toggleLocationSearch" type="button" class="btn btn-secondary btn-sm" style="margin-top:8px">
+                Choose Location</button>
             <div id="locationSearch">
                 <input class="selectize-input searchTextBox" form="xForm" name="pac_input" id="pac-input" type="text"
                        placeholder="Enter a location" />
-                <input class="selectize-input searchTextBox" form="xForm" type="number" name="radius" id="radius" step="any" placeholder="Radius (km)" />
+                <input class="selectize-input searchTextBox" form="xForm" type="number" name="radius"
+                       id="radius" step="any" placeholder="Radius (km)" value="1"  min="1"/>
                 <div class="pac-card" id="pac-card">
                     <div id="map"></div>
                 </div>
@@ -47,11 +49,11 @@
             <button form="xForm" id="g" name="g" type="submit" class="btn btn-primary">Search</button>
         </div>
         <main id="results" style="margin-top:30px">
-        <% if (typeof result_arr !== 'undefined') { %>
-            <script>
-                searchFn(<%-result_arr%>, cuisine_arr %>);
-            </script>
-        <%}%>
+            <% if (typeof result_arr !== 'undefined') { %>
+                <script>
+                    searchFn(<%-result_arr%>, cuisine_arr %>);
+                </script>
+            <%}%>
         </main>
     </body>
 </html>
