@@ -23,30 +23,24 @@
                 $("#locationSearch").hide();
                 $( "#toggleLocationSearch" ).click(function() {
                     $( "#locationSearch" ).slideToggle( "slow", function() {
-                        // Animation complete.
+                        $('html,body').animate({scrollTop: $("#keywords").offset().top},'slow');
                     });
                 });
             } );
         </script>
-        <link rel ="stylesheet" href="/selectize/css/selectize.css" />
-        <script src="/selectize/js/standalone/selectize.min.js"></script>
     </head>
     <body>
     <% include ../views/templates/nav.ejs%>
     <div class="jumbotron text-center">
         <h1><%= title %></h1>
-        <input class="searchTextBox" form="xForm" type="text" name="cuisine" id="cuisine_selector" placeholder="Cuisine"/><br />
-        Match Any? <input form="xForm" type="checkbox" name="all_any_cuisine" id="all_any_cuisine" />
-        <p>
-            <ul id="cuisine_checkboxes">
-            </ul>
-        </p>
-        <input class="searchTextBox" form="xForm" type="text" name="keywords" id="keywords" placeholder="Keywords"/><br />
-        <button id="toggleLocationSearch" type="button" class="btn btn-secondary btn-sm">Choose Location</button>
+        <input form="xForm" type="text" name="cuisine" id="cuisine_selector" placeholder="Cuisine"/>
+        Match Any? <input form="xForm" type="checkbox" name="all_any_cuisine" id="all_any_cuisine" /><br />
+        <input class="selectize-input searchTextBox" form="xForm" type="text" name="keywords" id="keywords" placeholder="Keywords"/><br />
+        <button id="toggleLocationSearch" type="button" class="btn btn-secondary btn-sm" style="margin-top:8px">Choose Location</button>
         <div id="locationSearch">
-            <input class="searchTextBox" form="xForm" name="pac_input" id="pac_input" type="text"
+            <input class="selectize-input searchTextBox" form="xForm" name="pac_input" id="pac-input" type="text"
                    placeholder="Enter a location" />
-            <input class="searchTextBox" form="xForm" type="number" name="radius" id="radius" step="any" placeholder="Radius (km)" />
+            <input class="selectize-input searchTextBox" form="xForm" type="number" name="radius" id="radius" step="any" placeholder="Radius (km)" />
             <div class="pac-card" id="pac-card">
                 <div id="map"></div>
             </div>

@@ -43,25 +43,22 @@ a {
     padding: 64px 0 20px 0;
     font-family: Montserrat, sans-serif !important;
 }
-.searchTextBox {
+.searchTextBox, .selectize-control.multi {
     color: #000;
     width: 80%;
-    margin: 2px 0;
-    padding: 0;
+    margin: 8px auto;
 }
-
-::placeholder {
-    color: #999;
-}
-
 .btn-secondary {
     color: #000;
+}
+input[type=checkbox] {
+    margin: 0;
 }
 
 /* Map UI */
 .pac-card {
     width: 80%;
-    margin:0 auto;
+    margin:8px auto 0 auto;
 }
 .pac-card #map {
     height: 500px;
@@ -93,7 +90,7 @@ a {
     main {
         padding: 0;
     }
-    .searchTextBox, .pac-card {
+    .searchTextBox, .selectize-control.multi, .pac-card {
         width: 100%;
     }
 }
