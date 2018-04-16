@@ -40,21 +40,28 @@ a {
 .jumbotron {
     background-color: #d64161;
     color: #feb236;
-    padding: 100px 0 20px 0;
-    font-family: Montserrat, sans-serif;
+    padding: 64px 0 20px 0;
+    font-family: Montserrat, sans-serif !important;
 }
 .searchTextBox {
+    color: #000;
     width: 80%;
     margin: 2px 0;
     padding: 0;
 }
+
+::placeholder {
+    color: #999;
+}
+
 .btn-secondary {
     color: #000;
 }
 
 /* Map UI */
 .pac-card {
-    width: 100%;
+    width: 80%;
+    margin:0 auto;
 }
 .pac-card #map {
     height: 500px;
@@ -86,7 +93,7 @@ a {
     main {
         padding: 0;
     }
-    .searchTextBox {
+    .searchTextBox, .pac-card {
         width: 100%;
     }
 }

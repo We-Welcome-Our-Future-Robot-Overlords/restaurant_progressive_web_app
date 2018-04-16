@@ -7,7 +7,7 @@ exports.prepare = function(req, res) {
     let pttCursor = Cuisine.find({}).exec(function(err, cuisines) {
         res.render('restaurants', {
             title: 'Restaurant Search',
-            cuisine_dict: JSON.stringify(cuisines),
+            cuisine_arr: cuisines,
             API: process.env.GOOGLE_API});
     });
 }

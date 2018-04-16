@@ -7,13 +7,12 @@
         <script src="/javascripts/cuisine.js"></script>
         <link rel='stylesheet' href='/chosen/chosen.css' />
         <script>
-            //Cuisine Tags
+            let cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
             $(function() {
                 $(".chosen-select").chosen({no_results_text: "No result found"});
             });
             $(document).ready(function(){
                 setLocation();
-                cuisine(<%- cuisine_dict %>);
                 resizeChosen();
                 jQuery(window).on('resize', resizeChosen);
             });
@@ -39,12 +38,11 @@
     <% include ../views/templates/nav.ejs%>
     <div class="jumbotron text-center">
         <h1><%= title %></h1>
-        <p>Cuisines:</p>
-        <select data-placeholder="Choose Your Cuisine" multiple class="chosen-select">
+        <select id="cuisine_tags" data-placeholder="Cuisine" multiple class="chosen-select">
             <option value=""></option>
-            <option>C11111111111111111</option>
-            <option>C2</option>
-            <option>C3</option>
+            <% cuisine_arr.forEach(function(kv) {%>
+                <%- "<option value=" + kv._id + ">" + kv.title +"</option>";%>
+            <%});%>
         </select><br />
         Match Any? <input form="xForm" type="checkbox" name="all_any_cuisine" id="all_any_cuisine" />
         <p>
@@ -62,7 +60,7 @@
             </div>
         </div>
         <hr />
-        <form id="xForm" onsubmit="checked_cuisines(); onSubmit('/restaurants');">
+        <form id="xForm" onsubmit="selected_cuisines(cuisine_arr); onSubmit('/restaurants');">
             <input type="hidden" name="cuisine" id="cuisine" />
             <input type="hidden" name="lat" id="lat" value="0"/>
             <input type="hidden" name="lng" id="lng" value="0"/>
