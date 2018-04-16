@@ -6,13 +6,19 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Restaurant App</a>
+            <a class="navbar-brand" href="/">App</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">Home</a></li>
-                <li><a href="/restaurants">Search</a></li>
-                <li><a href="/add_restaurant">Create</a></li>
+            <%_Object.keys(global.primary_routes_title).forEach(function (k){%>
+                <%- "<li";_%>
+                <%_if (k==page) {_%>
+                    <%- " class='active'><a>";_%>
+                <%_} else {_%>
+                    <%- "><a href='" + k + "'>";_%>
+                <%}_%>
+                <%-global.primary_routes_title[k] + "</a></li>";_%>
+            <%});_%>
             </ul>
         </div>
     </div>

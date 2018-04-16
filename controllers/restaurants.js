@@ -6,7 +6,8 @@ let maths = require('../public/javascripts/maths');
 exports.prepare = function(req, res) {
     let pttCursor = Cuisine.find({}).exec(function(err, cuisines) {
         res.render('restaurants', {
-            title: 'Restaurant Search',
+            route_n: 1,
+            page: req.url,
             cuisine_arr: cuisines,
             API: process.env.GOOGLE_API});
     });

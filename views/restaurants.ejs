@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <% const title = Object.values(global.primary_routes_title)[route_n]%>
         <% include ../views/templates/head %>
         <script src="/javascripts/index.js"></script>
         <script src="/javascripts/map.js"></script>
@@ -46,7 +47,7 @@
             </div>
         </div>
         <hr />
-        <form id="xForm" onsubmit="onSubmit('/restaurants');">
+        <form id="xForm" onsubmit="onSubmit('<%- page %>');">
             <!--<input type="hidden" name="cuisine" id="cuisine" />-->
             <input type="hidden" name="lat" id="lat" value="0"/>
             <input type="hidden" name="lng" id="lng" value="0"/>

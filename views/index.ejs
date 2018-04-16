@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <% const title = Object.values(global.primary_routes_title)[route_n]%>
         <% include ../views/templates/head %>
     </head>
     <body>
@@ -9,7 +10,7 @@
             <h1><%= title %></h1>
         </div>
         <main>
-            <%=foo%>
+            <%- title %>
         </main>
     </body>
 </html>

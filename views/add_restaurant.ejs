@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <% include ../views/templates/head %>
-    <script type="text/javascript" src="/javascripts/map.js"></script>
-</head>
-<body onload="initMap(53.379484, -1.47946, 'address')">
-<% include ../views/templates/nav.ejs %>
-<div class="jumbotron text-center">
-    <h1><%= title %></h1>
-</div>
-<main>
-    <h1>Preview:</h1>
-</main>
-<div class="pac-card" id="pac-card">
-    <div id="title">
-        Autocomplete Address
-    </div>
-    <div id="pac-container">
-        <input id="pac-input" type="text"
-               placeholder="Enter a location">
-    </div>
-    <div id="map"></div>
-    <div id="infowindow-content">
-        <img src="" width="16" height="16" id="place-icon">
-        <span id="place-name" class="title"></span><br>
-        <span id="place-address"></span>
-    </div>
-</div>
-<div id="address-output"></div>
-<input id="lat"/>
-<input id="lng"/>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
-        async defer></script>
-</body>
+    <head>
+        <% const title = Object.values(global.primary_routes_title)[route_n]%>
+        <% include ../views/templates/head %>
+        <script type="text/javascript" src="/javascripts/map.js"></script>
+    </head>
+    <body onload="initMap(53.379484, -1.47946, 'address')">
+        <% include ../views/templates/nav.ejs %>
+        <div class="jumbotron text-center">
+            <h1><%= title %></h1>
+        </div>
+        <main>
+            <h1>Preview:</h1>
+        </main>
+        <div class="pac-card" id="pac-card">
+            <div id="title">
+                Autocomplete Address
+            </div>
+            <div id="pac-container">
+                <input id="pac-input" type="text"
+                       placeholder="Enter a location">
+            </div>
+            <div id="map"></div>
+            <div id="infowindow-content">
+                <img src="" width="16" height="16" id="place-icon">
+                <span id="place-name" class="title"></span><br>
+                <span id="place-address"></span>
+            </div>
+        </div>
+        <div id="address-output"></div>
+        <input id="lat"/>
+        <input id="lng"/>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
+                async defer></script>
+    </body>
 </html>
