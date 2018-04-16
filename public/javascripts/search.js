@@ -14,7 +14,7 @@ function setCuisineSel(cuisine_arr){
 }
 
 function searchFn(dat){
-    console.log(dat[0]);
+    var locations = [];
     $('#results').html('');
     dat.forEach((result) => {
         var result_item = $("<div class='searchResult'></div>").html("<h2>" + result.name + "</h2>"
@@ -38,5 +38,8 @@ function searchFn(dat){
         });
         result_item.append(cuisine_tags);
         $('#results').append(result_item);
+        var location = {lat: result.location.lat,lng: result.location.lng};
+        locations.push(location);
     })
+    placeMarkers(locations);
 }

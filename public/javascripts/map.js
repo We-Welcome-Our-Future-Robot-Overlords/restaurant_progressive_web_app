@@ -13,10 +13,12 @@ function geoError() {
     initMap(53.379484, -1.47946, '(cities)');
 }
 
+var map;
+
 function initMap(lat, lng, type) {
     lat = parseFloat(lat);
     lng = parseFloat(lng);
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         center: {lat, lng},
         zoom: 15
     });
@@ -38,15 +40,16 @@ function initMap(lat, lng, type) {
 
     var marker = new google.maps.Marker({
         map: map,
-        position: {lat, lng}
+        position: {lat, lng},
+        icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
     });
 
     if (type != undefined) {
-        autoFillAddresss(map, marker, type);
+        autoFillAddresss(marker, type);
     }
 }
 
-function autoFillAddresss(map, marker, type) {
+function autoFillAddresss(marker, type) {
     var input = document.getElementById('pac-input');
 
     var autocomplete = new google.maps.places.Autocomplete(input);
@@ -79,5 +82,26 @@ function autoFillAddresss(map, marker, type) {
 
         $('input#lat').val(place.geometry.location.lat());
         $('input#lng').val(place.geometry.location.lng());
+    });
+}
+
+var markers = [];
+
+function placeMarkers(locations) {
+    // clear all markers
+    markers.forEach(function(marker) {
+        marker.setMap(null);
+    });
+
+    var labels = '123456789';
+    markers = locations.map(function(location, i) {
+        return new google.maps.Marker({
+            map: map,
+            position: location,
+            label: labels[i % labels.length]
+        });
+    });
+    markers.forEach(function(marker) {
+        marker.setVisible(true);
     });
 }
