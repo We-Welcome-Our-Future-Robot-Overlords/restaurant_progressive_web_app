@@ -4,23 +4,19 @@
         <% include ../views/templates/head %>
         <script src="/javascripts/index.js"></script>
         <script src="/javascripts/map.js"></script>
-        <script src="/javascripts/cuisine.js"></script>
-        <link rel='stylesheet' href='/chosen/chosen.css' />
         <script>
             let cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
-            $(function() {
-                $(".chosen-select").chosen({no_results_text: "No result found"});
-            });
             $(document).ready(function(){
                 setLocation();
-                resizeChosen();
-                jQuery(window).on('resize', resizeChosen);
-            });
-            function resizeChosen() {
-                $(".chosen-container").each(function() {
-                    $(this).attr('style', '').addClass("searchTextBox");
+                $('#cuisine_selector').selectize({
+                    persist: false,
+                    maxItems: null,
+                    valueField: '_id',
+                    labelField: 'title',
+                    options: cuisine_arr,
+                    create: false
                 });
-            }
+            });
 
             //Show or Hide Location Search
             $( function() {
@@ -32,18 +28,14 @@
                 });
             } );
         </script>
-        <script src="/chosen/chosen.jquery.js"></script>
+        <link rel ="stylesheet" href="/selectize/css/selectize.css" />
+        <script src="/selectize/js/standalone/selectize.min.js"></script>
     </head>
     <body>
     <% include ../views/templates/nav.ejs%>
     <div class="jumbotron text-center">
         <h1><%= title %></h1>
-        <select id="cuisine_tags" data-placeholder="Cuisine" multiple class="chosen-select">
-            <option value=""></option>
-            <% cuisine_arr.forEach(function(kv) {%>
-                <%- "<option value=" + kv._id + ">" + kv.title +"</option>";%>
-            <%});%>
-        </select><br />
+        <input class="searchTextBox" form="xForm" type="text" name="cuisine" id="cuisine_selector" placeholder="Cuisine"/><br />
         Match Any? <input form="xForm" type="checkbox" name="all_any_cuisine" id="all_any_cuisine" />
         <p>
             <ul id="cuisine_checkboxes">
@@ -60,8 +52,8 @@
             </div>
         </div>
         <hr />
-        <form id="xForm" onsubmit="selected_cuisines(cuisine_arr); onSubmit('/restaurants');">
-            <input type="hidden" name="cuisine" id="cuisine" />
+        <form id="xForm" onsubmit="onSubmit('/restaurants');">
+            <!--<input type="hidden" name="cuisine" id="cuisine" />-->
             <input type="hidden" name="lat" id="lat" value="0"/>
             <input type="hidden" name="lng" id="lng" value="0"/>
         </form>
