@@ -9,7 +9,7 @@ var initDB= require('../controllers/init');
 initDB.init();
 
 global.primary_routes_title = {
-    '/': 'Restaurant App',
+    '/': 'Home',
     '/search': 'Search Restaurants',
     '/add_restaurant': 'Add Restaurant'
 }

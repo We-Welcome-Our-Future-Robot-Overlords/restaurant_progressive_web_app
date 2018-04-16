@@ -7,14 +7,18 @@
     <body>
         <% include ../views/templates/nav.ejs%>
         <div class="jumbotron text-center">
-            <h1><%= title %></h1>
+            <h1>Restaurant App</h1>
+            <p>Find some restaurants</p>
+            <form class="form-inline" action="/search" method="post">
+                <div class="input-group">
+                    <input type="text" class="form-control" size="50" placeholder="Keywords" name="keywords" required>
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
         </div>
         <main>
-            <form action="/search" method="post">
-                <input type="hidden" name="keywords" value="Chicken" />
-                <input type="submit" />
-            </form>
-            <%- title %>
         </main>
     </body>
 </html>

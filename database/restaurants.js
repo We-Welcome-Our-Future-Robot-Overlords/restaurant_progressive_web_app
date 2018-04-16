@@ -23,5 +23,3 @@ db.dropDatabase();
 // }
 //
 // WHICH WOULD ALLOW MULTIPLE CONNECTIONS
-
-

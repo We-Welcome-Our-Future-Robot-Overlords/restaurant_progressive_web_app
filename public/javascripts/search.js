@@ -18,19 +18,19 @@ function searchFn(dat, cuisine_arr){
     var locations = [];
     $('#results').html('');
     dat.forEach((result) => {
-        var result_item = $("<div class='searchResult'></div>").html("<h2>" + result.name + "</h2>"
-            + "<p>" + Object.values(result.address)+"</p>"
-            + "<summary>" + result.description +"</summary>");
-        var cuisine_tags = $('');
+        var result_panel = $("<div class='panel panel-info'><div class='panel-heading'>" + result.name + "</div></div>");
+        var panel_body = $("<div class='panel-body'>").html("<p>" + Object.values(result.address)+"</p><summary>" + result.description +"</summary>");
+        var cuisine_tags = $('<div class="btn-group"></div>');
         result.cuisine.forEach((c) => {
-           var c_tag = $("<button type='button' class='btn btn-primary btn-sm'></button>").html(cuisine_map.get(c));
+           var c_tag = $("<button type='button' class='btn btn-info btn-sm'></button>").html(cuisine_map.get(c));
            c_tag.click(() => {
                sendAjaxQuery('/search', {cuisine: c}, searchFn);
            });
-            cuisine_tags = cuisine_tags.add(c_tag);
+            cuisine_tags = cuisine_tags.append(c_tag);
         });
-        result_item.append(cuisine_tags);
-        $('#results').append(result_item);
+        panel_body.append(cuisine_tags);
+        result_panel.append(panel_body);
+        $('#results').append(result_panel);
         var location = {lat: result.location.lat,lng: result.location.lng};
         locations.push(location);
     })
