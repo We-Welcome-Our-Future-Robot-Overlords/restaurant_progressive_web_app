@@ -11,7 +11,7 @@ function sendAjaxQuery(url, data, fn) {
             var ret = dataR;
             // in order to have the object printed by alert
             // we need to JSON stringify the object
-            fn(JSON.stringify(ret));
+            fn(ret);
         },
         error: function (xhr, status, error) {
             alert('Error: ' + error.message);
@@ -19,16 +19,12 @@ function sendAjaxQuery(url, data, fn) {
     });
 }
 
-function onSubmit(url) {
+function onSubmit(url, fn) {
     var formArray= $("form").serializeArray();
     var data={};
     for (index in formArray){
         data[formArray[index].name]= formArray[index].value;
     }
-    // const data = JSON.stringify($(this).serializeArray());
-    //TODO: User friendly way of displaying search results
-    sendAjaxQuery(url, data, function(dat) {
-        $('#results').html(dat);
-    });
+    sendAjaxQuery(url, data, fn);
     event.preventDefault();
 }

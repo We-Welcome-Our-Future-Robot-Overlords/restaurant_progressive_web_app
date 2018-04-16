@@ -16,8 +16,7 @@ global.primary_routes_title = {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', {route_n: 0,
-        page: req.url})
+    res.render('index', {page: req.url})
 });
 
 /* GET search page. */
@@ -30,7 +29,6 @@ router.post('/search', restaurant.search);
 /* GET Create Restaurant page. */
 router.get('/add_restaurant', function(req, res, next) {
     res.render('add_restaurant', {
-        route_n: 2,
         page: req.url,
         API: process.env.GOOGLE_API});
 });

@@ -36,7 +36,7 @@ a {
     background-color: #feb236 !important;
 }
 
-/* Search */
+/* Search Controls*/
 .jumbotron {
     background-color: #d64161;
     color: #feb236;
@@ -85,6 +85,18 @@ input[type=checkbox] {
     padding: 6px 12px;
 }
 
+/* Search Results */
+.searchResult {
+    border: 1px solid #d64161;
+    border-radius: 8px;
+    margin: 8px 0;
+    padding: 8px;
+}
+.cuisineTag {
+    background-color: #d64161;
+    color: #feb236;
+}
+
 /* Mobile */
 @media only screen and (max-width: 600px) {
     main {
@@ -92,5 +104,13 @@ input[type=checkbox] {
     }
     .searchTextBox, .selectize-control.multi, .pac-card {
         width: 100%;
+    }
+    .pac-card #map {
+        height: 40vh;
+    }
+    .searchResult {
+        border-width: 1px 0;
+        border-radius: 0px;
+        padding: 0 2px;
     }
 }

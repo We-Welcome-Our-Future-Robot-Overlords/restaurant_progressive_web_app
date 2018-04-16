@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <% const title = Object.values(global.primary_routes_title)[route_n]%>
+        <% const title = global.primary_routes_title[page]%>
         <% include ../views/templates/head %>
         <script src="/javascripts/index.js"></script>
         <script src="/javascripts/map.js"></script>
@@ -24,10 +24,26 @@
                 $("#locationSearch").hide();
                 $( "#toggleLocationSearch" ).click(function() {
                     $( "#locationSearch" ).slideToggle( "slow", function() {
-                        $('html,body').animate({scrollTop: $("#keywords").offset().top},'slow');
+
                     });
                 });
             } );
+
+            //Searcher
+            let cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id, kv.title]));
+            console.log(cuisine_map);
+
+            function searchFn(dat) {
+                console.log(dat[0]);
+                $('#results').html('');
+                dat.forEach(function (result) {
+                    let result_section = "<div class='searchResult'><h2>" + result.name + "</h2>"
+                        + "<p>" + Object.values(result.address)+"</p>"
+                        + "<summary>" + result.description +"</summary>"
+                        + "<p class='cuisineTag'>" + result.cuisine.map((c)=> {return cuisine_map.get(c)}) + "</p></div>";
+                    $('#results').append(result_section);
+                })
+            }
         </script>
     </head>
     <body>
@@ -47,7 +63,7 @@
             </div>
         </div>
         <hr />
-        <form id="xForm" onsubmit="onSubmit('<%- page %>');">
+        <form id="xForm" onsubmit="onSubmit('<%- page %>', searchFn);">
             <!--<input type="hidden" name="cuisine" id="cuisine" />-->
             <input type="hidden" name="lat" id="lat" value="0"/>
             <input type="hidden" name="lng" id="lng" value="0"/>
