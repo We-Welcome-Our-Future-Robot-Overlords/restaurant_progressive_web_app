@@ -3,22 +3,12 @@
     <head>
         <% const title = global.primary_routes_title[page]%>
         <% include ../views/templates/head %>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
+                async defer></script>
         <script src="/javascripts/index.js"></script>
         <script src="/javascripts/map.js"></script>
+        <script src="/javascripts/cuisine.js"></script>
         <script>
-            let cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
-            $(document).ready(function(){
-                setLocation();
-                $('#cuisine_selector').selectize({
-                    persist: false,
-                    maxItems: null,
-                    valueField: '_id',
-                    labelField: 'title',
-                    options: cuisine_arr,
-                    create: false
-                });
-            });
-
             //Show or Hide Location Search
             $( function() {
                 $("#locationSearch").hide();
@@ -28,51 +18,33 @@
                     });
                 });
             } );
-
-            //Searcher
-            let cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id, kv.title]));
-            console.log(cuisine_map);
-
-            function searchFn(dat) {
-                console.log(dat[0]);
-                $('#results').html('');
-                dat.forEach(function (result) {
-                    let result_section = "<div class='searchResult'><h2>" + result.name + "</h2>"
-                        + "<p>" + Object.values(result.address)+"</p>"
-                        + "<summary>" + result.description +"</summary>"
-                        + "<p class='cuisineTag'>" + result.cuisine.map((c)=> {return cuisine_map.get(c)}) + "</p></div>";
-                    $('#results').append(result_section);
-                })
-            }
         </script>
     </head>
-    <body>
-    <% include ../views/templates/nav.ejs%>
-    <div class="jumbotron text-center">
-        <h1><%= title %></h1>
-        <input form="xForm" type="text" name="cuisine" id="cuisine_selector" placeholder="Cuisine"/>
-        Match Any? <input form="xForm" type="checkbox" name="all_any_cuisine" id="all_any_cuisine" /><br />
-        <input class="selectize-input searchTextBox" form="xForm" type="text" name="keywords" id="keywords" placeholder="Keywords"/><br />
-        <button id="toggleLocationSearch" type="button" class="btn btn-secondary btn-sm" style="margin-top:8px">Choose Location</button>
-        <div id="locationSearch">
-            <input class="selectize-input searchTextBox" form="xForm" name="pac_input" id="pac-input" type="text"
-                   placeholder="Enter a location" />
-            <input class="selectize-input searchTextBox" form="xForm" type="number" name="radius" id="radius" step="any" placeholder="Radius (km)" />
-            <div class="pac-card" id="pac-card">
-                <div id="map"></div>
+    <body onload="setCuisineSel(<%= JSON.stringify(cuisine_arr) %>), setLocation()">
+        <% include ../views/templates/nav.ejs%>
+        <div class="jumbotron text-center">
+            <h1><%= title %></h1>
+            <input form="xForm" type="text" name="cuisine" id="cuisine_selector" placeholder="Cuisine"/>
+            Match Any? <input form="xForm" type="checkbox" name="all_any_cuisine" id="all_any_cuisine" /><br />
+            <input class="selectize-input searchTextBox" form="xForm" type="text" name="keywords" id="keywords" placeholder="Keywords"/><br />
+            <button id="toggleLocationSearch" type="button" class="btn btn-secondary btn-sm" style="margin-top:8px">Choose Location</button>
+            <div id="locationSearch">
+                <input class="selectize-input searchTextBox" form="xForm" name="pac_input" id="pac-input" type="text"
+                       placeholder="Enter a location" />
+                <input class="selectize-input searchTextBox" form="xForm" type="number" name="radius" id="radius" step="any" placeholder="Radius (km)" />
+                <div class="pac-card" id="pac-card">
+                    <div id="map"></div>
+                </div>
             </div>
+            <hr />
+            <form id="xForm" onsubmit="onSubmit('<%- page %>', searchFn);">
+                <!--<input type="hidden" name="cuisine" id="cuisine" />-->
+                <input type="hidden" name="lat" id="lat" value="0"/>
+                <input type="hidden" name="lng" id="lng" value="0"/>
+            </form>
+            <button form="xForm" id="g" name="g" type="submit" class="btn btn-primary">Search</button>
         </div>
-        <hr />
-        <form id="xForm" onsubmit="onSubmit('<%- page %>', searchFn);">
-            <!--<input type="hidden" name="cuisine" id="cuisine" />-->
-            <input type="hidden" name="lat" id="lat" value="0"/>
-            <input type="hidden" name="lng" id="lng" value="0"/>
-        </form>
-        <button form="xForm" id="g" name="g" type="submit" class="btn btn-primary">Search</button>
-    </div>
-    <main id="results" style="margin-top:30px">
-    </main>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
-            async defer></script>
+        <main id="results" style="margin-top:30px">
+        </main>
     </body>
 </html>
