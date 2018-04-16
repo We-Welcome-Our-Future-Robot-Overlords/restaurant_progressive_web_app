@@ -1,66 +1,92 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  width: 100%;
+main {
+    padding: 50px;
+}
+#results {
+    /*TODO: Remove when results are returned neatly */
+    overflow: hidden;
+}
+a {
+    color: #00B7FF;
 }
 
-a {
-  color: #00B7FF;
+/* Navigation */
+.navbar {
+    margin-bottom: 0;
+    background-color: #d64161;
+    z-index: 9999;
+    border: 0;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
 }
+.navbar li a, .navbar .navbar-brand {
+    color: #feb236 !important;
+}
+.navbar-nav li a:hover, .navbar-nav li.active a {
+    color: #000 !important;
+    background-color: #fff !important;
+}
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #fff !important;
+}
+.icon-bar {
+    background-color: #feb236 !important;
+}
+
 /* Search */
-.inputList {
-    text-align: right;
-    list-style: none;
+.jumbotron {
+    background-color: #d64161;
+    color: #feb236;
+    padding: 100px 0 20px 0;
+    font-family: Montserrat, sans-serif;
 }
+.searchTextBox {
+    width: 80%;
+    margin: 2px 0;
+    padding: 0;
+}
+.btn-secondary {
+    color: #000;
+}
+
 /* Map UI */
 .pac-card {
-    width: 500px;
-    margin: 10px 10px 0 0;
-    border-radius: 2px 0 0 2px;
-    background-color: #fff;
+    width: 100%;
 }
-
 .pac-card #map {
     height: 500px;
 }
-
 #infowindow-content .title {
     font-weight: bold;
 }
-
 #infowindow-content {
     display: none;
 }
-
 #map #infowindow-content {
     display: inline;
 }
-
 #pac-container {
     padding-bottom: 12px;
     margin-top: 12px;
     margin-right: 12px;
 }
-
-#pac-input {
-    background-color: #fff;
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 300;
-    margin-left: 12px;
-    padding: 0 11px 0 13px;
-    text-overflow: ellipsis;
-    width: 400px;
-}
-
-#pac-input:focus {
-    border-color: #4d90fe;
-}
-
 #title {
     color: #fff;
     background-color: #4d90fe;
     font-size: 25px;
     font-weight: 500;
     padding: 6px 12px;
+}
+
+/* Mobile */
+@media only screen and (max-width: 600px) {
+    main {
+        padding: 0;
+    }
+    .searchTextBox {
+        width: 100%;
+    }
 }

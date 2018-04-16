@@ -1,4 +1,5 @@
 var express = require('express');
+var expressListRoutes   = require('express-list-routes');
 var router = express.Router();
 var bodyParser= require("body-parser");
 
@@ -10,7 +11,8 @@ initDB.init();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Restaurant App' });
+  res.render('index', { title: 'Restaurant App', foo: expressListRoutes({ prefix: '/' }, 'API:', router )
+});
 });
 
 /* GET search page. */

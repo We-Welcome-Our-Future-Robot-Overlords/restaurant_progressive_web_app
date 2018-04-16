@@ -5,9 +5,9 @@
         <script src="/javascripts/index.js"></script>
         <script src="/javascripts/map.js"></script>
         <script src="/javascripts/cuisine.js"></script>
-        <script src="/chosen/chosen.jquery.js"></script>
         <link rel='stylesheet' href='/chosen/chosen.css' />
         <script>
+            //Cuisine Tags
             $(function() {
                 $(".chosen-select").chosen({no_results_text: "No result found"});
             });
@@ -19,64 +19,59 @@
             });
             function resizeChosen() {
                 $(".chosen-container").each(function() {
-                    $(this).attr('style', 'width: 50%');
+                    $(this).attr('style', '').addClass("searchTextBox");
                 });
             }
+
+            //Show or Hide Location Search
+            $( function() {
+                $("#locationSearch").hide();
+                $( "#toggleLocationSearch" ).click(function() {
+                    $( "#locationSearch" ).slideToggle( "slow", function() {
+                        // Animation complete.
+                    });
+                });
+            } );
         </script>
+        <script src="/chosen/chosen.jquery.js"></script>
     </head>
     <body>
     <% include ../views/templates/nav.ejs%>
-    <main>
+    <div class="jumbotron text-center">
         <h1><%= title %></h1>
+        <p>Cuisines:</p>
         <select data-placeholder="Choose Your Cuisine" multiple class="chosen-select">
             <option value=""></option>
             <option>C11111111111111111</option>
             <option>C2</option>
             <option>C3</option>
-        </select>
-        <div class="pac-card" id="pac-card">
-            <div id="map"></div>
+        </select><br />
+        Match Any? <input form="xForm" type="checkbox" name="all_any_cuisine" id="all_any_cuisine" />
+        <p>
+            <ul id="cuisine_checkboxes">
+            </ul>
+        </p>
+        <input class="searchTextBox" form="xForm" type="text" name="keywords" id="keywords" placeholder="Keywords"/><br />
+        <button id="toggleLocationSearch" type="button" class="btn btn-secondary btn-sm">Choose Location</button>
+        <div id="locationSearch">
+            <input class="searchTextBox" form="xForm" name="pac_input" id="pac_input" type="text"
+                   placeholder="Enter a location" />
+            <input class="searchTextBox" form="xForm" type="number" name="radius" id="radius" step="any" placeholder="Radius (km)" />
+            <div class="pac-card" id="pac-card">
+                <div id="map"></div>
+            </div>
         </div>
-
-        <section id="SearchControls">
-            <p>Cuisines:
-                <ul id="cuisine_checkboxes">
-                </ul>
-            </p>
-            <form id=“xForm" onsubmit="checked_cuisines(); onSubmit('/restaurants');">
-                <ul class="inputList">
-                    <li>
-                        <label for="all_any_cuisine">Any?</label>
-                        <input type="checkbox" name="all_any_cuisine" id="all_any_cuisine" />
-                    </li>
-                    <li>
-                        <label for='keywords'>Keywords:</label>
-                        <input type="text" name="keywords" id="keywords"/>
-                    </li>
-                    <li>
-                        <input type="hidden" name="cuisine" id="cuisine" />
-                    </li>
-                    <li>
-                        <input name="pac_input" id="pac-input" type="text"
-                               placeholder="Enter a location">
-                    </li>
-                    <li>
-                        <input type="hidden" name="lat" id="lat" value="0"/>
-                    </li>
-                    <li>
-                        <input type="hidden" name="lng" id="lng" value="0"/>
-                    </li>
-                    <li>
-                        <label for="radius">Radius (km):</label>
-                        <input type="number" name="radius" id="radius" step="any" value="1"/>
-                    </li>
-                    <li><input type="submit" name="g" value="Submit" id="g"></li>
-                </ul>
-            </form>
-        </section>
-        <div id="results" style="margin-top:30px"></div>
-        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
-                async defer></script>
+        <hr />
+        <form id="xForm" onsubmit="checked_cuisines(); onSubmit('/restaurants');">
+            <input type="hidden" name="cuisine" id="cuisine" />
+            <input type="hidden" name="lat" id="lat" value="0"/>
+            <input type="hidden" name="lng" id="lng" value="0"/>
+        </form>
+        <button form="xForm" id="g" name="g" type="submit" class="btn btn-primary">Search</button>
+    </div>
+    <main id="results" style="margin-top:30px">
     </main>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
+            async defer></script>
     </body>
 </html>
