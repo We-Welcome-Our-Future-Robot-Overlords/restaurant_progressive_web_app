@@ -38,11 +38,7 @@ exports.search = function (req, res, extra_dict) {
     //Cuisine Search
     if ('cuisine' in rstrntData) {
         let cuisine_arr = rstrntData.cuisine.split(",");
-        if (rstrntData.all_any_cuisine == 'on') {
-            rstrntData.cuisine = {$in: cuisine_arr};
-        } else {
-            rstrntData.cuisine = {$all: cuisine_arr};
-        }
+        rstrntData.cuisine = {$all: cuisine_arr};
         delete rstrntData['all_any_cuisine'];
     }
 

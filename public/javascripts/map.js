@@ -10,6 +10,9 @@ function showPosition(position) {
 }
 
 function geoError() {
+    //TODO: Service worker toremember last location.
+
+
     initMap(53.379484, -1.47946, '(cities)');
 }
 
@@ -38,18 +41,13 @@ function initMap(lat, lng, type) {
     };
     map.setOptions({styles: styles['hide']});
 
-    var marker = new google.maps.Marker({
-        map: map,
-        position: {lat, lng},
-        icon: 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
-    });
-
     if (type != undefined) {
-        autoFillAddresss(marker, type);
+        autoFillAddresss(type);
     }
+
 }
 
-function autoFillAddresss(marker, type) {
+function autoFillAddresss(type) {
     var input = document.getElementById('pac-input');
 
     var autocomplete = new google.maps.places.Autocomplete(input);
@@ -60,7 +58,6 @@ function autoFillAddresss(marker, type) {
     // bounds option in the request.
     autocomplete.bindTo('bounds', map);
     autocomplete.addListener('place_changed', function() {
-        marker.setVisible(false);
         var place = autocomplete.getPlace();
         if (!place.geometry) {
             // User entered the name of a Place that was not suggested and
@@ -77,9 +74,6 @@ function autoFillAddresss(marker, type) {
             map.setZoom(17);
         }
 
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
-
         $('input#lat').val(place.geometry.location.lat());
         $('input#lng').val(place.geometry.location.lng());
     });
@@ -94,17 +88,24 @@ function placeMarkers(locations) {
     });
 
     var labels = '123456789';
+    var bounds = new google.maps.LatLngBounds();
+    bounds.extend(map.getCenter());
+
     markers = locations.map(function(location, i) {
+        bounds.extend(location);
         return new google.maps.Marker({
             map: map,
             position: location,
             label: labels[i % labels.length]
         });
     });
-    var ready = false;
     markers.forEach(function(marker) {
-        console.log(marker);
-        console.log(Object.keys(marker));
         marker.setVisible(true);
     });
+    if (markers.length == 1){
+        map.setCenter(markers[0].getPosition());
+        map.setZoom(17);
+    } else if (markers.length > 1){
+        map.fitBounds(bounds);
+    }
 }
