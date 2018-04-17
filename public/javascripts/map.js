@@ -1,12 +1,12 @@
-function setLocation() {
+function setLocation(_callback) {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, geoError);
+        navigator.geolocation.getCurrentPosition(_callback, geoError);
     }
 }
-function showPosition(position) {
+function showPosition(position, _callback) {
     $('input#lat').val(position.coords.latitude);
     $('input#lng').val(position.coords.longitude);
-    initMap(position.coords.latitude, position.coords.longitude, '(cities)');
+    _callback(position.coords.latitude, position.coords.longitude, '(cities)');
 }
 
 function geoError() {
@@ -18,14 +18,13 @@ function geoError() {
 
 var map;
 
-function initMap(lat, lng, type) {
+function initMap(lat, lng, type, _callback) {
     lat = parseFloat(lat);
     lng = parseFloat(lng);
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat, lng},
         zoom: 15
     });
-    console.log("Init map", map);
     var styles = {
         hide: [
             {
@@ -42,12 +41,12 @@ function initMap(lat, lng, type) {
     map.setOptions({styles: styles['hide']});
 
     if (type != undefined) {
-        autoFillAddresss(type);
+        _callback(type);
     }
 
 }
 
-function autoFillAddresss(type) {
+function autoFillAddresss(type, _callback) {
     var input = document.getElementById('pac-input');
 
     var autocomplete = new google.maps.places.Autocomplete(input);
@@ -77,6 +76,7 @@ function autoFillAddresss(type) {
         $('input#lat').val(place.geometry.location.lat());
         $('input#lng').val(place.geometry.location.lng());
     });
+    _callback();
 }
 
 var markers = [];
@@ -89,7 +89,6 @@ function placeMarkers(locations) {
 
     var labels = '123456789';
     var bounds = new google.maps.LatLngBounds();
-    console.log("Markers", map);
     bounds.extend(map.getCenter());
 
     markers = locations.map(function(location, i) {

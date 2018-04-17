@@ -8,11 +8,23 @@
         <script>
             var cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
             function initializer() {
-                setLocation();
-                console.log("Ready");
-                <% if (typeof result_arr !== 'undefined') { %>
-                    searchFn(<%-result_arr%>, cuisine_arr %>);
-                <%}%>
+                console.log('Map Loaded');
+                setLocation((position) => {
+                    console.log('Asking Location');
+                    showPosition(position, (lat, lng, type) => {
+                        console.log('Setting Location');
+                        initMap(lat,lng, type, (type) => {
+                            console.log('Fitting Map')
+                            autoFillAddresss(type, ()=> {
+                                console.log('Ready')
+                            <% if (typeof result_arr !== 'undefined') { %>
+                                searchFn(<%-result_arr%>, cuisine_arr);
+                                $('#locationSearch').show();
+                            <%}%>
+                            });
+                        });
+                    });
+                });
             }
             $('document').ready(() => {
                 setCuisineSel();
