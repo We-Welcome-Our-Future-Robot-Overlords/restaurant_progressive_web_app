@@ -1,6 +1,6 @@
 function setLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, geoError);
+        navigator.geolocation.getCurrentPosition(showPosition, geoError, {timeout: 5000});
     }
 }
 function showPosition(position) {
@@ -105,5 +105,8 @@ function placeMarkers(locations) {
         map.setZoom(17);
     } else if (markers.length > 1){
         map.fitBounds(bounds);
+        if (map.getZoom() == 0){
+            map.setZoom(8);
+        }
     }
 }

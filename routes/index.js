@@ -43,4 +43,12 @@ router.get('/add_restaurant', function(req, res, next) {
     });
 });
 
+router.get('/restaurant/:id', function (req, res, next) {
+    res.render('restaurant', {
+        page: req.url,
+        id: req.params.id
+    });
+})
+
+
 module.exports = router;

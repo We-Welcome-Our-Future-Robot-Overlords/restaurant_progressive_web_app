@@ -8,7 +8,7 @@ exports.prepare = function(req, res, extra_dict) {
         return_dict = Object.assign({},{
             cuisine_arr: cuisines}, extra_dict || {});
         console.log(return_dict);
-        res.render('restaurants', return_dict);
+        res.render('search', return_dict);
     });
 }
 
