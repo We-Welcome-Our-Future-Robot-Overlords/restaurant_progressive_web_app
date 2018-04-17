@@ -3,8 +3,10 @@
     <head>
         <% const title = global.primary_routes_title[page]%>
         <% include ../views/templates/head %>
-        <script src="/javascripts/search.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
+                async defer></script>
         <script src="/javascripts/map.js"></script>
+        <script src="/javascripts/search.js"></script>
         <script>
             var cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
             $('document').ready(() => {
@@ -49,8 +51,6 @@
             <button form="xForm" id="g" name="g" type="submit" class="btn btn-primary">
                 Search<span class="oi ml-1" data-glyph="magnifying-glass"></span></button>
         </header>
-        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
-                async defer></script>
         <main id="results" style="margin-top:30px">
         </main>
     </body>
