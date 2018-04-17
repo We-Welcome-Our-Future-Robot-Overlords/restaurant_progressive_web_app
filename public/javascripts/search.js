@@ -16,19 +16,22 @@ function searchFn(dat, cuisine_arr){
     var locations = [];
     $('#results').html('');
     dat.forEach((result) => {
-        var result_panel = $("<div class='panel panel-info'><div class='panel-heading'>" + result.name + "</div></div>");
-        var panel_body = $("<div class='panel-body'>").html("<p>" + Object.values(result.address)+"</p><summary>" + result.description +"</summary>");
-        var cuisine_tags = $('<div class="btn-group"></div>');
+        var result_card = $("<div class='card rounded-0'></div>");
+        //TODO: Images
+        var card_body = $("<div class='card-body'><h4 class='card-title'>" + result.name + "</h4></div>");
+        var card_text = $("<p class='card_text'>" + Object.values(result.address) + "</p><summary class='card-text'>" + result.description + "</summary>");
+        var cuisine_tags = $('<div class="btn-group btn-group-sm"></div>');
         result.cuisine.forEach((c) => {
-            var c_tag = $("<button type='button' class='btn btn-info btn-sm'></button>").html(cuisine_map.get(c));
+            var c_tag = $("<button type='button' class='btn btn-info'></button>").html(cuisine_map.get(c));
             c_tag.click(() => {
                 sendAjaxQuery('/search', {cuisine: c}, (dat) => searchFn(dat, cuisine_arr));
             });
             cuisine_tags = cuisine_tags.append(c_tag);
         });
-        panel_body.append(cuisine_tags);
-        result_panel.append(panel_body);
-        $('#results').append(result_panel);
+        card_body.append(card_text);
+        card_body.append(cuisine_tags);
+        result_card.append(card_body);
+        $('#results').append(result_card);
         var location = {lat: result.location.lat,lng: result.location.lng};
         locations.push(location);
     })

@@ -3,47 +3,13 @@ main {
 }
 
 /* Navigation */
-.navbar {
-    margin-bottom: 0;
-    background-color: #d64161;
-    z-index: 9999;
-    border: 0;
-    font-size: 12px !important;
-    line-height: 1.42857143 !important;
-    letter-spacing: 4px;
-    border-radius: 0;
-    font-family: Montserrat, sans-serif;
-}
-.navbar li a, .navbar .navbar-brand {
-    color: #feb236 !important;
-}
-.navbar-nav li a:hover, .navbar-nav li.active a {
-    color: #000 !important;
-    background-color: #fff !important;
-}
-.navbar-default .navbar-toggle {
-    border-color: transparent;
-    color: #fff !important;
-}
-.icon-bar {
-    background-color: #feb236 !important;
-}
 
 /* Search Controls*/
-.jumbotron {
-    background-color: #d64161;
-    color: #feb236;
-    padding: 64px 0 20px 0;
-    font-family: Montserrat, sans-serif !important;
-}
 .searchTextBox, .selectize-control.multi {
     text-align: left;
     color: #000;
     width: 80%;
     margin: 8px auto;
-}
-.btn-secondary {
-    color: #000;
 }
 input[type=checkbox] {
     margin: 0;
@@ -94,6 +60,9 @@ input[type=checkbox] {
 @media only screen and (max-width: 600px) {
     main {
         padding: 0;
+    }
+    .jumbotron {
+        padding: 8px 0;
     }
     .searchTextBox, .selectize-control.multi, .pac-card {
         width: 100%;
