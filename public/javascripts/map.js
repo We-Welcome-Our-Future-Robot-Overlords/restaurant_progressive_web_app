@@ -41,7 +41,7 @@ function initMap(lat, lng, type) {
     var marker = new google.maps.Marker({
         map: map,
         position: {lat, lng},
-        icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+        icon: 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
     });
 
     if (type != undefined) {
@@ -101,7 +101,10 @@ function placeMarkers(locations) {
             label: labels[i % labels.length]
         });
     });
+    var ready = false;
     markers.forEach(function(marker) {
+        console.log(marker);
+        console.log(Object.keys(marker));
         marker.setVisible(true);
     });
 }

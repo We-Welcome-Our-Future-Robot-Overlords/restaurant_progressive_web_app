@@ -31,8 +31,8 @@ function searchFn(dat, cuisine_arr){
         panel_body.append(cuisine_tags);
         result_panel.append(panel_body);
         $('#results').append(result_panel);
-        var location = {lat: result.location.lat,lng: result.location.lng};
+        var location = result.location;
         locations.push(location);
     })
-    placeMarkers(locations);
+    return locations;
 }
