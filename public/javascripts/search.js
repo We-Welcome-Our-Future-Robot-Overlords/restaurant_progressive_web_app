@@ -16,7 +16,7 @@ function searchFn(dat, cuisine_arr){
     var locations = [];
     $('#results').html('');
     dat.forEach((result) => {
-        var result_card = $("<div class='card rounded-0'></div>");
+        var result_card = $("<div class='card rounded-0 my-3'></div>");
         //TODO: Images
         var card_body = $("<div class='card-body'><h4 class='card-title'>" + result.name + "</h4></div>");
         var card_text = $("<p class='card_text'>" + Object.values(result.address) + "</p><summary class='card-text'>" + result.description + "</summary>");

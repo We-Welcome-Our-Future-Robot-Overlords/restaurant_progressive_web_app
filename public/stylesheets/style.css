@@ -1,5 +1,6 @@
 main {
-    padding: 50px;
+    width: 90%;
+    margin: auto;
 }
 
 /* Navigation */
@@ -10,12 +11,8 @@ main {
 }
 .searchTextBox, .selectize-control.multi {
     text-align: left;
-    color: #000;
     width: 90%;
     margin: 4px auto;
-}
-input[type=checkbox] {
-    margin: 0;
 }
 
 /* Map UI */
@@ -62,7 +59,7 @@ input[type=checkbox] {
 /* Mobile */
 @media only screen and (max-width: 600px) {
     main {
-        padding: 0;
+        width: 100%;
     }
     .jumbotron {
         padding: 8px 0;
@@ -72,5 +69,11 @@ input[type=checkbox] {
     }
     .pac-card #map {
         height: 40vmax;
+    }
+    #results > .card {
+        border-width: 1px 0;
+    }
+    #locSearchToggle, button#g {
+        width: 100%;
     }
 }

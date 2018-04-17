@@ -23,7 +23,7 @@ function initMap(lat, lng, type, _callback) {
     lng = parseFloat(lng);
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat, lng},
-        zoom: 25,
+        zoom: 15,
     });
     var styles = {
         hide: [
@@ -53,7 +53,6 @@ function autoFillAddresss(type, _callback) {
 
 
     if (_callback != undefined) {
-        console.log("FOOBAR");
         var autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.setTypes([type]);
     // Bind the map's bounds (viewport) property to the autocomplete object,
