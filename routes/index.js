@@ -17,7 +17,7 @@ global.primary_routes_title = {
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', {
-        page: req.url,
+        page: req.url
     });
 });
 
@@ -31,24 +31,14 @@ router.get('/search', function(req, res, next) {
 router.post('/search', (req, res) => {
     restaurant.search(req, res, {
         page: req.url,
-        API: process.env.GOOGLE_API
-    });
+        API: process.env.GOOGLE_API});
 });
 
 /* GET Create Restaurant page. */
 router.get('/add_restaurant', function(req, res, next) {
     res.render('add_restaurant', {
         page: req.url,
-        API: process.env.GOOGLE_API
-    });
+        API: process.env.GOOGLE_API});
 });
-
-router.get('/restaurant/:id', function (req, res, next) {
-    res.render('restaurant', {
-        page: req.url,
-        id: req.params.id
-    });
-})
-
 
 module.exports = router;

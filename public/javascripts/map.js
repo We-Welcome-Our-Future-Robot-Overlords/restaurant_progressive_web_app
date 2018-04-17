@@ -1,27 +1,24 @@
-function setLocation() {
+function setLocation(_callback, _err) {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, geoError, {timeout: 5000});
+        navigator.geolocation.getCurrentPosition(_callback, _err);
     }
 }
-function showPosition(position) {
+function showPosition(position, _callback) {
+    console.log('Asking Location');
     $('input#lat').val(position.coords.latitude);
     $('input#lng').val(position.coords.longitude);
-    initMap(position.coords.latitude, position.coords.longitude, '(cities)');
-}
-
-function geoError() {
-    //TODO: Service worker toremember last location.
-    initMap(53.3816197, -1.4820851, '(cities)');
+    _callback(position.coords.latitude, position.coords.longitude, 'geocode');
 }
 
 var map;
 
-function initMap(lat, lng, type) {
+function initMap(lat, lng, type, _callback) {
+    console.log('Setting Location');
     lat = parseFloat(lat);
     lng = parseFloat(lng);
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat, lng},
-        zoom: 17,
+        zoom: 15,
     });
     var styles = {
         hide: [
@@ -39,20 +36,25 @@ function initMap(lat, lng, type) {
     map.setOptions({styles: styles['hide']});
 
     if (type != undefined) {
-        autoFillAddresss(type);
+        if (_callback != undefined) {
+            _callback(type);
+        }
     }
 
 }
 
-function autoFillAddresss(type) {
+function autoFillAddresss(type, _callback) {
     var input = document.getElementById('pac-input');
 
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.setTypes([type]);
+
+    if (_callback != undefined) {
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.setTypes([type]);
     // Bind the map's bounds (viewport) property to the autocomplete object,
     // so that the autocomplete requests use the current map bounds for the
     // bounds option in the request.
     autocomplete.bindTo('bounds', map);
+    }
 
 
     autocomplete.addListener('place_changed', function() {
@@ -75,9 +77,11 @@ function autoFillAddresss(type) {
         $('input#lat').val(place.geometry.location.lat());
         $('input#lng').val(place.geometry.location.lng());
     });
+    _callback();
 }
 
 var markers = [];
+var bounds =[];
 
 function placeMarkers(locations) {
     // clear all markers
@@ -86,7 +90,7 @@ function placeMarkers(locations) {
     });
 
     var labels = '123456789';
-    var bounds = new google.maps.LatLngBounds();
+    bounds = new google.maps.LatLngBounds();
     bounds.extend(map.getCenter());
 
     markers = locations.map(function(location, i) {
@@ -97,6 +101,10 @@ function placeMarkers(locations) {
             label: labels[i % labels.length]
         });
     });
+
+}zoomTight();
+
+function zoomTight() {
     markers.forEach(function(marker) {
         marker.setVisible(true);
     });
@@ -105,8 +113,5 @@ function placeMarkers(locations) {
         map.setZoom(17);
     } else if (markers.length > 1){
         map.fitBounds(bounds);
-        if (map.getZoom() == 0){
-            map.setZoom(8);
-        }
     }
 }

@@ -1,5 +1,4 @@
-var cuisine_map;
-function setCuisineSel(cuisine_arr){
+function setCuisineSel(){
     $('#cuisine_selector').selectize({
         plugins: ['remove_button'],
         persist: false,
@@ -10,18 +9,16 @@ function setCuisineSel(cuisine_arr){
         options: cuisine_arr,
         create: false
     });
-    cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id, kv.title]));
 }
 
-function searchFn(dat){
+function searchFn(dat, cuisine_arr){
+    var cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id, kv.title]));
     var locations = [];
     $('#results').html('');
-    var n = 0;
     dat.forEach((result) => {
-        n += 1;
         var result_card = $("<div class='card rounded-0 my-3'></div>");
         //TODO: Images
-        var card_body = $("<div class='card-body'><h4 class='card-title'>" + n + ". " + result.name + "</h4></div>");
+        var card_body = $("<div class='card-body'><h4 class='card-title'>" + result.name + "</h4></div>");
         var card_text = $("<p class='card_text'>" + Object.values(result.address) + "</p><summary class='card-text'>" + result.description + "</summary>");
         var cuisine_tags = $('<div class="btn-group btn-group-sm"></div>');
         result.cuisine.forEach((c) => {

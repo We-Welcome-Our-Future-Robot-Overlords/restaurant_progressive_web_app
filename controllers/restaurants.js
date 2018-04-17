@@ -39,6 +39,7 @@ exports.search = function (req, res, extra_dict) {
     if ('cuisine' in rstrntData) {
         let cuisine_arr = rstrntData.cuisine.split(",");
         rstrntData.cuisine = {$all: cuisine_arr};
+        delete rstrntData['all_any_cuisine'];
     }
 
     //Location Search
@@ -83,17 +84,15 @@ exports.search = function (req, res, extra_dict) {
                                 return inrange;
                             });
                         }
-                        if (req.xhr) { // ajax
+                        if (req.xhr) {
                             res.setHeader('Content-Type', 'application/json');
                             res.send(JSON.stringify(restaurants));
-                        } else { // non ajax
+                        } else {
                             return_dict = Object.assign({}, {
                                 keywords: kw,
                                 result_arr: JSON.stringify(restaurants)
                             }, extra_dict || {});
-                            res.send(JSON.stringify(restaurants));
-                            // exports.prepare(req, res, return_dict);
-                            // TODO render page with result
+                            exports.prepare(req, res, return_dict);
                         }
                     }
                 });
