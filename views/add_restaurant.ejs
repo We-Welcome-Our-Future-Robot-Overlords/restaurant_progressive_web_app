@@ -3,11 +3,14 @@
     <head>
         <% const title = global.primary_routes_title[page]%>
         <% include ../views/templates/head %>
-        <script type="text/javascript" src="/javascripts/map.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
-                async defer></script>
+        <script src="/javascripts/map.js"></script>
+        <script>
+            function initializer() {
+                initMap(53.3816197, -1.4820851, 'geocode', autoFillAddresss('geocode'));
+            }
+        </script>
     </head>
-    <body onload="initMap(53.379484, -1.47946, 'address')">
+    <body>
         <% include ../views/templates/nav.ejs %>
         <header class="jumbotron jumbotron-fluid text-center">
             <h1><%= title %></h1>
@@ -33,5 +36,7 @@
         <div id="address-output"></div>
         <input id="lat"/>
         <input id="lng"/>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initializer"
+                async defer></script>
     </body>
 </html>

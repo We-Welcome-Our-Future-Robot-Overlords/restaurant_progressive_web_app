@@ -5,11 +5,14 @@ main {
 /* Navigation */
 
 /* Search Controls*/
+.jumbotron {
+    padding: 16px 0;
+}
 .searchTextBox, .selectize-control.multi {
     text-align: left;
     color: #000;
-    width: 80%;
-    margin: 8px auto;
+    width: 90%;
+    margin: 4px auto;
 }
 input[type=checkbox] {
     margin: 0;
@@ -17,7 +20,7 @@ input[type=checkbox] {
 
 /* Map UI */
 .pac-card {
-    width: 80%;
+    width: 90%;
     margin:8px auto 0 auto;
 }
 .pac-card #map {

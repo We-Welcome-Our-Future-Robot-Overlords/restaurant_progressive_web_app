@@ -1,29 +1,29 @@
-<nav class="navbar navbar-expand-md bg-default navbar-light">
+<nav class="navbar navbar-expand-md bg-default navbar-light ">
     <a class="navbar-brand" href="#">App</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
-            <%_Object.keys(global.primary_routes_title).forEach(function (k){%>
-                <%- "<li class='nav-item";_%>
-                <%_if (k==page) {_%>
-                    <%- " active'><a";_%>
-                <%_} else {_%>
-                    <%- "'><a href='" + k + "'";_%>
-                <%}_%>
-                <%-"class='nav-link'>" + global.primary_routes_title[k] + "</a></li>";_%>
-            <%});_%>
+        <%_Object.keys(global.primary_routes_title).forEach(function (k){%>
+            <%- "<li class='nav-item";_%>
+            <%_if (k==page) {_%>
+                <%- " active'><a";_%>
+            <%_} else {_%>
+                <%- "'><a href='" + k + "'";_%>
+            <%}_%>
+            <%-"class='nav-link'>" + global.primary_routes_title[k] + "</a></li>";_%>
+        <%});_%>
         </ul>
-        <%_if (page != '/search') {_%>
-            <form class="form-inline navbar" action="/search" method="post">
-                <div class="input-group">
-                    <input class="form-control" type="text" name="keywords" placeholder="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </div>
+    <%_if (page != '/search') {_%>
+        <form class="navbar-nav ml-auto" action="/search" method="post">
+            <div class="input-group">
+                <input class="form-control" type="text" name="keywords" placeholder="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Search</button>
                 </div>
-            </form>
-        <%_}_%>
+            </div>
+        </form>
+    <%_}_%>
     </div>
 </nav>

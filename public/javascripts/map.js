@@ -6,14 +6,14 @@ function setLocation(_callback) {
 function showPosition(position, _callback) {
     $('input#lat').val(position.coords.latitude);
     $('input#lng').val(position.coords.longitude);
-    _callback(position.coords.latitude, position.coords.longitude, '(cities)');
+    _callback(position.coords.latitude, position.coords.longitude, 'geocode');
 }
 
 function geoError() {
     //TODO: Service worker toremember last location.
 
 
-    initMap(53.379484, -1.47946, '(cities)');
+    initMap(53.3816197, -1.4820851, 'geocode');
 }
 
 var map;
@@ -23,7 +23,7 @@ function initMap(lat, lng, type, _callback) {
     lng = parseFloat(lng);
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat, lng},
-        zoom: 15
+        zoom: 25,
     });
     var styles = {
         hide: [
@@ -41,7 +41,9 @@ function initMap(lat, lng, type, _callback) {
     map.setOptions({styles: styles['hide']});
 
     if (type != undefined) {
-        _callback(type);
+        if (_callback != undefined) {
+            _callback(type);
+        }
     }
 
 }
@@ -49,13 +51,18 @@ function initMap(lat, lng, type, _callback) {
 function autoFillAddresss(type, _callback) {
     var input = document.getElementById('pac-input');
 
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.setTypes([type]);
 
+    if (_callback != undefined) {
+        console.log("FOOBAR");
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.setTypes([type]);
     // Bind the map's bounds (viewport) property to the autocomplete object,
     // so that the autocomplete requests use the current map bounds for the
     // bounds option in the request.
     autocomplete.bindTo('bounds', map);
+    }
+
+
     autocomplete.addListener('place_changed', function() {
         var place = autocomplete.getPlace();
         if (!place.geometry) {
