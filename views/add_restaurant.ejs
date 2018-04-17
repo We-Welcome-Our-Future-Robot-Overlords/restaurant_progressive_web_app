@@ -4,13 +4,8 @@
         <% const title = global.primary_routes_title[page]%>
         <% include ../views/templates/head %>
         <script src="/javascripts/map.js"></script>
-        <script>
-            function initializer() {
-                initMap(53.3816197, -1.4820851, 'geocode', autoFillAddresss('geocode'));
-            }
-        </script>
     </head>
-    <body>
+    <body onload="initMap(53.3816197, -1.4820851, 'address')">
         <% include ../views/templates/nav.ejs %>
         <header class="jumbotron jumbotron-fluid text-center">
             <h1><%= title %></h1>
@@ -36,7 +31,7 @@
         <div id="address-output"></div>
         <input id="lat"/>
         <input id="lng"/>
-        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initializer"
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
                 async defer></script>
     </body>
 </html>

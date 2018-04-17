@@ -3,31 +3,13 @@
     <head>
         <% const title = global.primary_routes_title[page]%>
         <% include ../views/templates/head %>
-        <script src="/javascripts/map.js"></script>
         <script src="/javascripts/search.js"></script>
+        <script src="/javascripts/map.js"></script>
         <script>
             var cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
-            function initializer() {
-                console.log('Map Loaded');
-                setLocation((position) => {
-                    console.log('Asking Location');
-                    showPosition(position, (lat, lng, type) => {
-                        console.log('Setting Location');
-                        initMap(lat,lng, type, (type) => {
-                            console.log('Fitting Map')
-                            autoFillAddresss(type, ()=> {
-                                console.log('Ready')
-                            <% if (typeof result_arr !== 'undefined') { %>
-                                searchFn(<%-result_arr%>, cuisine_arr);
-                                $('#locSearchToggle').click();
-                            <%}%>
-                            });
-                        });
-                    });
-                });
-            }
             $('document').ready(() => {
-                setCuisineSel();
+                setLocation();
+                setCuisineSel(cuisine_arr);
             });
         </script>
     </head>
@@ -35,25 +17,30 @@
         <% include ../views/templates/nav.ejs%>
         <header class="jumbotron jumbotron-fluid text-center">
             <h1><%= title %></h1>
-            <input class="selectize-input searchTextBox" form="xForm" type="text" name="keywords" id="keywords" placeholder="Keywords" <%-(typeof keywords !== 'undefined') ? "value='" + keywords + "'" : ''%>"/><br />
+            <input class="selectize-input searchTextBox" form="xForm" type="text" name="keywords"
+                   id="keywords" placeholder="Keywords"
+                   <%-(typeof keywords !== 'undefined') ? "value='" + keywords + "'" : ''%> />
+            <br />
             <input form="xForm" type="text" name="cuisine" id="cuisine_selector" placeholder="Cuisine"/>
-            <button id="locSearchToggle" type="button" class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#locationSearch">Choose Location</button>
+            <button id="locSearchToggle" type="button" class="btn btn-secondary btn-sm" data-toggle="collapse"
+                    data-target="#locationSearch">Choose Location</button>
             <div id="locationSearch" class="collapse">
                 <input class="selectize-input searchTextBox" form="xForm" name="pac_input" id="pac-input" type="text"
                        placeholder="Enter a location" />
-                <input class="selectize-input searchTextBox" form="xForm" type="number" name="radius" id="radius" step="any" placeholder="Radius (km)" />
+                <input class="selectize-input searchTextBox" form="xForm" type="number" name="radius"
+                       id="radius" step="any" placeholder="Radius (km)" value="1"  min="1"/>
                 <div class="pac-card" id="pac-card">
                     <div id="map"></div>
                 </div>
             </div>
             <hr />
-            <form id="xForm" onsubmit="onSubmit('<%- page %>', (dat) => searchFn(dat, cuisine_arr));">
+            <form id="xForm" onsubmit="onSubmit('<%- page %>', (dat) => searchFn(dat));">
                 <input type="hidden" name="lat" id="lat" value="0"/>
                 <input type="hidden" name="lng" id="lng" value="0"/>
             </form>
             <button form="xForm" id="g" name="g" type="submit" class="btn btn-primary">Search</button>
         </header>
-        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initializer"
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initMap"
                 async defer></script>
         <main id="results" style="margin-top:30px">
         </main>
