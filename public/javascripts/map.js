@@ -25,7 +25,7 @@ function initMap(lat, lng, type) {
         center: {lat, lng},
         zoom: 15
     });
-
+    console.log("Init map", map);
     var styles = {
         hide: [
             {
@@ -89,6 +89,7 @@ function placeMarkers(locations) {
 
     var labels = '123456789';
     var bounds = new google.maps.LatLngBounds();
+    console.log("Markers", map);
     bounds.extend(map.getCenter());
 
     markers = locations.map(function(location, i) {

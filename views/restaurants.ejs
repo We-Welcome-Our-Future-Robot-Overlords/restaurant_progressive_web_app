@@ -3,8 +3,6 @@
     <head>
         <% const title = global.primary_routes_title[page]%>
         <% include ../views/templates/head %>
-        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initializer"
-                async defer></script>
         <script src="/javascripts/map.js"></script>
         <script src="/javascripts/search.js"></script>
         <script>
@@ -18,7 +16,6 @@
             }
             $('document').ready(() => {
                 setCuisineSel();
-                setLocation();
                 $("#locationSearch").hide();
                 $( "#toggleLocationSearch" ).click(() => {
                     $( "#locationSearch" ).slideToggle(() => {
@@ -50,6 +47,8 @@
             </form>
             <button form="xForm" id="g" name="g" type="submit" class="btn btn-primary">Search</button>
         </header>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initializer"
+                async defer></script>
         <main id="results" style="margin-top:30px">
         </main>
     </body>
