@@ -1,4 +1,10 @@
-function sendAjaxQuery(url, data, fn) {
+/**
+ * Send an ajax query
+ * @param url the url to post to
+ * @param data the data to post
+ * @param successor callback function that uses the return data from the server.
+ */
+function sendAjaxQuery(url, data, successor) {
     $.ajax({
         url: url ,
         data: data,
@@ -11,7 +17,7 @@ function sendAjaxQuery(url, data, fn) {
             var ret = dataR;
             // in order to have the object printed by alert
             // we need to JSON stringify the object
-            fn(ret);
+            successor(ret);
         },
         error: function (xhr, status, error) {
             alert('Error: ' + error.message);
@@ -19,6 +25,13 @@ function sendAjaxQuery(url, data, fn) {
     });
 }
 
+/**
+ * For form submissions
+ * @param url the url to post to
+ * @param form_selector the form
+ * @param validator the validation function
+ * @param successor the callback function
+ */
 function onSubmit(url, form_selector, validator, successor) {
     var formArray= $(form_selector).serializeArray();
     var data={};
