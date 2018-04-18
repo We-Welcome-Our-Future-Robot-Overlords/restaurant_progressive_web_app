@@ -22,7 +22,7 @@ function showPosition(position, _callback) {
 }
 
 var map;
-
+var default_marker;
 /**
  * Render the map initially at the center of the artists in their genius
  * @param lat latitude
@@ -52,6 +52,11 @@ function initMap(lat, lng, type, _callback) {
         ]
     };
     map.setOptions({styles: styles['hide']});
+
+    default_marker =   new google.maps.Marker({
+        map: map,
+        position: {lat: lat, lng: lng}
+    });
 
     if (type != undefined) {
         if (_callback != undefined) {
@@ -91,7 +96,10 @@ function autoFillAddresss(type, _callback) {
             map.setCenter(place.geometry.location);
             map.setZoom(17);
         }
-
+        default_marker =   new google.maps.Marker({
+            map: map,
+            position: place.geometry.location
+        });
         $('input#lat').val(place.geometry.location.lat());
         $('input#lng').val(place.geometry.location.lng());
     });
@@ -121,8 +129,8 @@ function placeMarkers(locations) {
             label: labels[i % labels.length]
         });
     });
-
-}zoomTight();
+    zoomTight();
+}
 
 function zoomTight() {
     markers.forEach(function(marker) {
