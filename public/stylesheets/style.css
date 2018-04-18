@@ -9,7 +9,7 @@ main {
 .jumbotron {
     padding: 16px 0;
 }
-.searchTextBox, .selectize-control.multi {
+.searchTextBox, .jumbotron .selectize-control.multi {
     text-align: left;
     width: 90%;
     margin: 4px auto;
@@ -38,17 +38,6 @@ main {
     margin-right: 12px;
 }
 
-/* Search Results */
-.searchResult {
-    border: 1px solid #d64161;
-    border-radius: 8px;
-    margin: 8px 0;
-    padding: 8px;
-}
-.searchResult .btn-sm {
-    margin-right: 2px;
-}
-
 /* Mobile */
 @media only screen and (max-width: 600px) {
     main {
@@ -57,13 +46,13 @@ main {
     .jumbotron {
         padding: 8px 0;
     }
-    .searchTextBox, .selectize-control.multi, .pac-card {
+    .searchTextBox, .jumbotron .selectize-control.multi, .pac-card {
         width: 100%;
     }
     .pac-card #map {
         height: 40vmax;
     }
-    #results > .card {
+    main > .card {
         border-width: 1px 0;
     }
     #locSearchToggle, button#g {

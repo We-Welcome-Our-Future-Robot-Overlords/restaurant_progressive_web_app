@@ -18,7 +18,7 @@ function showPosition(position, _callback) {
     console.log('Asking Location');
     $('input#lat').val(position.coords.latitude);
     $('input#lng').val(position.coords.longitude);
-    _callback(position.coords.latitude, position.coords.longitude, 'geocode');
+    _callback(position.coords.latitude, position.coords.longitude, 'establishment');
 }
 
 var map;
@@ -96,12 +96,11 @@ function autoFillAddresss(type, _callback) {
             map.setCenter(place.geometry.location);
             map.setZoom(17);
         }
-        default_marker =   new google.maps.Marker({
-            map: map,
-            position: place.geometry.location
-        });
+        default_marker.setPosition(place.geometry.location);
         $('input#lat').val(place.geometry.location.lat());
         $('input#lng').val(place.geometry.location.lng());
+        $('input#pac-input').val(place.formatted_address);
+        $('input#restaurantTitle').val(place.name);
 
     });
     if (_callback != undefined) {
