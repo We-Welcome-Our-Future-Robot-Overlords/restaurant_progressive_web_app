@@ -39,7 +39,6 @@ exports.search = function (req, res, extra_dict) {
     if ('cuisine' in rstrntData) {
         let cuisine_arr = rstrntData.cuisine.split(",");
         rstrntData.cuisine = {$all: cuisine_arr};
-        delete rstrntData['all_any_cuisine'];
     }
 
     //Location Search

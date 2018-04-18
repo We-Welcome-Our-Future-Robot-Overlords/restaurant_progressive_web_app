@@ -25,20 +25,30 @@ router.get('/', function(req, res, next) {
 router.get('/search', function(req, res, next) {
     restaurant.prepare(req,res, {
         page: req.url,
-        API: process.env.GOOGLE_API});
+        API: process.env.GOOGLE_API
+    });
 });
 
 router.post('/search', (req, res) => {
     restaurant.search(req, res, {
         page: req.url,
-        API: process.env.GOOGLE_API});
+        API: process.env.GOOGLE_API
+    });
 });
 
 /* GET Create Restaurant page. */
 router.get('/add_restaurant', function(req, res, next) {
     res.render('add_restaurant', {
         page: req.url,
-        API: process.env.GOOGLE_API});
+        API: process.env.GOOGLE_API
+    });
 });
+
+router.get('/restaurant/:id', function (req, res, next) {
+    res.render('restaurant', {
+        page: req.url,
+        id: req.params.id
+    });
+})
 
 module.exports = router;
