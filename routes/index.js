@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var bodyParser= require("body-parser");
 
-
+let Restaurant = require('../models/restaurants');
 var restaurant = require('../controllers/restaurants');
 var initDB= require('../controllers/init');
 initDB.init();
@@ -39,6 +39,16 @@ router.get('/add_restaurant', function(req, res, next) {
     restaurant.prepare('add_restaurant', req,res, {
         page: req.url,
         API: process.env.GOOGLE_API});
+});
+
+/* GET View Restaurant page. */
+router.get('/restaurant/:id', function(req, res, next) {
+    Restaurant.findOne({_id: req.params.id}).exec(function(err, rstrnt) {
+        restaurant.prepare('restaurant', req,res, {
+                page: req.url,
+                restaurant: rstrnt
+            }
+        )});
 });
 
 module.exports = router;

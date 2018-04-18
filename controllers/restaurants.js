@@ -3,7 +3,7 @@ let Cuisine = require('../models/cuisine');
 let maths = require('../public/javascripts/maths');
 
 //---GET---
-exports.prepare = function(view, req, res, extra_dict) {
+exports.prepare = function(view,  req, res, extra_dict) {
     let pttCursor = Cuisine.find({}).exec(function(err, cuisines) {
         return_dict = Object.assign({},{
             cuisine_arr: cuisines}, extra_dict || {});

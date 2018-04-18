@@ -7,7 +7,7 @@ main {
 
 /* Search Controls*/
 .jumbotron {
-    padding: 16px 0;
+    padding: 64px 0 16px 0;
 }
 .searchTextBox, .jumbotron .selectize-control.multi {
     text-align: left;
@@ -42,9 +42,6 @@ main {
 @media only screen and (max-width: 600px) {
     main {
         width: 100%;
-    }
-    .jumbotron {
-        padding: 8px 0;
     }
     .searchTextBox, .jumbotron .selectize-control.multi, .pac-card {
         width: 100%;

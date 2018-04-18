@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <% const title = global.primary_routes_title[page]%>
+        <% const title =  restaurant.name%>
         <% include ../views/templates/head %>
     </head>
     <body>
         <% include ../views/templates/nav.ejs%>
         <header class="jumbotron jumbotron-fluid text-center bg-dark text-white">
-            <h1>Restaurant <%= id %></h1>
+            <h1><%= title %></h1>
         </header>
         <main>
+            <article class="card rounded-0">
+                <div class="card-body">
+                    <h5 class="card-title">Description</h5>
+                    <section class="card-text"><%= restaurant.description%></section>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><%= restaurant.address%></li>
+                    <li class="list-group-item">
+                        <div class="btn-group btn-group-sm">
+                        <%_ var cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id, kv.title])); _%>
+                        <%= restaurant.cuisine _%>
+                        </div>
+                    </li>
+                </ul>
+            </article>
         </main>
     </body>
 </html>

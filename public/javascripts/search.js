@@ -29,10 +29,12 @@ function searchFn(dat, cuisine_arr){
     var cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id, kv.title]));
     var locations = [];
     $('#results').html('');
+    let n = 0;
     dat.forEach((result) => {
+        n++;
         var result_card = $("<div class='card rounded-0 my-3'></div>");
         //TODO: Images
-        var card_body = $("<div class='card-body'><h4 class='card-title'>" + result.name + "</h4></div>");
+        var card_body = $("<div class='card-body'><h4 class='card-title'><a href='./restaurant/" +result._id + "'>" + n + "." + result.name + "</a></h4></div>");
         var card_text = $("<p class='card_text'>" + result.address + "</p><summary class='card-text'>" + result.description + "</summary>");
         var cuisine_tags = $('<div class="btn-group btn-group-sm"></div>');
         result.cuisine.forEach((c) => {
