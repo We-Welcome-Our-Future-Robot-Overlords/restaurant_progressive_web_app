@@ -10,17 +10,25 @@
             <h1><%= title %></h1>
         </header>
         <main>
-            <article class="card rounded-0">
-                <div class="card-body">
+            <article class="card bg-info rounded-0">
+                <div class="card-body text-light">
                     <h5 class="card-title">Description</h5>
                     <section class="card-text"><%= restaurant.description%></section>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><%= restaurant.address%></li>
-                    <li class="list-group-item">
+                    <li class="list-group-item rounded-0">
                         <div class="btn-group btn-group-sm">
-                        <%_ var cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id, kv.title])); _%>
-                        <%= restaurant.cuisine _%>
+                        <%_ var cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id.toString(), kv.title])); _%>
+                        <% console.log(cuisine_map); _%>
+                        <%_ restaurant.cuisine.forEach((c)=>{ _%>
+                            <button form="<%=c%>" type='submit' class='btn btn-info'>
+                                <form id="<%=c%>" style="display:none;" action="/search" method="post">
+                                    <input name="cuisine" value="<%=c%>" hidden />
+                                </form>
+                                <%=cuisine_map.get(c.toString()); _%>
+                            </button>
+                        <%});_%>
                         </div>
                     </li>
                 </ul>
