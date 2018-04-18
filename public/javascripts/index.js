@@ -19,12 +19,14 @@ function sendAjaxQuery(url, data, fn) {
     });
 }
 
-function onSubmit(url, fn) {
-    var formArray= $("form").serializeArray();
+function onSubmit(url, form_selector, validator, successor) {
+    var formArray= $(form_selector).serializeArray();
     var data={};
     for (index in formArray){
         data[formArray[index].name]= formArray[index].value;
     }
-    sendAjaxQuery(url, data, fn);
+    if (validator(data)) {
+        sendAjaxQuery(url, data, successor);
+    }
     event.preventDefault();
 }

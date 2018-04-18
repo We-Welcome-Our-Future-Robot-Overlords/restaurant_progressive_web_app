@@ -1,3 +1,6 @@
+/**
+ * Set the input for cuisines.
+ */
 function setCuisineSel(){
     $('#cuisine_selector').selectize({
         plugins: ['remove_button'],
@@ -9,6 +12,30 @@ function setCuisineSel(){
         options: cuisine_arr,
         create: false
     });
+}
+
+/***
+ * Validator function for onSubmit
+ * @param data JSON
+ */
+function validatorFn(data){
+    var text_arr = [];
+    for (var key in data) {
+        if ((key!=='lat')||(key!=='lng')||(key!=='radius')){
+            text_arr.push(data[key]);
+        }
+    }
+    /* Reduce is like Haskell's fold which we learnt in COM2001
+       If all text inputs were empty then their concatenation would be the empty string.
+       The condition would then be satisfied because empty strings are falsy.
+     */
+    if ((text_arr.reduce((a,b) => {return a+b}))) {
+        //If all text inputs were empty then the radius number input shouldn't be.
+        if (!data['radius']) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function searchFn(dat, cuisine_arr){
