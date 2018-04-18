@@ -102,6 +102,7 @@ function autoFillAddresss(type, _callback) {
         });
         $('input#lat').val(place.geometry.location.lat());
         $('input#lng').val(place.geometry.location.lng());
+
     });
     if (_callback != undefined) {
         _callback();

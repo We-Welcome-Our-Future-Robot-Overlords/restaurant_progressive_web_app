@@ -7,11 +7,7 @@ var Restaurant = new Schema(
         name: {type: String, required: true},
         cuisine:  [{ type: Schema.Types.ObjectId, ref: 'Cuisine', required: true}],
         description: {type: String},
-        address: {
-            street: {type: String, required: true},
-            city: {type: String, required: true},
-            country: {type: String, required: true}
-        },
+        address: {type: String},
         location: {
             lat: {type: Number},
             lng: {type: Number}
@@ -32,7 +28,7 @@ Restaurant.virtual('full_address')
     }
 );
 
-Restaurant.index({name: 'text', description: 'text'});
+Restaurant.index({name: 'text', description: 'text', address: 'text'});
 
 Restaurant.set('toObject', {getters: true, virtual: true});
 

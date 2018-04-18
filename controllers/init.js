@@ -54,11 +54,7 @@ exports.init = function () {
         name: 'Tasteez',
         cuisine: [c3._id, c4.id],
         description: 'Nope',
-        address: {
-            street: '196 Brook Hill',
-            city: 'Sheffield',
-            country: 'United Kingdom'
-        },
+        address: "196 Brook Hill, Sheffield, United Kingdom",
         location: {
             lat: 53.382081,
             lng: -1.482708
@@ -73,11 +69,7 @@ exports.init = function () {
         name: 'KFC',
         cuisine: [c1._id, c3.id],
         description: 'Kentucky Fried Chicken',
-        address: {
-            street: '163 West Street',
-            city: 'Sheffield',
-            country: 'United Kingdom'
-        },
+        address: "163 West Street, Sheffield, United Kingdom",
         location: {
             lat: 53.3800525,
             lng: -1.4792723000000478
@@ -92,11 +84,7 @@ exports.init = function () {
         name: 'City Chicken Cafe',
         cuisine: [c3._id, c4._id],
         description: 'No coffee',
-        address: {
-            street: '29 Mansfield Road',
-            city: 'Nottingham',
-            country: 'United Kingdom'
-        },
+        address: "29 Mansfield Road, Nottingham, United Kingdom",
         location: {
             lat: 52.95837629999999,
             lng: -1.1493497
@@ -111,11 +99,7 @@ exports.init = function () {
         name: 'KFC',
         cuisine: [c1._id, c3.id],
         description: 'Kentucky Fried Chicken',
-        address: {
-            street: '23-25 Milton Street',
-            city: 'Nottingham',
-            country: 'United Kingdom'
-        },
+        address: "23-25 Milton Street, Nottingham, United Kingdom",
         location: {
             lat: 52.9557397,
             lng: -1.1484259000000065
@@ -130,11 +114,7 @@ exports.init = function () {
         name: "Mr Man's Restaurant",
         cuisine: [c2.id, c5.id],
         description: 'Wollaton',
-        address: {
-            street: 'Wollaton Park, Wollaton Road',
-            city: 'Nottingham',
-            country: 'United Kingdom'
-        },
+        address: "Wollaton Park, Wollaton Road, Nottingham, United Kingdom",
         location: {
             lat: 52.9537045,
             lng: -1.213083
@@ -149,11 +129,7 @@ exports.init = function () {
         name: 'Orient Express',
         cuisine: [c2.id, c4.id],
         description: 'Near Diamond',
-        address: {
-            street: '290 Glossop Road',
-            city: 'Sheffield',
-            country: 'United Kingdom'
-        },
+        address: "290 Glossop Road, Sheffield, United Kingdom",
         location: {
             lat: 53.3802244,
             lng: -1.4823355999999421
