@@ -43,3 +43,20 @@ function onSubmit(url, form_selector, validator, successor) {
     }
     event.preventDefault();
 }
+
+/**
+ * Set the input for cuisines.
+ */
+function setCuisineSel(){
+    $('#cuisine_selector').selectize({
+        plugins: ['remove_button'],
+        persist: false,
+        maxItems: null,
+        valueField: '_id',
+        labelField: 'title',
+        searchField: 'title',
+        options: cuisine_arr,
+        create: false,
+        theme: 'links'
+    });
+}

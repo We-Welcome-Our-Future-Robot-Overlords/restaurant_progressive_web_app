@@ -3,12 +3,12 @@ let Cuisine = require('../models/cuisine');
 let maths = require('../public/javascripts/maths');
 
 //---GET---
-exports.prepare = function(req, res, extra_dict) {
+exports.prepare = function(view, req, res, extra_dict) {
     let pttCursor = Cuisine.find({}).exec(function(err, cuisines) {
         return_dict = Object.assign({},{
             cuisine_arr: cuisines}, extra_dict || {});
         console.log(return_dict);
-        res.render('search', return_dict);
+        res.render(view, return_dict);
     });
 }
 
@@ -91,7 +91,7 @@ exports.search = function (req, res, extra_dict) {
                                 keywords: kw,
                                 result_arr: JSON.stringify(restaurants)
                             }, extra_dict || {});
-                            exports.prepare(req, res, return_dict);
+                            exports.prepare('search', req, res, return_dict);
                         }
                     }
                 });

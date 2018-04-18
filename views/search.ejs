@@ -50,12 +50,12 @@
         <% include ../views/templates/nav.ejs%>
         <header class="jumbotron jumbotron-fluid text-center bg-dark text-white">
             <h1><%= title %></h1>
-            <input class="selectize-input searchTextBox" form="searchForm" type="text" name="keywords" id="keywords" placeholder="Keywords" <%-(typeof keywords !== 'undefined') ? "value='" + keywords + "'" : ''%>"/><br />
+            <input class="form-control searchTextBox" form="searchForm" type="text" name="keywords" id="keywords" placeholder="Keywords" <%-(typeof keywords !== 'undefined') ? "value='" + keywords + "'" : ''%>"/><br />
             <input form="searchForm" type="text" name="cuisine" id="cuisine_selector" placeholder="Cuisine"/>
             <button id="locSearchToggle" type="button" class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#locationSearch">Choose Location<span class="oi ml-1" data-glyph="chevron-bottom"></span></button>
             <div id="locationSearch" class="collapse">
-                <input class="selectize-input searchTextBox" form="searchForm" name="pac_input" id="pac-input" type="text" placeholder="Enter a location" />
-                <input class="selectize-input searchTextBox" form="searchForm" type="number" name="radius" id="radius" step="any" placeholder="Radius (km)" min="1"/>
+                <input class="form-control searchTextBox" form="searchForm" name="pac_input" id="pac-input" type="text" placeholder="Enter a location" />
+                <input class="form-control searchTextBox" form="searchForm" type="number" name="radius" id="radius" step="any" placeholder="Radius (km)" min="1"/>
                 <div class="pac-card" id="pac-card">
                     <div id="map"></div>
                 </div>

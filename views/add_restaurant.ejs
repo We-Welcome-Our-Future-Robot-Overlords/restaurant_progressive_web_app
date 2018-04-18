@@ -5,9 +5,13 @@
         <% include ../views/templates/head %>
         <script src="/javascripts/map.js"></script>
         <script>
+            var cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
             function initializer() {
                 initMap(53.3816197, -1.4820851, 'geocode', autoFillAddresss('geocode'));
             }
+            $('document').ready(() => {
+                setCuisineSel();
+            });
         </script>
     </head>
     <body>
@@ -16,26 +20,46 @@
             <h1><%= title %></h1>
         </header>
         <main>
-            <h1>Preview:</h1>
+            <div class=""card>
+                <div class="card-body pac-card" id="pac-card">
+
+                    <h5 class="card-title">
+                        Address
+                    </h5>
+                    <div id="pac-container">
+                        <input id="pac-input" type="text"
+                               placeholder="Enter a location">
+                    </div>
+                    <div id="map"></div>
+                    <div id="infowindow-content">
+                        <img src="" width="16" height="16" id="place-icon">
+                        <span id="place-name" class="title"></span><br>
+                        <span id="place-address"></span>
+                    </div>
+
+                    <div id="address-output"></div>
+                    <form id="addRestaurantForm">
+                        <input id="lat"/>
+                        <input id="lng"/>
+                        <div class="form-group">
+                            <input form="searchForm" type="text" name="cuisine" id="cuisine_selector" placeholder="Cuisine"/>
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
         </main>
-        <div class="pac-card" id="pac-card">
-            <div id="title">
-                Autocomplete Address
-            </div>
-            <div id="pac-container">
-                <input id="pac-input" type="text"
-                       placeholder="Enter a location">
-            </div>
-            <div id="map"></div>
-            <div id="infowindow-content">
-                <img src="" width="16" height="16" id="place-icon">
-                <span id="place-name" class="title"></span><br>
-                <span id="place-address"></span>
-            </div>
-        </div>
-        <div id="address-output"></div>
-        <input id="lat"/>
-        <input id="lng"/>
         <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initializer"
                 async defer></script>
     </body>

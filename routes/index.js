@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
 
 /* GET search page. */
 router.get('/search', function(req, res, next) {
-    restaurant.prepare(req,res, {
+    restaurant.prepare('search', req,res, {
         page: req.url,
         API: process.env.GOOGLE_API});
 });
@@ -36,7 +36,7 @@ router.post('/search', (req, res) => {
 
 /* GET Create Restaurant page. */
 router.get('/add_restaurant', function(req, res, next) {
-    res.render('add_restaurant', {
+    restaurant.prepare('add_restaurant', req,res, {
         page: req.url,
         API: process.env.GOOGLE_API});
 });
