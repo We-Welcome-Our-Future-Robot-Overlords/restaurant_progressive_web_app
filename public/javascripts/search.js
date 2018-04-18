@@ -23,19 +23,19 @@ function setCuisineSel(cuisine_arr){
  */
 function validatorFn(data){
     var text_arr = [];
-    console.log(data);
-    for (var key in data) {
-        if ((key.name!=='lat')||(key.name!=='lng')||(key.name!=='radius')){
-            text_arr.push(data[key]);
-        }
-    }
+    text_arr.push(data['keywords']);
+    text_arr.push(data['cuisine']);
+    text_arr.push(data['pac_input']);
+
     /* Reduce is like Haskell's fold which we learnt in COM2001
        If all text inputs were empty then their concatenation would be the empty string.
        The condition would then be satisfied because empty strings are falsy.
      */
-    if ((text_arr.reduce((a,b) => {return a+b}))) {
+    if (text_arr.join('') == "") {
         return false;
     }
+    console.log(text_arr)
+    console.log(text_arr.join(''))
     return true;
 }
 
