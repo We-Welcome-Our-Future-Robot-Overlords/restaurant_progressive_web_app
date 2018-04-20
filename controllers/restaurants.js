@@ -100,3 +100,13 @@ exports.search = function (req, res, extra_dict) {
         }
     }
 }
+
+exports.add = function (req, res, extra_dict) {
+    Restaurant.findOne({_id: req.params.id}).exec(function (err, rstrnt) {
+        restaurant.prepare('restaurant', req, res, {
+                page: req.url,
+                restaurant: rstrnt
+            }
+        )
+    });
+}

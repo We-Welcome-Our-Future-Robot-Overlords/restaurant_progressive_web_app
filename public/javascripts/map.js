@@ -1,11 +1,11 @@
 /**
- * Asks the user  fortheir current location
+ * Asks the user  for their current location
  * @param _callback callback function
  * @param _err error function
  */
 function setLocation(_callback, _err) {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(_callback, _err);
+        navigator.geolocation.getCurrentPosition(_callback, _err, {timeout: 5000});
     }
 }
 
@@ -18,19 +18,18 @@ function showPosition(position, _callback) {
     console.log('Asking Location');
     $('input#lat').val(position.coords.latitude);
     $('input#lng').val(position.coords.longitude);
-    _callback(position.coords.latitude, position.coords.longitude, 'establishment');
+    _callback(position.coords.latitude, position.coords.longitude, 'geocode');
 }
 
 var map;
 var default_marker;
 /**
- * Render the map initially at the center of the artists in their genius
+ * Render the map
  * @param lat latitude
  * @param lng longitude
- * @param type kingdom
  * @param _callback callback function
  */
-function initMap(lat, lng, type, _callback) {
+function initMap(lat, lng, _callback) {
     console.log('Setting Location');
     lat = parseFloat(lat);
     lng = parseFloat(lng);
@@ -58,20 +57,17 @@ function initMap(lat, lng, type, _callback) {
         position: {lat: lat, lng: lng}
     });
 
-    if (type != undefined) {
-        if (_callback != undefined) {
-            _callback(type);
-        }
+    if (_callback != undefined) {
+        _callback;
     }
-
 }
 
-function autoFillAddresss(type, _callback) {
+function autoFillAddresss(_callback) {
     var input = document.getElementById('pac-input');
 
 
     var autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.setTypes([type]);
+    autocomplete.setTypes([]);
     // Bind the map's bounds (viewport) property to the autocomplete object,
     // so that the autocomplete requests use the current map bounds for the
     // bounds option in the request.

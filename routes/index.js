@@ -40,6 +40,12 @@ router.get('/add_restaurant', function(req, res, next) {
         page: req.url,
         API: process.env.GOOGLE_API});
 });
+/* Post Create Restaurant page. */
+router.post('/search', (req, res) => {
+    restaurant.add(req, res, {
+        page: req.url,
+        API: process.env.GOOGLE_API});
+});
 
 /* GET View Restaurant page. */
 router.get('/restaurant/:id', function(req, res, next) {

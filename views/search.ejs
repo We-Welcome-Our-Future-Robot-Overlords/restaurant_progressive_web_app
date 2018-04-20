@@ -10,10 +10,10 @@
             function initializer() {
                 console.log('Map Loaded');
                 setLocation((position) => {
-                    showPosition(position, (lat, lng, type) => {
-                        initMap(lat,lng, type, (type) => {
+                    showPosition(position, (lat, lng) => {
+                        initMap(lat,lng, () => {
                             console.log('Fitting Map')
-                            autoFillAddresss(type, ()=> {
+                            autoFillAddresss(()=> {
                                 console.log('Ready')
                                 <% if (typeof result_arr !== 'undefined') { %>
                                 searchFn(<%-result_arr%>, cuisine_arr);
@@ -23,7 +23,7 @@
                         });
                     });
                 }, ()=>{console.log("Default");
-                    initMap(53.3816197,-1.4820851, 'geocode');
+                    initMap(53.3816197,-1.4820851);
                     <% if (typeof result_arr !== 'undefined') { %>
                     searchFn(<%-result_arr%>, cuisine_arr);
                     $('#locSearchToggle').click();

@@ -7,7 +7,7 @@
         <script>
             var cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
             function initializer() {
-                initMap(53.3816197, -1.4820851, 'establishment', autoFillAddresss('establishment'));
+                initMap(53.3816197, -1.4820851, autoFillAddresss());
             }
             $('document').ready(() => {
                 setCuisineSel();
@@ -31,7 +31,7 @@
                     </div>
                     <div id="map"></div>
                     <div id="address-output"></div>
-                    <form id="addRestaurantForm">
+                    <form id="addRestaurantForm" method="post">
                         <input id="lat" hidden/>
                         <input id="lng" hidden/>
                         <div class="form-group">
