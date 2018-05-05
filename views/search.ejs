@@ -10,25 +10,19 @@
             function initializer() {
                 console.log('Map Loaded');
                 setLocation((position) => {
+                    console.log("Current Location");
                     showPosition(position, (lat, lng) => {
-                        initMap(lat,lng, () => {
-                            console.log('Fitting Map')
-                            autoFillAddresss(()=> {
-                                console.log('Ready')
-                                <% if (typeof result_arr !== 'undefined') { %>
-                                searchFn(<%-result_arr%>, cuisine_arr);
-                                $('#locSearchToggle').click();
-                                <%}%>
-                            });
-                        });
+                        initMap(lat,lng, autoFillAddresss);
                     });
-                }, ()=>{console.log("Default");
-                    initMap(53.3816197,-1.4820851);
-                    <% if (typeof result_arr !== 'undefined') { %>
-                    searchFn(<%-result_arr%>, cuisine_arr);
-                    $('#locSearchToggle').click();
-                    <%}%>
+                }, (error)=>{
+                    console.log("Default Location");
+                    initMap(53.3816197,-1.4820851, autoFillAddresss);
                 });
+                console.log('Map Ready')
+                <% if (typeof result_arr !== 'undefined') { %>
+                searchFn(<%-result_arr%>, cuisine_arr);
+                $('#locSearchToggle').click();
+                <%}%>
             }
             $('document').ready(() => {
                 setCuisineSel();
@@ -55,7 +49,7 @@
             <button id="locSearchToggle" type="button" class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#locationSearch">Choose Location<span class="oi ml-1" data-glyph="chevron-bottom"></span></button>
             <div id="locationSearch" class="collapse">
                 <input class="form-control searchTextBox" form="searchForm" name="pac_input" id="pac-input" type="text" placeholder="Enter a location" />
-                <input class="form-control searchTextBox" form="searchForm" type="number" name="radius" id="radius" step="any" value="1" min="1" max="17"/>
+                <input class="form-control searchTextBox" form="searchForm" type="number" name="radius" id="radius" step="any" value="1" min="1" max="17" onchange="circleRadius()"/>
                 <div class="pac-card" id="pac-card">
                     <div id="map"></div>
                 </div>

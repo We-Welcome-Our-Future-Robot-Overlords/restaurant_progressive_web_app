@@ -18,11 +18,12 @@ function showPosition(position, _callback) {
     console.log('Asking Location');
     $('input#lat').val(position.coords.latitude);
     $('input#lng').val(position.coords.longitude);
-    _callback(position.coords.latitude, position.coords.longitude, 'geocode');
+    _callback(position.coords.latitude, position.coords.longitude);
 }
 
 var map;
 var default_marker;
+var circle;
 /**
  * Render the map
  * @param lat latitude
@@ -52,17 +53,27 @@ function initMap(lat, lng, _callback) {
     };
     map.setOptions({styles: styles['hide']});
 
-    default_marker =   new google.maps.Marker({
+    default_marker = new google.maps.Marker({
         map: map,
         position: {lat: lat, lng: lng}
     });
 
+    circle = new google.maps.Circle({
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.7,
+        fillColor: '#FF0000',
+        fillOpacity: 0.05,
+        map: map,
+        center: {lat, lng},
+        radius: 1000
+    });
+
     if (_callback != undefined) {
-        _callback;
+        _callback();
     }
 }
 
-function autoFillAddresss(_callback) {
+function autoFillAddresss() {
     var input = document.getElementById('pac-input');
 
 
@@ -71,9 +82,7 @@ function autoFillAddresss(_callback) {
     // Bind the map's bounds (viewport) property to the autocomplete object,
     // so that the autocomplete requests use the current map bounds for the
     // bounds option in the request.
-    if (_callback != undefined) {
-        autocomplete.bindTo('bounds', map);
-    }
+    autocomplete.bindTo('bounds', map);
 
 
     autocomplete.addListener('place_changed', function() {
@@ -93,15 +102,14 @@ function autoFillAddresss(_callback) {
             map.setZoom(17);
         }
         default_marker.setPosition(place.geometry.location);
+        circle.setCenter(place.geometry.location);
+
         $('input#lat').val(place.geometry.location.lat());
         $('input#lng').val(place.geometry.location.lng());
         $('input#pac-input').val(place.formatted_address);
         $('input#restaurantTitle').val(place.name);
 
     });
-    if (_callback != undefined) {
-        _callback();
-    }
 }
 
 var markers = [];
@@ -138,4 +146,9 @@ function zoomTight() {
     } else if (markers.length > 1){
         map.fitBounds(bounds);
     }
+}
+
+function circleRadius() {
+    var radius = parseFloat(document.getElementById("radius").value);
+    circle.setRadius(radius*1000);
 }
