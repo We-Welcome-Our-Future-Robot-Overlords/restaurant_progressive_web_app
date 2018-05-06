@@ -9,6 +9,7 @@ function setLocation(_callback, _err) {
     }
 }
 
+var current_loc = {lat: 53.3816197, lng: -1.4820851};
 /**
  * Show the positions off of the map,
  * @param position position
@@ -16,9 +17,11 @@ function setLocation(_callback, _err) {
  */
 function showPosition(position, _callback) {
     console.log('Asking Location');
-    $('input#lat').val(position.coords.latitude);
-    $('input#lng').val(position.coords.longitude);
-    _callback(position.coords.latitude, position.coords.longitude);
+    current_loc.lat = position.coords.latitude;
+    current_loc.lng = position.coords.longitude;
+    $('input#lat').val(current_loc.lat);
+    $('input#lng').val(current_loc.lng);
+    _callback(current_loc.lat, current_loc.lng);
 }
 
 var map;
@@ -55,7 +58,9 @@ function initMap(lat, lng, _callback) {
 
     default_marker = new google.maps.Marker({
         map: map,
-        position: {lat: lat, lng: lng}
+        position: {lat: lat, lng: lng},
+        icon: 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+        visible: false
     });
 
     circle = new google.maps.Circle({
@@ -65,7 +70,8 @@ function initMap(lat, lng, _callback) {
         fillOpacity: 0.05,
         map: map,
         center: {lat, lng},
-        radius: 1000
+        radius: 1000,
+        visible: false
     });
 
     if (_callback != undefined) {
@@ -76,6 +82,13 @@ function initMap(lat, lng, _callback) {
 function autoFillAddresss() {
     var input = document.getElementById('pac-input');
 
+    // hide marker when no input in pac-input
+    input.addEventListener("change", function() {
+        if (input.value == "") {
+            default_marker.setVisible(false);
+            circle.setVisible(false);
+        }
+    });
 
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.setTypes([]);
@@ -87,6 +100,8 @@ function autoFillAddresss() {
 
     autocomplete.addListener('place_changed', function() {
         var place = autocomplete.getPlace();
+        default_marker.setVisible(false);
+        circle.setVisible(false);
         if (!place.geometry) {
             // User entered the name of a Place that was not suggested and
             // pressed the Enter key, or the Place Details request failed.
@@ -102,7 +117,9 @@ function autoFillAddresss() {
             map.setZoom(17);
         }
         default_marker.setPosition(place.geometry.location);
+        default_marker.setVisible(true);
         circle.setCenter(place.geometry.location);
+        circle.setVisible(true);
 
         $('input#lat').val(place.geometry.location.lat());
         $('input#lng').val(place.geometry.location.lng());
@@ -142,7 +159,7 @@ function zoomTight() {
     });
     if (markers.length == 1){
         map.setCenter(markers[0].getPosition());
-        map.setZoom(17);
+        map.setZoom(15);
     } else if (markers.length > 1){
         map.fitBounds(bounds);
     }
@@ -151,4 +168,23 @@ function zoomTight() {
 function circleRadius() {
     var radius = parseFloat(document.getElementById("radius").value);
     circle.setRadius(radius*1000);
+}
+
+function toggleLocation(){
+    document.getElementById("pac-input").readOnly = document.getElementById("current-loc").checked;
+    if (document.getElementById("current-loc").checked){
+        $('input#lat').val(current_loc.lat);
+        $('input#lng').val(current_loc.lng);
+        $('input#pac-input').val("Current Location");
+        map.setCenter(current_loc);
+        map.setZoom(15);
+        default_marker.setPosition(current_loc);
+        default_marker.setVisible(true);
+        circle.setCenter(current_loc);
+        circle.setVisible(true);
+    } else {
+        $('input#pac-input').val("");
+        default_marker.setVisible(false);
+        circle.setVisible(false);
+    }
 }
