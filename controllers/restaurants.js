@@ -12,6 +12,20 @@ exports.prepare = function(view,  req, res, extra_dict) {
     });
 }
 
+exports.show = function(view, req, res) {
+    Restaurant.findOne({_id: req.params.id}).exec(function(err, rstrnt) {
+        if (rstrnt != null){
+            exports.prepare(view, req,res, {
+                restaurant: rstrnt,
+                page: req.url
+            })
+        } else {
+            res.redirect('/search');
+        }
+    });
+}
+
+
 //---POST---
 //Remove empty attributes:
 function clean(obj) {
@@ -101,12 +115,32 @@ exports.search = function (req, res, extra_dict) {
     }
 }
 
-exports.add = function (req, res, extra_dict) {
-    Restaurant.findOne({_id: req.params.id}).exec(function (err, rstrnt) {
-        restaurant.prepare('restaurant', req, res, {
-                page: req.url,
-                restaurant: rstrnt
+exports.add = function (req, res) {
+    var rstrntData = req.body;
+    if (rstrntData == null) {
+        res.status(403).send('No data sent!')
+    }
+    try {
+        var restaurant = new Restaurant({
+            name: rstrntData.restaurantTitle,
+            cuisine: rstrntData.restaurantCuisine,
+            description: rstrntData.restaurantDescription,
+            address: rstrntData.restaurantAddress,
+            location: {
+                lat: rstrntData.lat,
+                lng: rstrntData.lng
             }
-        )
-    });
+        });
+        console.log('received: ' + restaurant);
+
+        restaurant.save(function (err, results) {
+            console.log(results._id);
+            if (err)
+                res.status(500).send('Invalid data!');
+            res.redirect('/restaurant/' + results._id);
+        });
+    } catch (e) {
+        res.status(500).send('error ' + e);
+    }
 }
+

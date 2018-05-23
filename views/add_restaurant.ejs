@@ -7,7 +7,7 @@
         <script>
             var cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
             function initializer() {
-                initMap(53.3816197, -1.4820851, autoFillAddresss());
+                initMap(53.3816197, -1.4820851, autoFillAddresss);
             }
             $('document').ready(() => {
                 setCuisineSel();
@@ -26,21 +26,21 @@
                     <h5 class="card-title">
                         Where is the restaurant?
                     </h5>
-                    <div id="pac-container">
-                        <input class="form-control" for="addRestaurantForm" name="restaurantAddress" id="pac-input" type="text" placeholder="Enter a location">
-                    </div>
-                    <div id="map"></div>
-                    <div id="address-output"></div>
-                    <form id="addRestaurantForm" method="post">
-                        <input id="lat" hidden/>
-                        <input id="lng" hidden/>
+                    <form id="addRestaurantForm" method="post" onsubmit="onSubmit('/add_restaurant')">
+                        <div id="pac-container">
+                            <input class="form-control" for="addRestaurantForm" name="restaurantAddress" id="pac-input" type="text" placeholder="Enter a location" required>
+                        </div>
+                        <div id="map"></div>
+                        <div id="address-output"></div>
                         <div class="form-group">
+                            <input id="lat" name="lat" hidden/>
+                            <input id="lng" name="lng" hidden/>
                             <label for="restaurantTitle">Title</label>
-                            <input type="text" class="form-control" id="restaurantTitle" name="restaurantTitle" />
+                            <input type="text" class="form-control" id="restaurantTitle" name="restaurantTitle" required/>
                             <label for="restaurantDescription">Description</label>
-                            <textarea class="form-control" id="restaurantDescription"></textarea>
+                            <textarea class="form-control" id="restaurantDescription" name="restaurantDescription"></textarea>
                             <label for="restaurantCuisine">Cuisine</label>
-                            <input type="text" name="restaurantCuisine" id="cuisine_selector" />
+                            <input type="text" name="restaurantCuisine" id="cuisine_selector" required/>
                         </div>
                         <button type="submit" class="btn btn-success">Submit</button>
                     </form>
