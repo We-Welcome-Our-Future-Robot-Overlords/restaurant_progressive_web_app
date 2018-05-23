@@ -117,6 +117,10 @@ exports.search = function (req, res, extra_dict) {
 
 exports.add = function (req, res) {
     var rstrntData = req.body;
+    var rstrntPic = req.file;
+    console.log(rstrntData);
+    console.log(rstrntPic.filename);
+
     if (rstrntData == null) {
         res.status(403).send('No data sent!')
     }
@@ -129,7 +133,8 @@ exports.add = function (req, res) {
             location: {
                 lat: rstrntData.lat,
                 lng: rstrntData.lng
-            }
+            },
+            official_photo: rstrntPic.filename
         });
         console.log('received: ' + restaurant);
 

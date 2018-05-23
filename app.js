@@ -15,7 +15,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -27,6 +27,7 @@ app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist')); // 
 app.use('/selectize', express.static(__dirname + '/node_modules/selectize/dist')); // redirect selectize
 app.use('/selectize', express.static(__dirname + '/node_modules/selectize/dist')); // redirect open-iconic
 app.use('/open-iconic', express.static(__dirname + '/node_modules/open-iconic')); // redirect open-iconic
+app.use('/uploads', express.static(__dirname + '/uploads')); // redirect uploads picture
 
 app.use('/', index);
 app.use('/users', users);

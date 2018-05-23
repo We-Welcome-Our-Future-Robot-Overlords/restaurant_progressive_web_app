@@ -26,7 +26,8 @@
                     <h5 class="card-title">
                         Where is the restaurant?
                     </h5>
-                    <form id="addRestaurantForm" method="post" onsubmit="onSubmit('/add_restaurant')">
+                    <form id="addRestaurantForm" method="post" enctype="multipart/form-data">
+                        <input type="file" name="photo" accept="image/*">
                         <div id="pac-container">
                             <input class="form-control" for="addRestaurantForm" name="restaurantAddress" id="pac-input" type="text" placeholder="Enter a location" required>
                         </div>

@@ -1,12 +1,25 @@
 var express = require('express');
 var router = express.Router();
-var multer = require('multer');
 var bodyParser= require("body-parser");
-var upload = multer({dest: "./uploads"});
+var multer = require('multer');
+var crypto = require('crypto')
+
 
 var restaurant = require('../controllers/restaurants');
 var initDB= require('../controllers/init');
 initDB.init();
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../uploads/')
+    },
+    filename: function (req, file, cb) {
+        crypto.pseudoRandomBytes(16, function (err, raw) {
+            cb(null, raw.toString('hex') + Date.now() + '.jpg');
+        });
+    }
+});
+var upload = multer({ storage: storage });
 
 global.primary_routes_title = {
     '/': 'Home',
@@ -41,7 +54,7 @@ router.get('/add_restaurant', function(req, res, next) {
 });
 
 /* Post Create Restaurant page. */
-router.post('/add_restaurant', restaurant.add);
+router.post('/add_restaurant', upload.single('photo'),  restaurant.add);
 
 /* GET View Restaurant page. */
 router.get('/restaurant/:id', function(req, res, next) {

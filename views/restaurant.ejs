@@ -33,6 +33,9 @@
                     </li>
                 </ul>
             </article>
+            <% if (restaurant.official_photo != null) { %>
+                <img src="/uploads/<%= restaurant.official_photo %>" alt="Official Photo" width="250" height="250">
+            <% } %>
         </main>
     </body>
 </html>

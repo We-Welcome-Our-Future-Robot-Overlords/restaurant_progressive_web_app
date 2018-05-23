@@ -1,6 +1,4 @@
 var mongoose = require('mongoose');
-var Grid = require('gridfs-stream');
-Grid.mongo = mongoose.mongo;
 var Schema = mongoose.Schema;
 
 var Restaurant = new Schema(
@@ -15,8 +13,8 @@ var Restaurant = new Schema(
         },
         star: {type: Number, default: 0},
         rating_count: {type: Number, default: 0},
-        official_photo: {type: Schema.Types.ObjectId},
-        review_photos: [{type: Schema.Types.ObjectId}]
+        official_photo: {type: String},
+        review_photos: [{type: String}]
     }
 );
 
