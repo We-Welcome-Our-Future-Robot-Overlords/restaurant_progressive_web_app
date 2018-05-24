@@ -1,5 +1,6 @@
 let Restaurant = require('../models/restaurants');
 let Cuisine = require('../models/cuisine');
+let Review = require('../models/reviews');
 let maths = require('../public/javascripts/maths');
 
 //---GET---
@@ -15,9 +16,12 @@ exports.prepare = function(view,  req, res, extra_dict) {
 exports.show = function(view, req, res) {
     Restaurant.findOne({_id: req.params.id}).exec(function(err, rstrnt) {
         if (rstrnt != null){
-            exports.prepare(view, req,res, {
-                restaurant: rstrnt,
-                page: req.url
+            Review.find({restaurant: rstrnt._id}).exec(function(err, reviews) {
+                exports.prepare(view, req, res, {
+                    restaurant: rstrnt,
+                    reviews: reviews,
+                    page: req.url
+                })
             })
         } else {
             res.redirect('/search');

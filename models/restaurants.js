@@ -4,32 +4,20 @@ var Schema = mongoose.Schema;
 var Restaurant = new Schema(
     {
         name: {type: String, required: true},
-        cuisine:  [{ type: Schema.Types.ObjectId, ref: 'Cuisine', required: true}],
+        cuisine:  [{type: Schema.Types.ObjectId, ref: 'Cuisine', required: true}],
         description: {type: String},
         address: {type: String},
         location: {
             lat: {type: Number},
             lng: {type: Number}
         },
-        star: {type: Number, default: 0},
-        rating_count: {type: Number, default: 0},
+        rating: {type: Number, default: 0},
         official_photo: {type: String},
         review_photos: [{type: String}]
     }
 );
 
-/* TODO auto lat lng input */
-Restaurant.virtual('full_address')
-    .get(function() {
-        return this.name + " "
-            +  this.address.street + " "
-            +  this.address.city + " "
-            +  this.address.country
-    }
-);
-
 Restaurant.index({name: 'text', description: 'text', address: 'text'});
-
-Restaurant.set('toObject', {getters: true, virtual: true});
+Restaurant.set('toObject', {getters: true});
 
 module.exports = mongoose.model('Restaurant', Restaurant);

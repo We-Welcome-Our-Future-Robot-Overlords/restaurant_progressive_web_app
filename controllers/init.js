@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Restaurant = require('../models/restaurants');
 var Cuisine = require('../models/cuisine');
-
+var Review = require('../models/reviews');
 
 exports.init = function () {
     // uncomment if you need to drop the database
@@ -52,7 +52,7 @@ exports.init = function () {
 
     var r1 = new Restaurant({
         name: 'Tasteez',
-        cuisine: [c3._id, c4.id],
+        cuisine: [c3._id, c4._id],
         description: 'Nope',
         address: "196 Brook Hill, Sheffield, United Kingdom",
         location: {
@@ -67,7 +67,7 @@ exports.init = function () {
 
     var r2 = new Restaurant({
         name: 'KFC',
-        cuisine: [c1._id, c3.id],
+        cuisine: [c1._id, c3._id],
         description: 'Kentucky Fried Chicken',
         address: "163 West Street, Sheffield, United Kingdom",
         location: {
@@ -98,7 +98,7 @@ exports.init = function () {
 
     var r4 = new Restaurant({
         name: 'KFC',
-        cuisine: [c1._id, c3.id],
+        cuisine: [c1._id, c3._id],
         description: 'Kentucky Fried Chicken',
         address: "23-25 Milton Street, Nottingham, United Kingdom",
         location: {
@@ -114,7 +114,7 @@ exports.init = function () {
 
     var r5 = new Restaurant({
         name: "Mr Man's Restaurant",
-        cuisine: [c2.id, c5.id],
+        cuisine: [c2._id, c5._id],
         description: 'Wollaton',
         address: "Wollaton Park, Wollaton Road, Nottingham, United Kingdom",
         location: {
@@ -129,7 +129,7 @@ exports.init = function () {
 
     var r6 = new Restaurant({
         name: 'Orient Express',
-        cuisine: [c2.id, c4.id],
+        cuisine: [c2._id, c4._id],
         description: 'Near Diamond',
         address: "290 Glossop Road, Sheffield, United Kingdom",
         location: {
@@ -141,4 +141,18 @@ exports.init = function () {
     r6.save(function (err, results) {
         console.log("r6_id: " + results._id);
     });
+
+    var review_r2 = new Review({
+        author: 'Donald',
+        restaurant: r2._id,
+        star: 2,
+        comment: "Its just a KFC, what would you expect"
+    });
+
+    review_r2.save(function (err, results) {
+        console.log("review_r2_id: " + results._id);
+    });
+
+    r2.rating = 2;
+    r2.update()
 }

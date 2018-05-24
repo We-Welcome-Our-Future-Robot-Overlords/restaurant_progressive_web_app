@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <% const title =  restaurant.name%>
+        <% const title = restaurant.name %>
         <% include ../views/templates/head %>
     </head>
     <body>
 
         <header class="jumbotron jumbotron-fluid bg-dark">
-            <% include ../views/templates/nav.ejs%>
+            <% include ../views/templates/nav.ejs %>
         </header>
         <main>
             <div class="container">
                 <h1><%= title %></h1>
+                <h1>Rating: <%= restaurant.rating %></h1>
                 <div class="row">
                     <div class="col">
                         <img class="img-thumbnail" src="
@@ -27,10 +28,10 @@
                 <article class="card bg-info rounded-0">
                     <div class="card-body text-light">
                         <h5 class="card-title">Description</h5>
-                        <section class="card-text"><%= restaurant.description%></section>
+                        <section class="card-text"><%= restaurant.description %></section>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><%= restaurant.address%></li>
+                        <li class="list-group-item"><%= restaurant.address %></li>
                         <li class="list-group-item rounded-0">
                             <div class="btn-group btn-group-sm">
                             <%_ var cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id.toString(), kv.title])); _%>
@@ -38,7 +39,7 @@
                             <%_ restaurant.cuisine.forEach((c)=>{ _%>
                                 <button form="<%=c%>" type='submit' class='btn btn-info'>
                                     <form id="<%=c%>" style="display:none;" action="/search" method="post">
-                                        <input name="cuisine" value="<%=c%>" hidden />
+                                        <input name="cuisine" value="<%= c %>" hidden />
                                     </form>
                                     <%=cuisine_map.get(c.toString()); _%>
                                 </button>
@@ -47,6 +48,22 @@
                         </li>
                     </ul>
                 </article>
+
+                <form id="review" method="post" onsubmit="onSubmit('/review')">
+                    <input type="text" name="author" id="author" placeholder="Author"/>
+                    <input type="number" name="star" id="star" value="0" min="0" max="5"/>
+                    <input type="text" name="comment" id="comment" placeholder="Comment"/>
+                    <input type="hidden" name="rstrnt_id" id="rstrnt_id" value="<%= restaurant._id %>"/>
+                    <button id="review_btn" name="review_btn" type="submit" class="btn btn-primary">
+                        Submit Review<span class="oi ml-1" data-glyph="magnifying-glass"></span></button>
+                </form>
+
+                <% for(var i=0; i < reviews.length; i++){ %>
+                    <h1><%= reviews[i].author %></h1>
+                    <p><%= reviews[i].comment %></p>
+                    <p>Posted: <%= reviews[i].date %></p>
+                    <p>Star: <%= reviews[i].star %></p>
+                <% } %>
             </div>
         </main>
     </body>
