@@ -2,6 +2,8 @@ let Restaurant = require('../models/restaurants');
 let Cuisine = require('../models/cuisine');
 let Review = require('../models/reviews');
 let maths = require('../public/javascripts/maths');
+var crypto = require('crypto')
+var fs = require('fs-extra');
 
 //---GET---
 exports.prepare = function(view,  req, res, extra_dict) {
@@ -121,7 +123,7 @@ exports.search = function (req, res, extra_dict) {
 
 exports.add = function (req, res) {
     var rstrntData = req.body;
-    var rstrntPic = req.file;
+    console.log(rstrntData);
     if (rstrntData == null) {
         res.status(403).send('No data sent!')
     }
@@ -136,8 +138,15 @@ exports.add = function (req, res) {
                 lng: rstrntData.lng
             }
         });
-        if (rstrntPic != null) {
-            restaurant.official_photo = rstrntPic.filename
+        var rstrntPic = req.body.img;
+        if (rstrntPic != '') {
+            rstrntPic = rstrntPic.replace(/^data:image\/\w+;base64,/, "")
+            // strip off the data: url prefix to get just the base64-encoded bytes
+            var targetDirectory = '../private/uploads/'
+            var buf = new Buffer(rstrntPic, 'base64');
+            var fileName = crypto.randomBytes(20).toString('hex') + '.jpg'
+            fs.writeFile(targetDirectory + fileName, buf);
+            restaurant.official_photo = fileName
         }
         console.log('received: ' + restaurant);
 
@@ -150,6 +159,18 @@ exports.add = function (req, res) {
                 res.status(500).send('Invalid data!');
             });
 
+    } catch (e) {
+        res.status(500).send('error ' + e);
+    }
+}
+
+exports.review = function (req, res) {
+    var reviewData = req.body;
+    if (reviewData == null) {
+        res.status(403).send('No data sent!')
+    }
+    try {
+        res.status(500).send('TODO');
     } catch (e) {
         res.status(500).send('error ' + e);
     }

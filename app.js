@@ -27,7 +27,7 @@ app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist')); // 
 app.use('/selectize', express.static(__dirname + '/node_modules/selectize/dist')); // redirect selectize
 app.use('/selectize', express.static(__dirname + '/node_modules/selectize/dist')); // redirect open-iconic
 app.use('/open-iconic', express.static(__dirname + '/node_modules/open-iconic')); // redirect open-iconic
-app.use('/uploads', express.static(__dirname + '/uploads')); // redirect uploads picture
+app.use('/uploads', express.static(__dirname + '/private/uploads')); // redirect uploads picture
 
 app.use('/', index);
 app.use('/users', users);

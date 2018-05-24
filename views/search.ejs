@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <hr />
-                <form id="searchForm" onsubmit="onSubmit('<%- page %>', '#searchForm', validatorFn, (dat) => searchFn(dat, cuisine_arr));">
+                <form id="searchForm" onsubmit="onSubmit('<%- page %>', '#searchForm', validateSearch, (dat) => searchFn(dat, cuisine_arr));">
                     <input type="hidden" name="lat" id="lat" value="0"/>
                     <input type="hidden" name="lng" id="lng" value="0"/>
                 </form>

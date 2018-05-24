@@ -4,6 +4,7 @@
         <% const title = global.primary_routes_title[page]%>
         <% include ../views/templates/head %>
         <script src="/javascripts/map.js"></script>
+        <script src="/javascripts/snapimage.js"></script>
         <script>
             var cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
             function initializer() {
@@ -11,6 +12,7 @@
             }
             $('document').ready(() => {
                 setCuisineSel();
+                snapshot(1);
             });
         </script>
     </head>
@@ -23,13 +25,26 @@
             <div class="container">
                 <div class="card rounded-0">
                     <div class="card-body pac-card" id="pac-card">
+                        <form id="addRestaurantForm" method="post" onsubmit="return confirm('Do you really want to submit the form?');">
 
-                        <h5 class="card-title">
-                            Where is the restaurant?
-                        </h5>
-                        <form id="addRestaurantForm" method="post" enctype="multipart/form-data">
-                            <input type="file" name="photo" accept="image/*">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Restaurant Official Photo</label><br/>
+                                    <canvas id="canvas" width="250" height="250" style="background: url('/placeholder.jpg')"></canvas><br/>
+                                    <input id="img" name="img" type="hidden" value="">
+                                    <div  class="custom-file">
+                                        <input type="file" name="photo" id="photo" class="custom-file-input" accept="image/*" onchange='loadImage();'>
+                                        <label class="custom-file-label" for="photo">Choose file</label>
+                                    </div >
+                                </div>
+                                <div class="col">
+                                    <label>Camera Snapshot</label><br/>
+                                    <video autoplay></video>
+                                </div>
+                            </div>
+
                             <div id="pac-container">
+                                <label for="restaurantAddress">Restaurant Address</label>
                                 <input class="form-control" for="addRestaurantForm" name="restaurantAddress" id="pac-input" type="text" placeholder="Enter a location" required>
                             </div>
                             <div id="map"></div>
@@ -37,12 +52,12 @@
                             <div class="form-group">
                                 <input id="lat" name="lat" hidden/>
                                 <input id="lng" name="lng" hidden/>
-                                <label for="restaurantTitle">Title</label>
+                                <label for="restaurantTitle">Restaurant Name</label>
                                 <input type="text" class="form-control" id="restaurantTitle" name="restaurantTitle" required/>
-                                <label for="restaurantDescription">Description</label>
-                                <textarea class="form-control" id="restaurantDescription" name="restaurantDescription"></textarea>
                                 <label for="restaurantCuisine">Cuisine</label>
                                 <input type="text" name="restaurantCuisine" id="cuisine_selector" required/>
+                                <label for="restaurantDescription">Description</label>
+                                <textarea class="form-control" id="restaurantDescription" name="restaurantDescription" style="height:200px"></textarea>
                             </div>
                             <button type="submit" class="btn btn-success">Submit</button>
                         </form>
@@ -52,5 +67,15 @@
         </main>
         <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initializer"
                 async defer></script>
+        <script>
+        $("input[type=file]").change(function () {
+            var fieldVal = $(this).val();
+            // Change the node's value by removing the fake path (Chrome)
+            fieldVal = fieldVal.replace("C:\\fakepath\\", "");
+            if (fieldVal != undefined || fieldVal != "") {
+                $(this).next(".custom-file-label").text(fieldVal);
+            }
+        });
+        </script>
     </body>
 </html>

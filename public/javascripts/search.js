@@ -2,7 +2,7 @@
  * Validator function for onSubmit
  * @param data JSON
  */
-function validatorFn(data){
+function validateSearch(data){
     var text_arr = [];
     text_arr.push(data['keywords']);
     text_arr.push(data['cuisine']);
