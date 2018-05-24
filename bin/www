@@ -16,15 +16,15 @@ console.log("Google API: " + process.env.GOOGLE_API);
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3002');
 app.set('port', port);
 
 /**
  * Create HTTPs server.
  */
 var options = {
-    key: fs.readFileSync('./private_access/ca.key'),
-    cert: fs.readFileSync('./private_access/ca.crt')
+    key: fs.readFileSync('../private_access/ca.key'),
+    cert: fs.readFileSync('../private_access/ca.crt')
 };
 
 /**

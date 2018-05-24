@@ -73,7 +73,8 @@ exports.init = function () {
         location: {
             lat: 53.3800525,
             lng: -1.4792723000000478
-        }
+        },
+        official_photo: 'd790fc52239e1bcfc62d10d2c3888b621527140376919.jpg'
     });
 
     r2.save(function (err, results) {
@@ -103,7 +104,8 @@ exports.init = function () {
         location: {
             lat: 52.9557397,
             lng: -1.1484259000000065
-        }
+        },
+        official_photo: 'fb5d9896f1aec89f7130c4b42dc0752b1527140159174.jpg'
     });
 
     r4.save(function (err, results) {

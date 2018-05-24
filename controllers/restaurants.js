@@ -118,32 +118,34 @@ exports.search = function (req, res, extra_dict) {
 exports.add = function (req, res) {
     var rstrntData = req.body;
     var rstrntPic = req.file;
-    console.log(rstrntData);
-    console.log(rstrntPic.filename);
-
     if (rstrntData == null) {
         res.status(403).send('No data sent!')
     }
     try {
         var restaurant = new Restaurant({
             name: rstrntData.restaurantTitle,
-            cuisine: rstrntData.restaurantCuisine,
+            cuisine: rstrntData.restaurantCuisine.split(","),
             description: rstrntData.restaurantDescription,
             address: rstrntData.restaurantAddress,
             location: {
                 lat: rstrntData.lat,
                 lng: rstrntData.lng
-            },
-            official_photo: rstrntPic.filename
+            }
         });
+        if (rstrntPic != null) {
+            restaurant.official_photo = rstrntPic.filename
+        }
         console.log('received: ' + restaurant);
 
-        restaurant.save(function (err, results) {
-            console.log(results._id);
-            if (err)
+        restaurant.save() // Promise
+            .then(function (results){
+                console.log(results._id);
+                res.redirect('/restaurant/' + results._id);
+            })
+            .catch(err => {
                 res.status(500).send('Invalid data!');
-            res.redirect('/restaurant/' + results._id);
-        });
+            });
+
     } catch (e) {
         res.status(500).send('error ' + e);
     }

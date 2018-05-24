@@ -30,6 +30,10 @@ function searchFn(dat, cuisine_arr){
     var locations = [];
     $('#results').html('');
     let n = 0;
+    if (dat == ''){
+        var empty_result = $("<h1><b>No Result Found</b></h1>");
+        $('#results').append(empty_result);
+    }
     dat.forEach((result) => {
         n++;
         var result_card = $("<div class='card rounded-0 my-3'></div>");

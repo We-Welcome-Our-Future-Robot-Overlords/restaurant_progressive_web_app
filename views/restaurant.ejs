@@ -5,37 +5,49 @@
         <% include ../views/templates/head %>
     </head>
     <body>
-        <% include ../views/templates/nav.ejs%>
-        <header class="jumbotron jumbotron-fluid text-center bg-dark text-white">
-            <h1><%= title %></h1>
+
+        <header class="jumbotron jumbotron-fluid bg-dark">
+            <% include ../views/templates/nav.ejs%>
         </header>
         <main>
-            <article class="card bg-info rounded-0">
-                <div class="card-body text-light">
-                    <h5 class="card-title">Description</h5>
-                    <section class="card-text"><%= restaurant.description%></section>
+            <div class="container">
+                <h1><%= title %></h1>
+                <div class="row">
+                    <div class="col">
+                        <img class="img-thumbnail" src="
+                            <% if (restaurant.official_photo != null) { %>
+                                /uploads/<%= restaurant.official_photo %>
+                            <% } %>
+                        " onerror="this.onerror=null;this.src='/uploads/placeholder.jpg';" alt="Official Photo" height="250" width="250">
+                    </div>
+                    <div class="col">
+                        SMALL MAP
+                    </div>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><%= restaurant.address%></li>
-                    <li class="list-group-item rounded-0">
-                        <div class="btn-group btn-group-sm">
-                        <%_ var cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id.toString(), kv.title])); _%>
-                        <% console.log(cuisine_map); _%>
-                        <%_ restaurant.cuisine.forEach((c)=>{ _%>
-                            <button form="<%=c%>" type='submit' class='btn btn-info'>
-                                <form id="<%=c%>" style="display:none;" action="/search" method="post">
-                                    <input name="cuisine" value="<%=c%>" hidden />
-                                </form>
-                                <%=cuisine_map.get(c.toString()); _%>
-                            </button>
-                        <%});_%>
-                        </div>
-                    </li>
-                </ul>
-            </article>
-            <% if (restaurant.official_photo != null) { %>
-                <img src="/uploads/<%= restaurant.official_photo %>" alt="Official Photo" width="250" height="250">
-            <% } %>
+                <article class="card bg-info rounded-0">
+                    <div class="card-body text-light">
+                        <h5 class="card-title">Description</h5>
+                        <section class="card-text"><%= restaurant.description%></section>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><%= restaurant.address%></li>
+                        <li class="list-group-item rounded-0">
+                            <div class="btn-group btn-group-sm">
+                            <%_ var cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id.toString(), kv.title])); _%>
+                            <% console.log(cuisine_map); _%>
+                            <%_ restaurant.cuisine.forEach((c)=>{ _%>
+                                <button form="<%=c%>" type='submit' class='btn btn-info'>
+                                    <form id="<%=c%>" style="display:none;" action="/search" method="post">
+                                        <input name="cuisine" value="<%=c%>" hidden />
+                                    </form>
+                                    <%=cuisine_map.get(c.toString()); _%>
+                                </button>
+                            <%});_%>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+            </div>
         </main>
     </body>
 </html>
