@@ -8,37 +8,31 @@
         <script>
             var cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
             function initializer() {
-                console.log('Map Loaded');
-                setLocation((position) => {
-                    console.log("Current Location");
-                    showPosition(position, (lat, lng) => {
-                        initMap(lat, lng, autoFillAddresss);
+                console.log('Map Loading');
+                let mapPromise = new Promise((resolve, reject) => {
+                    setLocation((position) => {
+                        console.log("Current Location");
+                        showPosition(position, (lat, lng) => {
+                            initMap(lat, lng, autoFillAddresss);
+                            resolve("Success!");
+                        });
+                    }, (error)=>{
+                        console.log("Default Location");
+                        initMap(53.3816197, -1.4820851, autoFillAddresss);
+                        document.getElementById("current-loc").disabled = true;
+                        resolve("Success!");
                     });
-                }, (error)=>{
-                    console.log("Default Location");
-                    initMap(53.3816197, -1.4820851, autoFillAddresss);
-                    document.getElementById("current-loc").disabled = true;
                 });
-                console.log('Map Ready')
-                <% if (typeof result_arr !== 'undefined') { %>
-                searchFn(<%-result_arr%>, cuisine_arr);
-                $('#locSearchToggle').click();
-                <%}%>
-            }
-            $('document').ready(() => {
+                mapPromise.then((success) => {
+                    console.log('Map Ready')
+                    <% if (typeof result_arr !== 'undefined') { %>
+                        searchFn(<%- result_arr %>, cuisine_arr);
+                        $('#locSearchToggle').click();
+                    <%}%>
+                });
                 setCuisineSel();
-                $('#locationSearch').on('shown.bs.collapse', function() {
-                    console.log("Shown");
-                    zoomTight();
-                }).on('show.bs.collapse', function() {
-                    console.log("Showing");
-                });
-
-                $('#locSearchToggle').click(()=>{
-                    const state = $('#locationSearch').hasClass('show');
-                    $('#locSearchToggle > span').attr('data-glyph', 'chevron-' + (state ? 'bottom' : 'top'));
-                });
-            });
+                mapToggle();
+            }
         </script>
     </head>
     <body>

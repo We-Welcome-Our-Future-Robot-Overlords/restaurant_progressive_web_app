@@ -49,15 +49,28 @@
                     </ul>
                 </article>
 
-                <form id="write_review" method="post" onsubmit="return confirm('Do you really want to submit the review?');">
-                    <input type="text" name="author" id="author" placeholder="Author"/>
-                    <input type="number" name="star" id="star" value="0" min="0" max="5"/>
-                    <input type="text" name="comment" id="comment" placeholder="Comment"/>
-                    <input type="hidden" name="rstrnt_id" id="rstrnt_id" value="<%= restaurant._id %>"/>
-                    <button id="review_btn" name="review_btn" type="submit" class="btn btn-primary">
-                        Submit Review</button>
-                </form>
+                <br/>
+                <div class="shadow card rounded-0">
+                    <div class="card-body pac-card" id="pac-card">
+                        <h1>Write Review</h1>
+                        <form id="write_review" method="post" onsubmit="return confirm('Do you really want to submit the review?');">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="author" id="author" placeholder="Author"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="number" name="star" id="star" value="0" min="0" max="5"/>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" type="text" name="comment" id="comment" placeholder="Comment" style="height:200px"/></textarea>
+                            </div>
+                            <input type="hidden" name="rstrnt_id" id="rstrnt_id" value="<%= restaurant._id %>"/>
+                            <button id="review_btn" name="review_btn" type="submit" class="btn btn-primary">
+                                Submit Review</button>
+                        </form>
+                    </div>
+                </div>
 
+                <br/>
                 <h1>Reviews</h1>
                 <% for(var i=0; i < reviews.length; i++){ %>
                     <div class="card rounded-0">

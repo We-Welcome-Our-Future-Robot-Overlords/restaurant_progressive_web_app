@@ -1,4 +1,4 @@
-function snapshot(sourceId) {
+function snapshotImage(sourceId) {
     var hasGetUserMedia = !!(navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia ||
@@ -14,15 +14,16 @@ function snapshot(sourceId) {
         var ctx = canvas.getContext('2d');
         var localMediaStream = null;
         video.addEventListener('click', snapshot, false);
-        navigator.getUserMedia({video: {optional: [{sourceId: sourceId}]}}, function (stream) {
+        navigator.getUserMedia({video: {width: 250, height: 250, sourceId: sourceId}}, function (stream) {
             video.src = window.URL.createObjectURL(stream);
             localMediaStream = stream;
         }, errorCallback);
 
         function snapshot() {
             if (localMediaStream) {
-                ctx.drawImage(video, 0, 0, video.width, video.height, 0, 0, canvas.width, canvas.height);
-                document.getElementById('img').value = canvas.toDataURL("image/jpg");
+                ctx.drawImage(video, 0, 0);
+                document.getElementById('photo_img').src = canvas.toDataURL('image/jpg');
+                document.getElementById('photo_text').value = document.getElementById('photo_img').src;
             }
         }
     } else {
@@ -55,7 +56,8 @@ function loadImage() {
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0, img.width, img.height,0, 0, canvas.width, canvas.height);
-        document.getElementById('img').value = canvas.toDataURL("image/jpg");
+        document.getElementById('photo_img').src = canvas.toDataURL('image/jpg');
+        document.getElementById('photo_text').value = document.getElementById('photo_img').src;
     }
 
 }

@@ -12,7 +12,7 @@
             }
             $('document').ready(() => {
                 setCuisineSel();
-                snapshot(1);
+                snapshotImage(1);
             });
         </script>
     </head>
@@ -30,8 +30,9 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Restaurant Official Photo</label><br/>
-                                    <canvas id="canvas" width="250" height="250" style="background: url('/placeholder.jpg')"></canvas><br/>
-                                    <input id="img" name="img" type="hidden" value="">
+                                    <canvas id="canvas" width="250" height="250" style="display:none;"></canvas>
+                                    <img id="photo_img" name="photo_img" width="250" height="250"><br/>
+                                    <input type="text" id="photo_text" name="photo_text" value="" hidden>
                                     <div  class="custom-file">
                                         <input type="file" name="photo" id="photo" class="custom-file-input" accept="image/*" onchange='loadImage();'>
                                         <label class="custom-file-label" for="photo">Choose file</label>

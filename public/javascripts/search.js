@@ -57,3 +57,17 @@ function searchFn(dat, cuisine_arr){
     })
     placeMarkers(locations);
 }
+
+function mapToggle(){
+    $('#locationSearch').on('shown.bs.collapse', function() {
+        console.log("Shown");
+        zoomTight();
+    }).on('show.bs.collapse', function() {
+        console.log("Showing");
+    });
+
+    $('#locSearchToggle').click(()=>{
+        const state = $('#locationSearch').hasClass('show');
+        $('#locSearchToggle > span').attr('data-glyph', 'chevron-' + (state ? 'bottom' : 'top'));
+    });
+}

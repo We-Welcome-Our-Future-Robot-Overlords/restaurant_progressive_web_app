@@ -138,7 +138,7 @@ exports.add = function (req, res) {
                 lng: rstrntData.lng
             }
         });
-        var rstrntPic = req.body.img;
+        var rstrntPic = rstrntData.photo_text;
         if (rstrntPic != '') {
             rstrntPic = rstrntPic.replace(/^data:image\/\w+;base64,/, "")
             // strip off the data: url prefix to get just the base64-encoded bytes

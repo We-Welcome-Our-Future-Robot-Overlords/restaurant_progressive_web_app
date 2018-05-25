@@ -9,50 +9,26 @@ exports.init = function () {
     // Restaurant.remove({}, function(err) {
     //    console.log('collection removed')
     // });
-    var c1 = new Cuisine({
-        title: 'American',
+    var cuisines = [
+        new Cuisine({title: 'American'}),
+        new Cuisine({title: 'Chinese'}),
+        new Cuisine({title: 'Chicken'}),
+        new Cuisine({title: 'Halal'}),
+        new Cuisine({title: 'Malaysian'}),
+        new Cuisine({title: 'British'}),
+        new Cuisine({title: 'Japanese'}),
+        new Cuisine({title: 'Italian'})]
+    cuisines.forEach(function(c) {
+        c.save(function (err, results) {
+            console.log(results.title+ ": "  + results._id);
+        });
     });
 
-    c1.save(function (err, results) {
-        console.log("c1_id: " + results._id);
-    });
-
-    var c2 = new Cuisine({
-        title: 'Chinese',
-    });
-
-    c2.save(function (err, results) {
-        console.log("c2_id: " + results._id);
-    });
-
-    var c3 = new Cuisine({
-        title: 'Chicken',
-    });
-
-    c3.save(function (err, results) {
-        console.log("c3_id: " + results._id);
-    });
-
-    var c4 = new Cuisine({
-        title: 'Halal',
-    });
-
-    c4.save(function (err, results) {
-        console.log("c4_id: " + results._id);
-    });
-
-    var c5 = new Cuisine({
-        title: 'Malaysian',
-    });
-
-    c5.save(function (err, results) {
-        console.log("c5_id: " + results._id);
-    });
 
 
     var r1 = new Restaurant({
         name: 'Tasteez',
-        cuisine: [c3._id, c4._id],
+        cuisine: [cuisines[2]._id, cuisines[3]._id],
         description: 'Nope',
         address: "196 Brook Hill, Sheffield, United Kingdom",
         location: {
@@ -67,7 +43,7 @@ exports.init = function () {
 
     var r2 = new Restaurant({
         name: 'KFC',
-        cuisine: [c1._id, c3._id],
+        cuisine: [cuisines[0]._id, cuisines[2]._id],
         description: 'Kentucky Fried Chicken',
         address: "163 West Street, Sheffield, United Kingdom",
         location: {
@@ -83,7 +59,7 @@ exports.init = function () {
 
     var r3 = new Restaurant({
         name: 'City Chicken Cafe',
-        cuisine: [c3._id, c4._id],
+        cuisine: [cuisines[2]._id, cuisines[3]._id],
         description: 'No coffee',
         address: "29 Mansfield Road, Nottingham, United Kingdom",
         location: {
@@ -98,7 +74,7 @@ exports.init = function () {
 
     var r4 = new Restaurant({
         name: 'KFC',
-        cuisine: [c1._id, c3._id],
+        cuisine: [cuisines[0]._id, cuisines[2]._id],
         description: 'Kentucky Fried Chicken',
         address: "23-25 Milton Street, Nottingham, United Kingdom",
         location: {
@@ -114,7 +90,7 @@ exports.init = function () {
 
     var r5 = new Restaurant({
         name: "Mr Man's Restaurant",
-        cuisine: [c2._id, c5._id],
+        cuisine: [cuisines[1]._id, cuisines[4]._id],
         description: 'Wollaton',
         address: "Wollaton Park, Wollaton Road, Nottingham, United Kingdom",
         location: {
@@ -129,7 +105,7 @@ exports.init = function () {
 
     var r6 = new Restaurant({
         name: 'Orient Express',
-        cuisine: [c2._id, c4._id],
+        cuisine: [cuisines[1]._id, cuisines[3]._id],
         description: 'Near Diamond',
         address: "290 Glossop Road, Sheffield, United Kingdom",
         location: {
