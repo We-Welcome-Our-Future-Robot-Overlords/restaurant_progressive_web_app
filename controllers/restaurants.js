@@ -166,13 +166,52 @@ exports.add = function (req, res) {
 
 exports.review = function (req, res) {
     var reviewData = req.body;
-    if (reviewData == null) {
-        res.status(403).send('No data sent!')
+    console.log(reviewData);
+    function validReview(){
+        if (
+            'author' in reviewData &&
+            'rstrnt_id' in reviewData &&
+            'star' in reviewData
+        ){
+            return (
+                reviewData.author != '' &&
+                reviewData.rstrnt_id != '' &&
+                reviewData.star != '')
+        } else {
+            return false
+        }
     }
-    try {
-        res.status(500).send('TODO');
-    } catch (e) {
-        res.status(500).send('error ' + e);
+    if (!validReview()) {
+        res.status(403).send('No data sent!')
+    } else {
+        try {
+            var review = new Review({
+                author: reviewData.author,
+                date: Date.now(),
+                restaurant: reviewData.rstrnt_id,
+                star: reviewData.star,
+                comment: reviewData.comment
+            });
+            var all_promises = [];
+            review.save().then(function (review_results) { // promise
+                Restaurant.findOne({_id: review_results.restaurant}).then(function (rstrnt) { // promise
+                    if (rstrnt != null) {
+                        Review.aggregate([
+                            {$match: {"restaurant": review_results.restaurant}},
+                            {$group: {_id: null, count: {$sum: 1}, total_rating: {$sum: "$star"}}}
+                        ]).then(function (all_reviews) {  // promise
+                            var new_rating = all_reviews[0].total_rating / all_reviews[0].count
+                            rstrnt.update({rating: new_rating}).then(function (rstrnt_results) { // promise
+                                console.log(review_results._id);
+                                exports.show('restaurant', req, res);
+                            });
+                        });
+                    }
+                });
+            });
+        } catch (e) {
+            res.status(500).send('error ' + e);
+        }
     }
 }
 

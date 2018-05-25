@@ -49,22 +49,31 @@
                     </ul>
                 </article>
 
-                <div id="results" style="margin-top:30px"></div>
-
-                <form id="write_review" onsubmit="onSubmit('<%- page %>', '#write_review', validateReview, (dat) => reviewFn(dat));">
+                <form id="write_review" method="post" onsubmit="return confirm('Do you really want to submit the review?');">
                     <input type="text" name="author" id="author" placeholder="Author"/>
                     <input type="number" name="star" id="star" value="0" min="0" max="5"/>
                     <input type="text" name="comment" id="comment" placeholder="Comment"/>
                     <input type="hidden" name="rstrnt_id" id="rstrnt_id" value="<%= restaurant._id %>"/>
                     <button id="review_btn" name="review_btn" type="submit" class="btn btn-primary">
-                        Submit Review<span class="oi ml-1" data-glyph="magnifying-glass"></span></button>
+                        Submit Review</button>
                 </form>
 
+                <h1>Reviews</h1>
                 <% for(var i=0; i < reviews.length; i++){ %>
-                    <h1><%= reviews[i].author %></h1>
-                    <p><%= reviews[i].comment %></p>
-                    <p>Posted: <%= reviews[i].date %></p>
-                    <p>Star: <%= reviews[i].star %></p>
+                    <div class="card rounded-0">
+                        <div class="card-body pac-card" id="pac-card">
+                            <div class="row">
+                                <div class="col-3">
+                                    <p><br/><%= reviews[i].author %></p>
+                                </div>
+                                <div class="col-9">
+                                    <p>Posted on <%= reviews[i].date.getDate() %>/<%= reviews[i].date.getMonth() %>/<%= reviews[i].date.getFullYear() %></p>
+                                    <p>Star: <%= reviews[i].star %></p>
+                                    <p><%= reviews[i].comment %></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <% } %>
             </div>
         </main>

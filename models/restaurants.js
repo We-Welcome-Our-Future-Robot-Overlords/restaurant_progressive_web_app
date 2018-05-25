@@ -11,7 +11,7 @@ var Restaurant = new Schema(
             lat: {type: Number},
             lng: {type: Number}
         },
-        rating: {type: Number, default: 0},
+        rating: {type: Number, required: true, default: 0},
         official_photo: {type: String},
         review_photos: [{type: String}]
     }
