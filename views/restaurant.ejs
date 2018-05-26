@@ -27,7 +27,7 @@
                     <div class="col">
                         <img class="img-thumbnail" src="
                             <% if (restaurant.official_photo != null) { %>
-                                /uploads/<%= restaurant.official_photo %>
+                                /uploads/official/<%= restaurant.official_photo %>
                             <% } %>
                         " onerror="this.onerror=null;this.src='/placeholder.jpg';" alt="Official Photo" height="250" width="250">
                     </div>
@@ -106,7 +106,7 @@
                                     <p><br/><%= reviews[i].author %></p>
                                 </div>
                                 <div class="col-9">
-                                    <p>Posted on <%= reviews[i].date.getDate() %>/<%= reviews[i].date.getMonth() %>/<%= reviews[i].date.getFullYear() %></p>
+                                    <p>Posted on <%= reviews[i].date.getDate() %>/<%= reviews[i].date.getMonth()+1 %>/<%= reviews[i].date.getFullYear() %></p>
                                     <p>Star: <%= reviews[i].star %></p>
                                     <p><%= reviews[i].comment %></p>
                                 </div>

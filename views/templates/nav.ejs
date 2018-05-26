@@ -6,17 +6,17 @@
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
-        <%_Object.keys(global.primary_routes_title).forEach(function (k){%>
+        <% Object.keys(global.primary_routes_title).forEach(function (k){ %>
             <%- "<li class='nav-item";_%>
-            <%_if (k==page) {_%>
-                <%- " active'><a";_%>
-            <%_} else {_%>
-                <%- "'><a href='" + k + "'";_%>
-            <%}_%>
-            <%-"class='nav-link'>" + global.primary_routes_title[k] + "</a></li>";_%>
-        <%});_%>
+            <% if (k==page) { %>
+                <%- " active'><a"; %>
+            <% } else { %>
+                <%- "'><a href='" + k + "'"; %>
+            <% } %>
+            <%-"class='nav-link'>" + global.primary_routes_title[k] + "</a></li>"; %>
+        <% }); %>
         </ul>
-    <%_if (page != '/search') {_%>
+    <% if (page != '/search' && page != '/') { %>
         <form class="navbar-nav ml-auto" action="/search" method="post">
             <div class="input-group">
                 <input class="form-control" type="text" name="keywords" placeholder="Search" required>
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </form>
-    <%_}_%>
+    <% } %>
     </div>
     </div>
 </nav>

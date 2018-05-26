@@ -4,16 +4,27 @@
         <% const title = global.primary_routes_title[page]%>
         <% include ../views/templates/head %>
     </head>
-    <body>
+    <body class="bg-dark text-white">
         <header class="jumbotron jumbotron-fluid text-center bg-dark text-white">
             <% include ../views/templates/nav.ejs%>
-            <div class="container">
-                <h1>RestauWant</h1>
-                <p>Find the best restaurants in your area!</p>
-                <p>Share your culinary opinions!</p>
-            </div>
         </header>
         <main>
+            <div class="jumbotron jumbotron-fluid text-center bg-dark text-white">
+                <div class="container">
+                    <h1 class="display-2"><b>RestauWant</b></h1>
+                    <p><i>Find the best restaurants in your area!</i></p>
+                    <p><i>Share your culinary opinions!</i></p>
+                    <br/>
+                    <form class="mx-auto col-9" action="/search" method="post">
+                        <div class="input-group">
+                            <input class="form-control form-control-lg" type="text" name="keywords" placeholder="Search" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary oi oi-magnifying-glass" data-glyph="magnifying-glass" type="submit" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </main>
     </body>
 </html>

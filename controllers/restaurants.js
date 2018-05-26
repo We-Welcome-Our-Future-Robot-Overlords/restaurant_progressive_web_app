@@ -142,7 +142,7 @@ exports.add = function (req, res) {
         if (rstrntPic != '') {
             rstrntPic = rstrntPic.replace(/^data:image\/\w+;base64,/, "")
             // strip off the data: url prefix to get just the base64-encoded bytes
-            var targetDirectory = '../private/uploads/'
+            var targetDirectory = '../private/uploads/official'
             var buf = new Buffer(rstrntPic, 'base64');
             var fileName = crypto.randomBytes(20).toString('hex') + '.jpg'
             fs.writeFile(targetDirectory + fileName, buf);

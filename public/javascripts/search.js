@@ -34,12 +34,24 @@ function searchFn(dat, cuisine_arr){
         var empty_result = $("<h1><b>No Result Found</b></h1>");
         $('#results').append(empty_result);
     }
+    dat.sort(function(a,b) {return (a.rating > b.rating) ? -1 : ((b.rating > a.rating) ? 1 : 0);} );
     dat.forEach((result) => {
         n++;
         var result_card = $("<div class='card rounded-0 my-3'></div>");
         //TODO: Images
-        var card_body = $("<div class='card-body'><h4 class='card-title'><a href='./restaurant/" +result._id + "'>" + n + "." + result.name + "</a></h4></div>");
-        var card_text = $("<p class='card_text'>" + result.address + "</p><summary class='card-text'>" + result.description + "</summary>");
+        var card_body = $("<div class='card-body'><h4 class='card-title'><a href='./restaurant/" +result._id + "'>" + n + ". " + result.name + "</a></h4></div>");
+        var rating_display = " "
+        for (i = 1; i <= 5; i++){
+            if (result.rating >= i){
+                rating_display = rating_display + "<span class='star full'></span>";
+            } else if ((i - result.rating)<1){
+                rating_display = rating_display + "<span class='star half'></span>";
+            } else {
+                rating_display = rating_display + "<span class='star'></span>";
+            }
+        }
+        var card_star = $("<div title='Rating: " + parseInt(result.rating*2)/2 + "'>" + rating_display + "</div>");
+        var card_text = $("<p class='card_text'>" + result.address + "</p>");
         var cuisine_tags = $('<div class="btn-group btn-group-sm"></div>');
         result.cuisine.forEach((c) => {
             var c_tag = $("<button type='button' class='btn btn-info'></button>").html(cuisine_map.get(c));
@@ -48,6 +60,7 @@ function searchFn(dat, cuisine_arr){
             });
             cuisine_tags = cuisine_tags.append(c_tag);
         });
+        card_body.append(card_star);
         card_body.append(card_text);
         card_body.append(cuisine_tags);
         result_card.append(card_body);
