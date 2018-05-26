@@ -203,7 +203,7 @@ exports.review = function (req, res) {
                             var new_rating = all_reviews[0].total_rating / all_reviews[0].count
                             rstrnt.update({rating: new_rating}).then(function (rstrnt_results) { // promise
                                 console.log(review_results._id);
-                                exports.show('restaurant', req, res);
+                                res.redirect('/restaurant/' + review_results.restaurant);
                             });
                         });
                     }

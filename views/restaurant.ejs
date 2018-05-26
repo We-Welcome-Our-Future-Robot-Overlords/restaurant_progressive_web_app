@@ -12,7 +12,17 @@
         <main>
             <div class="container">
                 <h1><%= title %></h1>
-                <h1>Rating: <%= restaurant.rating %></h1>
+                <div title="Rating: <%= parseInt(restaurant.rating*2)/2 %>">
+                    <% for (i = 1; i <= 5; i++){ %>
+                        <% if (restaurant.rating >= i){ %>
+                            <span class="star full"></span>
+                        <% } else if ((i - restaurant.rating)<1){%>
+                            <span class="star half"></span>
+                        <% } else { %>
+                            <span class="star"></span>
+                        <% } %>
+                    <% } %>
+                </div>
                 <div class="row">
                     <div class="col">
                         <img class="img-thumbnail" src="
@@ -52,16 +62,32 @@
                 <br/>
                 <div class="shadow card rounded-0">
                     <div class="card-body pac-card" id="pac-card">
-                        <h1>Write Review</h1>
-                        <form id="write_review" method="post" onsubmit="return confirm('Do you really want to submit the review?');">
+                        <h1 class="border-bottom">Write Review</h1>
+                        <form id="write_review" method="post" action="<%- page %>" onsubmit="return confirm('Do you really want to submit the review?');">
                             <div class="form-group">
-                                <input class="form-control" type="text" name="author" id="author" placeholder="Author"/>
+                                <label><b>Author</b></label>
+                                <input class="form-control" type="text" name="author" id="author" placeholder="Name"/>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" type="number" name="star" id="star" value="0" min="0" max="5"/>
+                                <label><b>Your Overall Restaurant Rating</b></label>
+                                <div class="form-check">
+                                    <div class="review_rating">
+                                        <input class="review_rate_input" type="radio" name="star" id="rating5" value="5" />
+                                            <label class="star review_rate_label" for="rating5" title="5 star"></label>
+                                        <input class="review_rate_input" type="radio" name="star" id="rating4" value="4" />
+                                            <label class="star review_rate_label" for="rating4" title="4 star"></label>
+                                        <input class="review_rate_input" type="radio" name="star" id="rating3" value="3" />
+                                            <label class="star review_rate_label" for="rating3" title="3 star"></label>
+                                        <input class="review_rate_input" type="radio" name="star" id="rating2" value="2" />
+                                            <label class="star review_rate_label" for="rating2" title="2 star"></label>
+                                        <input class="review_rate_input" type="radio" name="star" id="rating1" value="1" />
+                                            <label class="star review_rate_label" for="rating1" title="1 star"></label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" type="text" name="comment" id="comment" placeholder="Comment" style="height:200px"/></textarea>
+                                <label><b>Your Review</b></label>
+                                <textarea class="form-control" type="text" name="comment" id="comment" placeholder="Write down the experience" style="height:200px"/></textarea>
                             </div>
                             <input type="hidden" name="rstrnt_id" id="rstrnt_id" value="<%= restaurant._id %>"/>
                             <button id="review_btn" name="review_btn" type="submit" class="btn btn-primary">

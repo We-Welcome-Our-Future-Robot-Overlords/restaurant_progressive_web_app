@@ -38,6 +38,55 @@ main {
     margin-right: 12px;
 }
 
+/* Star Rating */
+.star {
+    font-size: x-large;
+    display: inline-block;
+    color: gray;
+}
+.star:before {
+    text-shadow: 0 0 2px rgba(0,0,0,0.7);
+    content: '\2605';
+}
+.star.full {
+    color: gold;
+}
+.star.half:after {
+    content: '\2605';
+    color: gold;
+    margin-left: -20px;
+    width: 10px;
+    position: absolute;
+    overflow: hidden;
+}
+/* Ratings widget */
+.review_rating {
+    display: inline-block;
+    border: 0;
+}
+/* Order correctly by floating highest to the right */
+.review_rating > label {
+    float: right;
+}
+/* Hide radio */
+.review_rating > input {
+    display: none;
+}
+
+/* Click + hover color */
+.review_rate_input:checked ~ .review_rate_label, /* color current and previous stars on checked */
+.review_rate_label:hover, .review_rate_label:hover ~ .review_rate_label {  /* color previous stars on hover */
+    color: gold;
+}
+
+/* Hover highlights */
+.review_rate_input:checked + .review_rate_label:hover, .review_rate_input:checked ~ .review_rate_label:hover, /* highlight current and previous stars */
+.review_rate_input:checked ~ .review_rate_label:hover ~ .review_rate_label, /* highlight previous selected stars for new rating */
+.review_rate_label:hover ~ .review_rate_input:checked ~ .review_rate_label { /* highlight previous selected stars */
+    color: gold;
+}
+
+
 /* Mobile */
 @media only screen and (max-width: 600px) {
     main {
