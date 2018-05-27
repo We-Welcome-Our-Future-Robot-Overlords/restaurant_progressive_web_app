@@ -18,7 +18,7 @@ exports.prepare = function(view,  req, res, extra_dict) {
 exports.show = function(view, req, res) {
     Restaurant.findOne({_id: req.params.id}).exec(function(err, rstrnt) {
         if (rstrnt != null){
-            Review.find({restaurant: rstrnt._id}).exec(function(err, reviews) {
+            Review.find({restaurant: rstrnt._id}).sort({date: -1}).exec(function(err, reviews) {
                 exports.prepare(view, req, res, {
                     restaurant: rstrnt,
                     reviews: reviews,
@@ -166,24 +166,24 @@ exports.add = function (req, res) {
 
 exports.review = function (req, res) {
     var reviewData = req.body;
-    console.log(reviewData);
-    function validReview(){
-        if (
-            'author' in reviewData &&
-            'rstrnt_id' in reviewData &&
-            'star' in reviewData
-        ){
-            return (
-                reviewData.author != '' &&
-                reviewData.rstrnt_id != '' &&
-                reviewData.star != '')
+    var validReview = new Promise((resolve, reject) => {
+        if ('author' in reviewData && 'rstrnt_id' in reviewData && 'star' in reviewData){
+            Restaurant.find({_id: reviewData.rstrnt_id}).limit(1).exec(function(err, rstrnt) {
+                if (err){
+                    var reason = new Error('Invalid review data sent');
+                    reject(reason);
+                } else if (rstrnt != null && reviewData.author != '' && reviewData.star != '') {
+                    resolve('Valid review data sent');
+                }
+            });
         } else {
-            return false
+            var reason = new Error('Missing required review data!');
+            reject(reason);
         }
-    }
-    if (!validReview()) {
-        res.status(403).send('No data sent!')
-    } else {
+    });
+
+    validReview.then(function (fulfilled){
+        console.log(fulfilled);
         try {
             var review = new Review({
                 author: reviewData.author,
@@ -192,7 +192,6 @@ exports.review = function (req, res) {
                 star: reviewData.star,
                 comment: reviewData.comment
             });
-            var all_promises = [];
             review.save().then(function (review_results) { // promise
                 Restaurant.findOne({_id: review_results.restaurant}).then(function (rstrnt) { // promise
                     if (rstrnt != null) {
@@ -212,6 +211,8 @@ exports.review = function (req, res) {
         } catch (e) {
             res.status(500).send('error ' + e);
         }
-    }
+    }).catch(function (error) {
+        res.status(403).send(error.message);
+    });
 }
 

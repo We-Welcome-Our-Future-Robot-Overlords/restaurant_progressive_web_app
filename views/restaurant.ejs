@@ -6,27 +6,17 @@
 
         <script src="/socket.io/socket.io.js"></script>
         <script>
-            var socket = io();
             var rstrntID = <%- JSON.stringify(restaurant.id) %>;
-            socket.on('new review', function(data){
-                document.getElementById('new_review').innerHTML = data;
-            })
-            function init() {
-                socket.emit('joining', rstrntID)
-            }
-            function updateIO() {
-                socket.emit('send review', rstrntID, 'Someone Send a New Review');
-            }
         </script>
+        <script src="/javascripts/socket.js"></script>
     </head>
-    <body onload="init();">
+    <body onload="initSocket(rstrntID);">
         <header class="jumbotron jumbotron-fluid bg-dark">
             <% include ../views/templates/nav.ejs %>
         </header>
         <main>
             <div class="container">
                 <h1><%= title %></h1>
-                <h1 id="new_review"></h1>
                 <div title="Rating: <%= parseInt(restaurant.rating*2)/2 %>">
                     <% for (var i = 1; i <= 5; i++){ %>
                         <% if (restaurant.rating >= i){ %>
@@ -78,7 +68,9 @@
                 <div class="shadow card rounded-0">
                     <div class="card-body pac-card" id="pac-card">
                         <h1 class="border-bottom">Write Review</h1>
-                        <form id="write_review" method="post" action="<%- page %>" onsubmit="return updateIO();">
+                        <form id="write_review" method="post" action="<%- page %>"
+                              onsubmit="return (confirm('Do you really want to submit the review?') &&
+                              updateIO('A New Review had been sent, refresh to receive'));">
                             <div class="form-group">
                                 <label><b>Author</b></label>
                                 <input class="form-control" type="text" name="author" id="author" placeholder="Name" required />
@@ -113,6 +105,7 @@
 
                 <br/>
                 <h1>Customer Reviews</h1>
+                <a href='<% page %>' id="new_review"></a>
                 <% for(var i=0; i < reviews.length; i++){ %>
                     <div class="card rounded-0">
                         <div class="card-body pac-card" id="pac-card">
