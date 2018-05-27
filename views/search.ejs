@@ -44,17 +44,22 @@
                 <input form="searchForm" type="text" name="cuisine" id="cuisine_selector" placeholder="Cuisine"/>
                 <button id="locSearchToggle" type="button" class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#locationSearch">Choose Location<span class="oi ml-1" data-glyph="chevron-bottom"></span></button>
                 <div id="locationSearch" class="collapse">
-                    <input class="form-control searchTextBox" form="searchForm" name="pac_input" id="pac-input" type="text" placeholder="Enter a location"/>
-                    <label class="form-check searchTextBox" for="current-loc">
-                        <input name="current_loc" id="current-loc" type="checkbox" onchange="toggleLocation()"/>
-                        Current Location
-                    </label>
-                    <input class="form-control searchTextBox" form="searchForm" type="number" name="radius" id="radius" step="any" value="1" min="1" max="17" onchange="circleRadius()"/>
+                    <div class ="input-group searchTextBox">
+                        <div class="input-group-prepend">
+                            <label for="current-loc" class="input-group-text">
+                                <span class="oi ml-1" id="inputGroup-sizing-default" data-glyph="location"></span>
+                            </label>
+                        </div>
+                        <input name="current_loc" id="current-loc" type="checkbox" style="display: none;" onchange="toggleLocation()"/>
+                        <input class="form-control" form="searchForm" name="pac_input" id="pac-input" type="text" placeholder="Enter a location"/>
+                    </div>
+                    <label for="radius">Radius of search (1 - 17 KM)</label>
+                    <input class="custom-range searchTextBox" form="searchForm" type="range" name="radius" id="radius" min="1" max="17" onchange="circleRadius()"/>
                     <div class="pac-card" id="pac-card">
                         <div id="map"></div>
                     </div>
                 </div>
-                <hr />
+                <hr>
                 <form id="searchForm" onsubmit="onSubmit('<%- page %>', '#searchForm', validateSearch, (dat) => searchFn(dat, cuisine_arr));">
                     <input type="hidden" name="lat" id="lat" value="0"/>
                     <input type="hidden" name="lng" id="lng" value="0"/>
@@ -65,7 +70,7 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initializer"
                 async defer></script>
         <main>
-            <div class="container" id="results" style="margin-top:30px">
+            <div class="container" id="results" style="margin-top:30px;">
             </div>
         </main>
     </body>

@@ -141,6 +141,9 @@ function placeMarkers(locations) {
     var labels = '123456789';
     bounds = new google.maps.LatLngBounds();
     bounds.extend(map.getCenter());
+    if (default_marker.getVisible()){
+        bounds.extend(default_marker.getPosition());
+    }
 
     markers = locations.map(function(location, i) {
         bounds.extend(location);
@@ -157,10 +160,14 @@ function zoomTight() {
     markers.forEach(function(marker) {
         marker.setVisible(true);
     });
-    if (markers.length == 1){
+    var total_markers = markers.length;
+    if (default_marker.getVisible()){
+        total_markers += 1;
+    }
+    if (markers.length == 1 && total_markers == 1){
         map.setCenter(markers[0].getPosition());
         map.setZoom(15);
-    } else if (markers.length > 1){
+    } else if (total_markers > 1){
         map.fitBounds(bounds);
     }
 }
@@ -168,6 +175,7 @@ function zoomTight() {
 function circleRadius() {
     var radius = parseFloat(document.getElementById("radius").value);
     circle.setRadius(radius*1000);
+    map.fitBounds(circle.getBounds());
 }
 
 function toggleLocation(){
