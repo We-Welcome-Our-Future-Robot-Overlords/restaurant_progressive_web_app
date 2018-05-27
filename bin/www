@@ -23,8 +23,8 @@ app.set('port', port);
  * Create HTTPs server.
  */
 var options = {
-    key: fs.readFileSync('./private_access/ca.key'),
-    cert: fs.readFileSync('./private_access/ca.crt')
+    key: fs.readFileSync('../private_access/ca.key'),
+    cert: fs.readFileSync('../private_access/ca.crt')
 };
 
 /**
@@ -32,12 +32,12 @@ var options = {
  */
 var server = https.createServer(options, app);
 
-
 /**
  * Listen on provided port, on all network interfaces.
  */
-
 server.listen(port);
+var io = require('socket.io').listen(server);
+require('../sockets/socketio')(io);
 server.on('error', onError);
 server.on('listening', onListening);
 
