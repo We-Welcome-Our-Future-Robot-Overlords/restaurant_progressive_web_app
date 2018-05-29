@@ -20,6 +20,7 @@ exports.show = function(view, req, res) {
         if (rstrnt != null){
             Review.find({restaurant: rstrnt._id}).sort({date: -1}).exec(function(err, reviews) {
                 exports.prepare(view, req, res, {
+                    API: process.env.GOOGLE_API,
                     restaurant: rstrnt,
                     reviews: reviews,
                     page: req.url

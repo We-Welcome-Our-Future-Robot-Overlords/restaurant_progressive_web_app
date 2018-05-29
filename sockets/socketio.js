@@ -3,9 +3,8 @@ module.exports = function (io) {
         socket.on('joining', function (rstrntID) {
             socket.join(rstrntID);
         });
-        socket.on('send review', function (rstrntID, data) {
-            console.log(data)
-            io.sockets.in(rstrntID).emit('new review', data);
+        socket.on('send review', function (rstrntID) {
+            io.sockets.in(rstrntID).emit('new review');
         });
     });
 };

@@ -28,18 +28,15 @@
                         <% } %>
                     <% } %>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <img class="img-thumbnail" src="
-                            <% if (restaurant.official_photo != null) { %>
-                                /uploads/official/<%= restaurant.official_photo %>
-                            <% } %>
-                        " onerror="this.onerror=null;this.src='/placeholder.jpg';" alt="Official Photo" height="250" width="250">
-                    </div>
-                    <div class="col">
-                        SMALL MAP
-                    </div>
-                </div>
+                <img class="img-thumbnail" src="
+                    <% if (restaurant.official_photo != null) { %>
+                        /uploads/official/<%= restaurant.official_photo %>
+                    <% } %>
+                " onerror="this.onerror=null;this.src='/placeholder.jpg';" alt="Official Photo" style="height:250px; width:250px;">
+                <a href="https://www.google.com/maps/search/?api=1&query=<%=restaurant.location.lat %>,<%=restaurant.location.lng %>">
+                    <img src="https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=250x250&maptype=roadmap&markers=<%=restaurant.location.lat %>,<%=restaurant.location.lng %>&key=<%= API %>"
+                         alt="Google Map Location of Restaurant">
+                </a>
                 <article class="card bg-info rounded-0">
                     <div class="card-body text-light">
                         <h5 class="card-title">Description</h5>
@@ -71,7 +68,7 @@
                         <hr>
                         <form id="write_review" method="post" action="<%- page %>"
                               onsubmit="return (confirm('Do you really want to submit the review?') &&
-                              updateIO('A New Review had been sent, refresh to receive'));">
+                              updateIO());">
                             <div class="form-group">
                                 <label><b>Author</b></label>
                                 <input class="form-control" type="text" name="author" id="author" placeholder="Name" required />
@@ -106,7 +103,9 @@
 
                 <br/>
                 <h1>Customer Reviews</h1>
-                <a href='<% page %>' id="new_review"></a>
+                <div class="alert alert-success collapse" id="new_review_alert">
+                    <a href='<% page %>' class="alert-link" id="new_review"></a>
+                </div>
                 <% for(var i=0; i < reviews.length; i++){ %>
                     <div class="card rounded-0">
                         <div class="card-body pac-card" id="pac-card">
