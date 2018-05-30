@@ -1,0 +1,107 @@
+main {
+    width: 90%;
+    margin: auto;
+}
+
+/* Navigation */
+
+/* Search Controls*/
+.jumbotron {
+    padding: 64px 0 16px 0;
+}
+.searchTextBox, .jumbotron .selectize-control.multi {
+    text-align: left;
+    width: 90%;
+    margin: 4px auto;
+}
+
+/* Map UI */
+.pac-card {
+    width: 90%;
+    margin:8px auto 0 auto;
+}
+.pac-card #map {
+    height: 500px;
+}
+#infowindow-content .title {
+    font-weight: bold;
+}
+#infowindow-content {
+    display: none;
+}
+#map #infowindow-content {
+    display: inline;
+}
+#pac-container {
+    padding-bottom: 12px;
+    margin-top: 12px;
+    margin-right: 12px;
+}
+
+/* Star Rating */
+.star {
+    font-size: x-large;
+    display: inline-block;
+    color: gray;
+}
+.star:before {
+    text-shadow: 0 0 2px rgba(0,0,0,0.7);
+    content: '\2605';
+}
+.star.full {
+    color: gold;
+}
+.star.half:after {
+    content: '\2605';
+    color: gold;
+    margin-left: -20px;
+    width: 10px;
+    position: absolute;
+    overflow: hidden;
+}
+/* Ratings widget */
+.review_rating {
+    display: inline-block;
+    border: 0;
+}
+/* Order correctly by floating highest to the right */
+.review_rating > label {
+    float: right;
+}
+/* Hide radio */
+.review_rating > input {
+    display: none;
+}
+
+/* Click + hover color */
+.review_rate_input:checked ~ .review_rate_label, /* color current and previous stars on checked */
+.review_rate_label:hover, .review_rate_label:hover ~ .review_rate_label {  /* color previous stars on hover */
+    color: gold;
+}
+
+/* Hover highlights */
+.review_rate_input:checked + .review_rate_label:hover, .review_rate_input:checked ~ .review_rate_label:hover, /* highlight current and previous stars */
+.review_rate_input:checked ~ .review_rate_label:hover ~ .review_rate_label, /* highlight previous selected stars for new rating */
+.review_rate_label:hover ~ .review_rate_input:checked ~ .review_rate_label { /* highlight previous selected stars */
+    color: gold;
+}
+
+
+/* Mobile */
+@media only screen and (max-width: 600px) {
+    main {
+        width: 100%;
+    }
+    .searchTextBox, .jumbotron .selectize-control.multi, .pac-card {
+        width: 100%;
+    }
+    .pac-card #map {
+        height: 40vmax;
+    }
+    main > .card {
+        border-width: 1px 0;
+    }
+    #locSearchToggle, button#g {
+        width: 100%;
+    }
+}

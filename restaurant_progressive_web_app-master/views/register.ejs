@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% const title = global.primary_routes_title[page]%>
+    <% include ../views/templates/head %>
+    <script src="/javascripts/user.js"/></script>
+  </head>
+  <body>
+    <header class="login-ctn jumbotron jumbotron-fluid text-center bg-dark text-white">
+      <!--<% include ../views/templates/nav.ejs%>-->
+      <div class=" bg-dark text-white">
+        <h1>Register</h1>
+        <input id="user" type="text" class="input-bar form-control" placeholder="Username">
+        <input id="pswd" type="password" class="input-bar form-control" placeholder="Password">
+        <button id="register-btn" type="button" class="btn-md btn-block btn-secondary">Register</button>
+        <p class="below-btn">Find the best restaurants in your area!</p>
+        <p>Share your culinary opinions!</p>
+      </div>
+    </header>
+  </body>
+</html>

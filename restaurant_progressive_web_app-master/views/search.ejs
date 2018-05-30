@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% const title = global.primary_routes_title[page]%>
+        <% include ../views/templates/head %>
+        <script src="/javascripts/map.js"></script>
+        <script src="/javascripts/search.js"></script>
+        <script>
+            var cuisine_arr = <%- JSON.stringify(cuisine_arr) %>;
+            function initializer() {
+                console.log('Map Loading');
+                let mapPromise = new Promise((resolve, reject) => {
+                    setLocation((position) => {
+                        console.log("Current Location");
+                        showPosition(position, (lat, lng) => {
+                            initMap(lat, lng, autoFillAddresss);
+                            resolve("Success!");
+                        });
+                    }, (error)=>{
+                        console.log("Default Location");
+                        initMap(53.3816197, -1.4820851, autoFillAddresss);
+                        document.getElementById("current-loc").disabled = true;
+                        resolve("Success!");
+                    });
+                });
+                mapPromise.then((success) => {
+                    console.log('Map Ready')
+                    <% if (typeof result_arr !== 'undefined') { %>
+                        searchFn(<%- result_arr %>, cuisine_arr);
+                        $('#locSearchToggle').click();
+                    <%}%>
+                });
+                setCuisineSel();
+                mapToggle();
+            }
+        </script>
+    </head>
+    <body>
+        <header class="jumbotron jumbotron-fluid text-center bg-dark text-white">
+            <% include ../views/templates/nav.ejs%>
+            <div class="container">
+                <h1><%= title %></h1>
+                <input class="form-control searchTextBox" form="searchForm" type="text" name="keywords" id="keywords" placeholder="Keywords" <%-(typeof keywords !== 'undefined') ? "value='" + keywords + "'" : ''%>"/>
+                <input form="searchForm" type="text" name="cuisine" id="cuisine_selector" placeholder="Cuisine"/>
+                <button id="locSearchToggle" type="button" class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#locationSearch">Choose Location<span class="oi ml-1" data-glyph="chevron-bottom"></span></button>
+                <div id="locationSearch" class="collapse">
+                    <div class ="input-group searchTextBox">
+                        <div class="input-group-prepend">
+                            <label for="current-loc" class="input-group-text">
+                                <span class="oi ml-1" id="inputGroup-sizing-default" data-glyph="location"></span>
+                            </label>
+                        </div>
+                        <input name="current_loc" id="current-loc" type="checkbox" style="display: none;" onchange="toggleLocation()"/>
+                        <input class="form-control" form="searchForm" name="pac_input" id="pac-input" type="text" placeholder="Enter a location"/>
+                    </div>
+                    <label for="radius">Radius of search (1 - 17 KM)</label>
+                    <input class="custom-range searchTextBox" form="searchForm" type="range" name="radius" id="radius" min="1" max="17" onchange="circleRadius()"/>
+                    <div class="pac-card" id="pac-card">
+                        <div id="map"></div>
+                    </div>
+                </div>
+                <hr>
+                <form id="searchForm" onsubmit="onSubmit('<%- page %>', '#searchForm', validateSearch, (dat) => searchFn(dat, cuisine_arr));">
+                    <input type="hidden" name="lat" id="lat" value="0"/>
+                    <input type="hidden" name="lng" id="lng" value="0"/>
+                </form>
+                <button form="searchForm" id="g" name="g" type="submit" class="btn btn-primary">Search<span class="oi ml-1" data-glyph="magnifying-glass"></span></button>
+            </div>
+        </header>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%= API %>&libraries=places&callback=initializer"
+                async defer></script>
+        <main>
+            <div class="container" id="results" style="margin-top:30px;">
+            </div>
+        </main>
+    </body>
+</html>

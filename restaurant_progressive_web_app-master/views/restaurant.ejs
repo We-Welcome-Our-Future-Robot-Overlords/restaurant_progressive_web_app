@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% const title = restaurant.name %>
+        <% include ../views/templates/head %>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var rstrntID = <%- JSON.stringify(restaurant.id) %>;
+        </script>
+        <script src="/javascripts/socket.js"></script>
+    </head>
+    <body onload="initSocket(rstrntID);">
+        <header class="jumbotron jumbotron-fluid bg-dark">
+            <% include ../views/templates/nav.ejs %>
+        </header>
+        <main>
+            <div class="container">
+                <h1><%= title %></h1>
+                <div title="Rating: <%= parseInt(restaurant.rating*2)/2 %>">
+                    <% for (var i = 1; i <= 5; i++){ %>
+                        <% if (restaurant.rating >= i){ %>
+                            <span class="star full"></span>
+                        <% } else if ((i - restaurant.rating)<1){%>
+                            <span class="star half"></span>
+                        <% } else { %>
+                            <span class="star"></span>
+                        <% } %>
+                    <% } %>
+                </div>
+                <img class="img-thumbnail" src="
+                    <% if (restaurant.official_photo != null) { %>
+                        /uploads/official/<%= restaurant.official_photo %>
+                    <% } %>
+                " onerror="this.onerror=null;this.src='/placeholder.jpg';" alt="Official Photo" style="height:250px; width:250px;">
+                <a href="https://www.google.com/maps/search/?api=1&query=<%=restaurant.location.lat %>,<%=restaurant.location.lng %>">
+                    <img src="https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=250x250&maptype=roadmap&markers=<%=restaurant.location.lat %>,<%=restaurant.location.lng %>&key=<%= API %>"
+                         alt="Google Map Location of Restaurant">
+                </a>
+                <article class="card bg-info rounded-0">
+                    <div class="card-body text-light">
+                        <h5 class="card-title">Description</h5>
+                        <section class="card-text"><%= restaurant.description %></section>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><%= restaurant.address %></li>
+                        <li class="list-group-item rounded-0">
+                            <div class="btn-group btn-group-sm">
+                            <%_ var cuisine_map = new Map(cuisine_arr.map((kv) => [kv._id.toString(), kv.title])); _%>
+                            <% console.log(cuisine_map); _%>
+                            <%_ restaurant.cuisine.forEach((c)=>{ _%>
+                                <button form="<%=c%>" type='submit' class='btn btn-info'>
+                                    <form id="<%=c%>" style="display:none;" action="/search" method="post">
+                                        <input name="cuisine" value="<%= c %>" hidden />
+                                    </form>
+                                    <%=cuisine_map.get(c.toString()); _%>
+                                </button>
+                            <%});_%>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+
+                <br/>
+                <div class="shadow card rounded-0">
+                    <div class="card-body pac-card" id="pac-card">
+                        <h1>Write Review</h1>
+                        <hr>
+                        <form id="write_review" method="post" action="<%- page %>"
+                              onsubmit="return (confirm('Do you really want to submit the review?') &&
+                              updateIO());">
+                            <div class="form-group">
+                                <label><b>Author</b></label>
+                                <input class="form-control" type="text" name="author" id="author" placeholder="Name" required />
+                            </div>
+                            <div class="form-group">
+                                <label><b>Your Overall Restaurant Rating</b></label>
+                                <div class="form-check">
+                                    <div class="review_rating">
+                                        <input class="review_rate_input" type="radio" name="star" id="rating5" value="5" />
+                                            <label class="star review_rate_label" for="rating5" title="5 star"></label>
+                                        <input class="review_rate_input" type="radio" name="star" id="rating4" value="4" />
+                                            <label class="star review_rate_label" for="rating4" title="4 star"></label>
+                                        <input class="review_rate_input" type="radio" name="star" id="rating3" value="3" />
+                                            <label class="star review_rate_label" for="rating3" title="3 star"></label>
+                                        <input class="review_rate_input" type="radio" name="star" id="rating2" value="2" />
+                                            <label class="star review_rate_label" for="rating2" title="2 star"></label>
+                                        <input class="review_rate_input" type="radio" name="star" id="rating1" value="1" required />
+                                            <label class="star review_rate_label" for="rating1" title="1 star"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label><b>Your Review</b></label>
+                                <textarea class="form-control" type="text" name="comment" id="comment" placeholder="Write down the experience" style="height:200px"/></textarea>
+                            </div>
+                            <input type="hidden" name="rstrnt_id" id="rstrnt_id" value="<%= restaurant._id %>"/>
+                            <button id="review_btn" name="review_btn" type="submit" class="btn btn-primary">
+                                Submit Review</button>
+                        </form>
+                    </div>
+                </div>
+
+                <br/>
+                <h1>Customer Reviews</h1>
+                <div class="alert alert-success collapse" id="new_review_alert">
+                    <a href='<% page %>' class="alert-link" id="new_review"></a>
+                </div>
+                <% for(var i=0; i < reviews.length; i++){ %>
+                    <div class="card rounded-0">
+                        <div class="card-body pac-card" id="pac-card">
+                            <div class="row">
+                                <div class="col-3">
+                                    <p><br/><%= reviews[i].author %></p>
+                                </div>
+                                <div class="col-9">
+                                    <p class="text-secondary">Posted on <%= reviews[i].date.getDate() %>/<%= reviews[i].date.getMonth()+1 %>/<%= reviews[i].date.getFullYear() %></p>
+                                    <div title="Rating: <%= parseInt(reviews[i].star*2)/2 %>">
+                                        <% for (var j = 1; j <= 5; j++){ %>
+                                            <% if (reviews[i].star >= j){ %>
+                                                <span class="star full"></span>
+                                            <% } else if ((j - reviews[i].star)<1){%>
+                                                <span class="star half"></span>
+                                            <% } else { %>
+                                                <span class="star"></span>
+                                            <% } %>
+                                        <% } %>
+                                    </div>
+                                    <p><%= reviews[i].comment %></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+                <br/>
+            </div>
+        </main>
+    </body>
+</html>
