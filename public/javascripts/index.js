@@ -1,4 +1,47 @@
 /**
+ * called by the HTML onload
+ * showing any cached forecast data and declaring the service worker
+ */
+function initSW() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .register('./service-worker.js')
+            .then(function() { console.log('Service Worker Registered'); });
+    }
+    if (!navigator.onLine){
+        showOfflineWarning();
+    }
+}
+
+/**
+ * When the client gets off-line, it shows an off line warning to the user
+ * so that it is clear that the data is stale
+ */
+window.addEventListener('offline', function(e) {
+    showOfflineWarning();
+}, false);
+
+/**
+ * When the client gets online, it hides the off line warning
+ */
+window.addEventListener('online', function(e) {
+    hideOfflineWarning();
+}, false);
+
+
+function showOfflineWarning(){
+    // Queue up events for server.
+    console.log("You are offline");
+    $('#offline_div').show();
+}
+
+function hideOfflineWarning(){
+    // Resync data with server.
+    console.log("You are online");
+    $('#offline_div').hide();
+}
+
+/**
  * Send an ajax query
  * @param url the url to post to
  * @param data the data to post

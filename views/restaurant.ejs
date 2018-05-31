@@ -10,8 +10,8 @@
         </script>
         <script src="/javascripts/socket.js"></script>
     </head>
-    <body onload="initSocket(rstrntID);">
-        <header class="jumbotron jumbotron-fluid bg-dark">
+    <body onload="initSocket(rstrntID); initSW();">
+        <header class="jumbotron jumbotron-fluid text-center bg-dark text-white">
             <% include ../views/templates/nav.ejs %>
         </header>
         <main>
