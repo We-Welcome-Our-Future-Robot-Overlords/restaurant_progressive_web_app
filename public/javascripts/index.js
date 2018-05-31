@@ -33,12 +33,49 @@ function showOfflineWarning(){
     // Queue up events for server.
     console.log("You are offline");
     $('#offline_div').show();
+    var buttons = document.getElementsByTagName("button");
+    for (var i = 0; i < buttons.length; i++) {
+        if (buttons[i].type === 'submit') {
+            buttons[i].disabled = true;
+        }
+    }
+    document.getElementById("offline_storage").disabled = false;
+    document.getElementById("offline_storage").style.display = "block";
 }
 
 function hideOfflineWarning(){
     // Resync data with server.
     console.log("You are online");
     $('#offline_div').hide();
+    var buttons = document.getElementsByTagName("button");
+    for (var i = 0; i < buttons.length; i++) {
+        if (buttons[i].type === 'submit') {
+            buttons[i].disabled = false;
+        }
+    }
+    document.getElementById("offline_storage").disabled = true;
+    document.getElementById("offline_storage").style.display = "none";
+}
+
+function store_post(form_id) {
+    var newPost = ""; // Inputted values
+    // Iterate through the inputs
+    $("form#" + form_id + " textarea, form#" + form_id + " input").each(function() {
+        if(this.type == "radio") {
+            if($(this).is(':checked')) {
+                newPost += $(this).val() + ",";
+            } else {
+                newPost += " ,";
+            }
+        } else {
+            newPost += $(this).val() + ",";
+        }
+    });
+    // Get rid of the last comma
+    newPost = newPost.substr(0, newPost.length - 1);
+    // Store the data
+    localStorage.setItem(form_id, newPost);
+    console.log(localStorage.getItem(form_id).split(','));
 }
 
 /**

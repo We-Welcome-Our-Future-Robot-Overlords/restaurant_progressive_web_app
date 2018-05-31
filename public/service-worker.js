@@ -80,18 +80,20 @@ self.addEventListener('activate', function (e) {
  */
 self.addEventListener('fetch', function (e) {
     console.log('[Service Worker] Fetch', e.request.url);
-    e.respondWith(
-        caches.open(e.request).then(function(cache) {
-            return cache.match(e.request)
-                .then(function(response) {
-                    var fetchPromise = fetch(e.request)
-                        .then(function(networkResponse) {
-                            cache.put(e.request,
-                                networkResponse.clone());
-                            return networkResponse;
-                        })
-                    return response || fetchPromise;
-                })
-        })
-    );
+    if (e.request.method === 'GET') {
+        e.respondWith(
+            caches.open(cacheName).then(function (cache) {
+                return cache.match(e.request)
+                    .then(function (response) {
+                        var fetchPromise = fetch(e.request)
+                            .then(function (networkResponse) {
+                                cache.put(e.request,
+                                    networkResponse.clone());
+                                return networkResponse;
+                            })
+                        return response || fetchPromise;
+                    })
+            })
+        );
+    }
 });

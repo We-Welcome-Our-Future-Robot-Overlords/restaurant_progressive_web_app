@@ -26,8 +26,6 @@ exports.show = function(view, req, res) {
                     page: req.url
                 })
             })
-        } else {
-            res.redirect('/search');
         }
     });
 }
@@ -129,37 +127,42 @@ exports.add = function (req, res) {
         res.status(403).send('No data sent!')
     }
     try {
-        var restaurant = new Restaurant({
-            name: rstrntData.restaurantTitle,
-            cuisine: rstrntData.restaurantCuisine.split(","),
-            description: rstrntData.restaurantDescription,
-            address: rstrntData.restaurantAddress,
-            location: {
-                lat: rstrntData.lat,
-                lng: rstrntData.lng
-            }
-        });
-        var rstrntPic = rstrntData.photo_text;
-        if (rstrntPic != '') {
-            rstrntPic = rstrntPic.replace(/^data:image\/\w+;base64,/, "")
-            // strip off the data: url prefix to get just the base64-encoded bytes
-            var targetDirectory = '../private/uploads/official'
-            var buf = new Buffer(rstrntPic, 'base64');
-            var fileName = crypto.randomBytes(20).toString('hex') + '.jpg'
-            fs.writeFile(targetDirectory + fileName, buf);
-            restaurant.official_photo = fileName
-        }
-        console.log('received: ' + restaurant);
-
-        restaurant.save() // Promise
-            .then(function (results){
-                console.log(results._id);
-                res.redirect('/restaurant/' + results._id);
-            })
-            .catch(err => {
-                res.status(500).send('Invalid data!');
+        var restaurant;
+        new Promise((resolve) => {
+            restaurant = new Restaurant({
+                name: rstrntData.restaurantTitle,
+                cuisine: rstrntData.restaurantCuisine.split(","),
+                description: rstrntData.restaurantDescription,
+                address: rstrntData.restaurantAddress,
+                location: {
+                    lat: rstrntData.lat,
+                    lng: rstrntData.lng
+                }
             });
-
+            var rstrntPic = rstrntData.photo_text;
+            if (rstrntPic != '') {
+                // strip off the data: url prefix to get just the base64-encoded bytes
+                rstrntPic = rstrntPic.replace(/^data:image\/\w+;base64,/, "")
+                var buf = new Buffer(rstrntPic, 'base64');
+                var targetDirectory = './private/uploads/official/'
+                var fileName = crypto.randomBytes(20).toString('hex') + '.jpg'
+                fs.writeFile(targetDirectory + fileName, buf);
+                restaurant.official_photo = fileName
+                resolve();
+            } else {
+                resolve();
+            }
+        }).then(function (success) {
+            console.log('received: ' + restaurant);
+            restaurant.save() // Promise
+                .then(function (results){
+                    console.log(results._id);
+                    res.redirect('/restaurant/' + results._id);
+                })
+                .catch(err => {
+                    res.status(500).send('Invalid data!');
+                });
+        });
     } catch (e) {
         res.status(500).send('error ' + e);
     }
