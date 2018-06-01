@@ -22,7 +22,9 @@ function validateSearch(data){
 
 /**
  * Populate the main#results with data
- * @param dat the details of each resturant returned by the search.
+ *
+ * @author Jack Cheng Ding Han 1501519519
+ * @param dat the details of each restaurant returned by the search.
  * @param cuisine_arr require to map ids to the names of cuisines displayed.
  */
 function searchFn(dat, cuisine_arr){
