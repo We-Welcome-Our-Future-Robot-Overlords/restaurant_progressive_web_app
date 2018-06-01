@@ -1,8 +1,5 @@
 var express = require('express');
 var router = express.Router();
-
-global.is_login = "Login"
-
 var users = require('../controllers/users');
 
 

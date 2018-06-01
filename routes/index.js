@@ -20,21 +20,22 @@ router.get('/', function(req, res, next) {
 /* GET search page. */
 router.get('/search', function(req, res, next) {
     restaurant.prepare('search', req, res, {
-        page: req.url,
-        API: process.env.GOOGLE_API});
+        page: req.url});
 });
 
 router.post('/search', (req, res) => {
     restaurant.search(req, res, {
-        page: req.url,
-        API: process.env.GOOGLE_API});
+        page: req.url});
 });
 
 /* GET Create Restaurant page. */
 router.get('/add_restaurant', function(req, res, next) {
-    restaurant.prepare('add_restaurant', req, res, {
-        page: req.url,
-        API: process.env.GOOGLE_API});
+    if (req.session.user_id !== undefined){
+        restaurant.prepare('add_restaurant', req, res, {
+            page: req.url});
+    } else {
+        res.redirect('/users/login');
+    }
 });
 
 /* Post Create Restaurant page. */

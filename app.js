@@ -34,6 +34,12 @@ app.use('/uploads', express.static(__dirname + '/private/uploads')); // redirect
 app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io-client/dist'));
 app.use(checkAuth);
 
+app.use(function (req, res, next) {
+    res.locals.API = process.env.GOOGLE_API;
+    res.locals.user_id = req.session.user_id;
+    next();
+});
+
 app.use('/', index);
 app.use('/users', users);
 

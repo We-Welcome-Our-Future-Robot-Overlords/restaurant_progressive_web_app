@@ -3,7 +3,7 @@ var User = require('../models/user');
 
 exports.checkAuth = function (req, res, next) {
   if (!req.session.user_id && req.path == '/add_restaurant') {
-    res.send("Please login first");
+    res.redirect('/users/login/');
     return;
   } else {
     next();
@@ -11,12 +11,11 @@ exports.checkAuth = function (req, res, next) {
 }
 
 exports.logout = function(req, res) {
-  if (global.is_login = "Login"){
-    res.send({success: false});
+  if (req.session.user_id !== undefined){
+      req.session.destroy();
+      res.send({success: true});
   } else {
-    global.is_login = "Login";
-    req.session.user_id = false;
-    res.send({success: true});
+      res.send({success: false});
   }
   
 }
@@ -28,9 +27,9 @@ exports.register = function (req, res) {
   let salt = bcrypt.genSaltSync(10);
   let hash = bcrypt.hashSync(pswd, salt);
 
-  User.find({email: email}, function(err, _res) {
+  User.find({email: email}).exec(function(err, users) {
     if(err){ throw err }
-    if(_res.length > 0){
+    if(users.length >= 1){
       res.send({success: false});
       return;
     }else{
@@ -39,32 +38,31 @@ exports.register = function (req, res) {
         'name': name,
         'pswd': hash
       });
-
-      user.save()
-      req.session.user_id = new Date().getTime()
-      res.status(200).send({success: true});  
+      user.save().then(function (user_result){
+        req.session.user_id = user_result._id;
+        res.status(200).send({success: true});
+      });
     }
-  })
-
+  });
 }
 
 exports.login = function (req, res) {
   var email = req.body.email;
   var pswd = req.body.pswd;
-  User.find({email: email}, function(err, _res) {
-    if(err){ res.send({msg: "This is Major Tom to Ground Control."})};
-    if(_res.length > 0 && _res[0].pswd){
-      let isCorrect = bcrypt.compareSync(pswd, _res[0].pswd);
-      if(isCorrect){
-        req.session.user_id = new Date().getTime();
-        global.is_login = "Logout"
-        
+  User.find({email: email}).exec(function(err, users) {
+    if (err){
+      res.send({msg: "Fail to Login"})
+    }
+    if(users.length == 1 && users[0].pswd){
+      let isCorrect = bcrypt.compareSync(pswd, users[0].pswd);
+      if (isCorrect){
+        req.session.user_id = users[0]._id;
         res.status(200).send({succeed: true});          
-      }else{
+      } else{
         res.status(200).send({failed: true});
       }
     } else {
-      res.status(200).send({failed: true, msg: "This is Ground Control to Major Tom. "})
+      res.status(200).send({failed: true, msg: "Fail to Login"})
     } 
-  })
+  });
 }

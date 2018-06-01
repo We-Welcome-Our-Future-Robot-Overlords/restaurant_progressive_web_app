@@ -149,24 +149,14 @@ function logout() {
         url: '/users/logout',
         type: 'GET',
         success: function(res) {
-            if(res.success){
-                alert("Success!");
+            if(res.success) {
                 window.location.href = '/';
-            }else{
+            } else {
                 window.location.href = '/users/login';
             }
         },
-        error: function(res) {
-            console.log("oops, f* words.");
+        error: function(err) {
+            window.location.href = '/users/login';
         }
     })
 }
-
-/**
- * Review solution
- */
-$(document).ready(function(){
-    if($('#user_stat').html()=='Login'){
-        $('#pac-card').hide();
-    }
-});

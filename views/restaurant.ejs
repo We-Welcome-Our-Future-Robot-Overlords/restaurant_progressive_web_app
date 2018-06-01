@@ -62,6 +62,7 @@
                 </article>
 
                 <br/>
+                <% if (user_id !== undefined) { %>
                 <div class="shadow card rounded-0">
                     <div class="card-body pac-card" id="pac-card">
                         <h1>Write Review</h1>
@@ -101,6 +102,7 @@
                         <button class="btn btn-warning" id="offline_storage" onclick="store_post('write_review')" style="display: none;">Save for later</button>
                     </div>
                 </div>
+                <% } %>
 
                 <br/>
                 <h1>Customer Reviews</h1>
