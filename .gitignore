@@ -4,6 +4,7 @@
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
+private
 
 # File-based project format
 *.iws
