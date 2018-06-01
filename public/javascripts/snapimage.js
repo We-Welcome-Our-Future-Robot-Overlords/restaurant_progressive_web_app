@@ -1,3 +1,9 @@
+/**
+ * snap image when click on the camera media
+ * store image to canvas for display
+ * store image as test for submit
+ * @param sourceId CameraID
+ */
 function snapshotImage(sourceId) {
     var hasGetUserMedia = !!(navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
@@ -31,6 +37,11 @@ function snapshotImage(sourceId) {
     }
 }
 
+/**
+ * load image from input file
+ * store image to canvas for display
+ * store image as test for submit
+ */
 function loadImage() {
     var input, file, fr, img;
 
