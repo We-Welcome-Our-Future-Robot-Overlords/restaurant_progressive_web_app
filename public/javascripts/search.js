@@ -71,6 +71,10 @@ function searchFn(dat, cuisine_arr){
     placeMarkers(locations);
 }
 
+/**
+ * hide or show map on search page
+ * refresh map size and position for correct display
+ */
 function mapToggle(){
     $('#locationSearch').on('shown.bs.collapse', function() {
         console.log("Shown");
