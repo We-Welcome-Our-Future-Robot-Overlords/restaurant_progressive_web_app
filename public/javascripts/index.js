@@ -28,7 +28,10 @@ window.addEventListener('online', function(e) {
     hideOfflineWarning();
 }, false);
 
-
+/**
+ * shows an offline warning to the user
+ * disable submit button, enable a button to store data in localStorage
+ */
 function showOfflineWarning(){
     // Queue up events for server.
     console.log("You are offline");
@@ -43,6 +46,10 @@ function showOfflineWarning(){
     document.getElementById("offline_storage").style.display = "block";
 }
 
+/**
+ * hide offline warning
+ * enable submit button, disable localStorage button
+ */
 function hideOfflineWarning(){
     // Resync data with server.
     console.log("You are online");
@@ -57,6 +64,10 @@ function hideOfflineWarning(){
     document.getElementById("offline_storage").style.display = "none";
 }
 
+/**
+ * store post form data to localStorage for later use
+ * @param form_id collect data from form with id = form_id
+ */
 function store_post(form_id) {
     var newPost = ""; // Inputted values
     // Iterate through the inputs
