@@ -80,7 +80,16 @@ self.addEventListener('activate', function (e) {
  */
 self.addEventListener('fetch', function (e) {
     console.log('[Service Worker] Fetch', e.request.url);
-    if (e.request.method === 'GET') {
+    var dataUrl = '/add_restaurant';
+    if (e.request.url.indexOf(dataUrl) > -1) {
+        e.respondWith(
+            fetch(e.request).catch(function() {
+                caches.open(cacheName).then(function (cache) {
+                    return cache.match(e.request);
+                })
+            })
+        );
+    } else if (e.request.method === 'GET') {
         e.respondWith(
             caches.open(cacheName).then(function (cache) {
                 return cache.match(e.request)

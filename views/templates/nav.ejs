@@ -16,6 +16,13 @@
                 <%-"class='nav-link'>" + global.primary_routes_title[k] + "</a></li>"; %>
             <% }); %>
             </ul>
+            <button id='user_stat' onclick='logout()' class='btn btn-link' style='color:#999' >
+                <% if (user_id !== undefined){ %>
+                    Logout
+                <% } else { %>
+                    Login
+                <% } %>
+            </button>
         <% if (page != '/search' && page != '/') { %>
             <form class="navbar-nav ml-auto" action="/search" method="post">
                 <div class="input-group">

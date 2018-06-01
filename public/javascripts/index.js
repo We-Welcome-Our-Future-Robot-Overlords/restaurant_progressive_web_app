@@ -140,3 +140,23 @@ function setCuisineSel(){
         theme: 'links'
     });
 }
+
+/**
+ * Login status manager
+ */
+function logout() {
+    $.ajax({
+        url: '/users/logout',
+        type: 'GET',
+        success: function(res) {
+            if(res.success) {
+                window.location.href = '/';
+            } else {
+                window.location.href = '/users/login';
+            }
+        },
+        error: function(err) {
+            window.location.href = '/users/login';
+        }
+    })
+}

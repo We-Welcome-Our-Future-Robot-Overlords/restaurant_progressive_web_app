@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var checkAuth = require('./controllers/users').checkAuth;
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -21,13 +23,22 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'the velvet underground', cookie: { maxAge: 60000 }}))
 
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist')); // redirect bootstrap
+app.use('/bcryptjs', express.static(__dirname + '/node_modules/bcryptjs/dist')); // redirect bcryptjs
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/selectize', express.static(__dirname + '/node_modules/selectize/dist')); // redirect selectize
 app.use('/open-iconic', express.static(__dirname + '/node_modules/open-iconic')); // redirect open-iconic
 app.use('/uploads', express.static(__dirname + '/private/uploads')); // redirect upload picture
 app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io-client/dist'));
+app.use(checkAuth);
+
+app.use(function (req, res, next) {
+    res.locals.API = process.env.GOOGLE_API;
+    res.locals.user_id = req.session.user_id;
+    next();
+});
 
 app.use('/', index);
 app.use('/users', users);
