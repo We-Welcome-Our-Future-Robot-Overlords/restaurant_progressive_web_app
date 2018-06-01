@@ -190,9 +190,11 @@ function toggleLocation(){
         default_marker.setVisible(true);
         circle.setCenter(current_loc);
         circle.setVisible(true);
+        $('#loc_icon').addClass(['bg-success', 'text-light']);
     } else {
         $('input#pac-input').val("");
         default_marker.setVisible(false);
         circle.setVisible(false);
+        $('#loc_icon').removeClass(['bg-success', 'text-light']);
     }
 }
