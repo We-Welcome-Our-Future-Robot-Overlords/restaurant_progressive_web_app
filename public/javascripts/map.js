@@ -79,6 +79,10 @@ function initMap(lat, lng, _callback) {
     }
 }
 
+/***
+ * Auto Fill Address assist for user typing in correct address
+ * Based on Google Map API
+ */
 function autoFillAddresss() {
     var input = document.getElementById('pac-input');
 
@@ -131,7 +135,10 @@ function autoFillAddresss() {
 
 var markers = [];
 var bounds =[];
-
+/***
+ * Place Marker for all the locations
+ * @param locations all locations [(lat,lng)] that need a marker to be placed on
+ */
 function placeMarkers(locations) {
     // clear all markers
     markers.forEach(function(marker) {
@@ -156,6 +163,10 @@ function placeMarkers(locations) {
     zoomTight();
 }
 
+/***
+ * Based on all markers on the map, zoom to fit all markers
+ * If only one marker exist, center on that
+ */
 function zoomTight() {
     markers.forEach(function(marker) {
         marker.setVisible(true);
@@ -172,12 +183,18 @@ function zoomTight() {
     }
 }
 
+/***
+ * Show a circle based on radius set by user
+ */
 function circleRadius() {
     var radius = parseFloat(document.getElementById("radius").value);
     circle.setRadius(radius*1000);
     map.fitBounds(circle.getBounds());
 }
 
+/***
+ * toggle between using current location and user input location
+ */
 function toggleLocation(){
     document.getElementById("pac-input").readOnly = document.getElementById("current-loc").checked;
     if (document.getElementById("current-loc").checked){
