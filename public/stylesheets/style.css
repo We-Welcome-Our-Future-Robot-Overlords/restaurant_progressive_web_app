@@ -3,6 +3,28 @@ main {
     margin: auto;
 }
 
+/* Login */
+.login-ctn {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.input-bar {
+    margin: 2rem 0px;
+}
+
+/* button {
+/*     margin: 1rem 0rem;
+/* }*/
+
+.below-btn {
+    margin-top: 1rem;
+}
+
 /* Navigation */
 
 /* Search Controls*/

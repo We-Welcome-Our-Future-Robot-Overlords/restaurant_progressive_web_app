@@ -140,3 +140,33 @@ function setCuisineSel(){
         theme: 'links'
     });
 }
+
+/**
+ * Login status manager
+ */
+function logout() {
+    $.ajax({
+        url: '/users/logout',
+        type: 'GET',
+        success: function(res) {
+            if(res.success){
+                alert("Success!");
+                window.location.href = '/';
+            }else{
+                window.location.href = '/users/login';
+            }
+        },
+        error: function(res) {
+            console.log("oops, f* words.");
+        }
+    })
+}
+
+/**
+ * Review solution
+ */
+$(document).ready(function(){
+    if($('#user_stat').html()=='Login'){
+        $('#pac-card').hide();
+    }
+});
