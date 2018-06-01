@@ -1,11 +1,14 @@
-if (typeof(Number.prototype.toRad) === "undefined") {
-    Number.prototype.toRad = function() {
-        return this * Math.PI / 180;
-    }
-}
-
 module.exports = {
-    //Distance between two map coordinates on Earth
+    /**
+     * Distance between two map coordinates on Earth.
+     *
+     * @author Jack Cheng Ding Han 150159519
+     * @param {number} lat1 Latitude of the first coordinate.
+     * @param {number} lng1 Longitude of the first coordinate.
+     * @param {number} lat2 Latitude of the second coordinate.
+     * @param {number} lng2 Longitude of the second coordinate.
+     * @returns {number} The distance between two coordinates.
+     */
     haversine: function (lat1,lng1, lat2, lng2) {
         var R = 6371e3; // metres
         var φ1 = lat1 * Math.PI / 180;
